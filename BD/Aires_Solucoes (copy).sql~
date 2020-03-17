@@ -1,0 +1,2435 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+DROP SCHEMA IF EXISTS `Aires_Solucoes` ;
+CREATE SCHEMA IF NOT EXISTS `Aires_Solucoes` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `Aires_Solucoes` ;
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Config.Indice`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Config.Indice` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Config.Indice` (
+  `ID_INDICE` INT NOT NULL AUTO_INCREMENT,
+  `NOME_INDICE` VARCHAR(30) NULL,
+  `VALOR_PERCENTUAL` FLOAT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_INDICE`),
+  UNIQUE INDEX `NOME_INDICE_UNIQUE` (`NOME_INDICE` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Cliente.Empresa`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Cliente.Empresa` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Cliente.Empresa` (
+  `ID_CLIENTE` INT NOT NULL AUTO_INCREMENT,
+  `TIPO_CLIENTE` INT NOT NULL COMMENT '--1 = BASE\n--2 = PROSPECÇÃO',
+  `MODALIDADE_EMPRESA` INT NOT NULL COMMENT '--1 = MATRIZ\n--2 = FILIAL',
+  `CNPJ` VARCHAR(18) NOT NULL,
+  `INSCRICAO_ESTADUAL` VARCHAR(15) NULL,
+  `RAZAO_SOCIAL` VARCHAR(100) NOT NULL,
+  `NOME_FANTASIA` VARCHAR(50) NOT NULL,
+  `DATA_ABERTURA` VARCHAR(10) NULL COMMENT 'Registra a data de abertura da empresa',
+  `N_FUNCIONARIOS` VARCHAR(20) NULL,
+  `PORTE` INT NOT NULL COMMENT '--Microempresa\n--Pequena empresa\n--Média empresa\n--Média-grande empresa\n--Grande empresa',
+  `ENDERECO` VARCHAR(100) NULL,
+  `NUMERO` INT NULL,
+  `CEP` VARCHAR(9) NULL,
+  `BAIRRO` VARCHAR(50) NULL,
+  `CIDADE` VARCHAR(50) NULL,
+  `UF` CHAR(2) NULL,
+  `TELEFONE_EMPRESA` VARCHAR(15) NULL,
+  `TELEFONE` VARCHAR(15) NULL,
+  `TELEFONE2` VARCHAR(15) NULL,
+  `RAMAL` VARCHAR(10) NULL,
+  `RAMAL2` VARCHAR(10) NULL,
+  `CELULAR` VARCHAR(15) NULL,
+  `CELULAR2` VARCHAR(15) NULL,
+  `EMAIL` VARCHAR(100) NOT NULL,
+  `EMAIL2` VARCHAR(100) NULL,
+  `NOME_CONTATO` VARCHAR(50) NOT NULL,
+  `NOME_CONTATO2` VARCHAR(50) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_CLIENTE`),
+  UNIQUE INDEX `CNPJ_UNIQUE` (`CNPJ` ASC),
+  UNIQUE INDEX `INSCRICAO_ESTADUAL_UNIQUE` (`INSCRICAO_ESTADUAL` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Cliente.Gestor`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Cliente.Gestor` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Cliente.Gestor` (
+  `ID_GESTOR` INT NOT NULL AUTO_INCREMENT,
+  `ID_EMPRESA` INT NOT NULL,
+  `CPF` VARCHAR(15) NOT NULL,
+  `NOME_COMPLETO` VARCHAR(100) NOT NULL,
+  `DATA_NASCIMENTO` VARCHAR(10) NULL,
+  `RG` VARCHAR(15) NULL,
+  `TELEFONE` VARCHAR(15) NULL,
+  `EMAIL` VARCHAR(100) NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_GESTOR`),
+  UNIQUE INDEX `CPF_UNIQUE` (`CPF` ASC),
+  UNIQUE INDEX `RG_UNIQUE` (`RG` ASC),
+  INDEX `ID_GESTOR_EMPRESA_FK_idx` (`ID_EMPRESA` ASC),
+  CONSTRAINT `ID_GESTOR_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Cliente.AuxEmpresaRepresentante`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Cliente.AuxEmpresaRepresentante` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Cliente.AuxEmpresaRepresentante` (
+  `ID_EMPRESA_REPRESENTANTE` INT NOT NULL AUTO_INCREMENT,
+  `ID_EMPRESA` INT NOT NULL,
+  `ID_REPRESENTANTE` INT NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_EMPRESA_REPRESENTANTE`),
+  INDEX `AUX_REPRESENTANTE_ID_idx` (`ID_EMPRESA` ASC),
+  INDEX `AUX_REPRESENTANTE_CPF_idx` (`ID_REPRESENTANTE` ASC),
+  CONSTRAINT `AUX_EMPRESA_ID_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `AUX_REPRESENTANTE_ID_FK`
+    FOREIGN KEY (`ID_REPRESENTANTE`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Gestor` (`ID_GESTOR`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Aires.Contrato`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Aires.Contrato` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Aires.Contrato` (
+  `ID_CONTRATO` INT NOT NULL AUTO_INCREMENT,
+  `ID_EMPRESA` INT NOT NULL,
+  `DATA_INICIO_CONTRATO` VARCHAR(20) NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_CONTRATO`),
+  CONSTRAINT `CONTRATO_AIRES_ID_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.Operadora`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.Operadora` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.Operadora` (
+  `ID_OPERADORA` INT NOT NULL AUTO_INCREMENT,
+  `NOME_OPERADORA` VARCHAR(50) NOT NULL,
+  `ORDEM` INT NOT NULL COMMENT 'POSIÇÃO EM QUE A OPERADORA APARECERÁ',
+  `CSP` INT NULL,
+  `CONTATO_FIXO` VARCHAR(15) NULL,
+  `CONTATO_MOVEL` VARCHAR(15) NULL,
+  `CONTATO_LINK_DEDICADO` VARCHAR(15) NULL,
+  `CONTATO_DADOS` VARCHAR(15) NULL,
+  `CONTATO_DDR` VARCHAR(15) NULL,
+  `CONTATO_OUVIDORIA` VARCHAR(15) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_OPERADORA`),
+  UNIQUE INDEX `RAZAO_SOCIAL_UNIQUE` (`NOME_OPERADORA` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Aires.AuxContrato`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Aires.AuxContrato` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Aires.AuxContrato` (
+  `ID_AUX_CONTRATO` INT NOT NULL AUTO_INCREMENT,
+  `ID_CONTRATO` INT NOT NULL,
+  `OPERADORA` VARCHAR(20) NOT NULL COMMENT '--UTILIZA O MODELO BINÁRIO PARA DETERMINAR QUAIS OPERADORAS FAZEM PARTE\n\nEX: VIVO (SIM), CLARO (NÃO), OI (SIM), TIM (SIM), NEXTEL (NÃO) = 10110',
+  `PERCENTUAL_NEGOCIACAO` VARCHAR(30) NOT NULL,
+  `GASTO_MENSAL_ESTIMADO` VARCHAR(30) NOT NULL,
+  `REDUCAO_MENSAL_ESTIMADA` VARCHAR(30) NOT NULL,
+  `REDUCAO_MENSAL_ESTIMADA_PERCENTUAL` VARCHAR(30) NOT NULL,
+  `REDUCAO_ANUAL_ESTIMADA` VARCHAR(30) NOT NULL,
+  `REDUCAO_ANUAL_ESTIMADA_PERCENTUAL` VARCHAR(30) NOT NULL,
+  `GASTO_MENSAL_FINAL` VARCHAR(30) NULL,
+  `REDUCAO_MENSAL_FINAL` VARCHAR(30) NULL,
+  `REDUCAO_MENSAL_PERCENTUAL_FINAL` VARCHAR(30) NULL,
+  `REDUCAO_ANUAL_FINAL` VARCHAR(30) NULL,
+  `REDUCAO_ANUAL_PERCENTUAL_FINAL` VARCHAR(30) NULL,
+  `VALOR_LINHA_ATIVA` VARCHAR(30) NOT NULL,
+  `QTD_LINHA_ATIVA` INT NOT NULL,
+  `VALOR_TOTAL_LINHA_ATIVA` VARCHAR(30) NOT NULL,
+  `VALOR_LINHA_INATIVA` VARCHAR(30) NULL,
+  `QTD_LINHA_INATIVA` INT NULL,
+  `VALOR_TOTAL_LINHA_INATIVA` VARCHAR(30) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_AUX_CONTRATO`),
+  INDEX `CONTRATO_idx` (`ID_CONTRATO` ASC),
+  CONSTRAINT `AUX_CONTRATO_FK`
+    FOREIGN KEY (`ID_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Aires.Contrato` (`ID_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Book.Book`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Book.Book` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Book.Book` (
+  `ID_BOOK` INT NOT NULL AUTO_INCREMENT,
+  `ID_OPERADORA` INT NOT NULL,
+  `PERIODO_VALIDADE` VARCHAR(30) NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_BOOK`),
+  INDEX `OPERADORA_BOOK_idx` (`ID_OPERADORA` ASC),
+  CONSTRAINT `BOOK_OPERADORA_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Book.PlanoBook`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Book.PlanoBook` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Book.PlanoBook` (
+  `ID_PLANO_BOOK` INT NOT NULL AUTO_INCREMENT,
+  `ID_BOOK` INT NOT NULL,
+  `TIPO_PLANO` INT NOT NULL COMMENT '--OPÇÕES\n-1 -> PLANO FLEXÍVEL\n-2 -> PLANO PRONTO',
+  `DESCRITIVO_PLANO` VARCHAR(100) NOT NULL,
+  `ID_PLATAFORMA_LD` INT NULL,
+  `TARIFA` VARCHAR(30) NULL,
+  `TARIFA_EXCEDENTE` VARCHAR(30) NULL,
+  `VALOR_ASSINATURA` VARCHAR(15) NULL,
+  `VALOR_FRANQUIA` VARCHAR(15) NULL,
+  `FRANQUIA_MINUTOS` VARCHAR(15) NULL,
+  `TIPO_FRANQUIA` INT NULL COMMENT '--OPÇÕES\n-1 -> FRANQUIA COMPARTILHADA\n-2 -> FRANQUIA INDIVIDUAL',
+  `QTD_LINHAS` INT NULL,
+  `VALOR_TOTAL` VARCHAR(15) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PLANO_BOOK`),
+  INDEX `ID_BOOK_PLANO_idx` (`ID_BOOK` ASC),
+  CONSTRAINT `ID_BOOK_PLANO_FK`
+    FOREIGN KEY (`ID_BOOK`)
+    REFERENCES `Aires_Solucoes`.`Book.Book` (`ID_BOOK`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = '				';
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Book.ModuloBook`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Book.ModuloBook` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Book.ModuloBook` (
+  `ID_MODULO_BOOK` INT NOT NULL AUTO_INCREMENT,
+  `ID_OPERADORA` INT NOT NULL,
+  `DESCRITIVO_MODULO` VARCHAR(100) NOT NULL,
+  `CAMPOS` VARCHAR(50) NULL COMMENT 'VALOR BINÁRIO QUE DETERMINA QUAIS SÃO OS CMAPOS A SEREM UTILIZADOS.',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_MODULO_BOOK`),
+  INDEX `ID_OPERADORA_MODULO_BOOK_idx` (`ID_OPERADORA` ASC),
+  CONSTRAINT `ID_OPERADORA_MODULO_BOOK_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.TipoContrato`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.TipoContrato` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.TipoContrato` (
+  `ID_TIPO_CONTRATO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRITIVO` VARCHAR(30) NOT NULL COMMENT 'Opções:\n-NOVO\n-RENOVAÇÃO\n-MIGRAÇÃO DE PLANO\n-TRANSFERÊNCIA DE TITULARIDADE\n-INCREMENTO',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_CONTRATO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.ContratoTipoServico`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.ContratoTipoServico` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.ContratoTipoServico` (
+  `ID_CONTRATO_TIPO_SERVICO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRITIVO` VARCHAR(30) NOT NULL COMMENT 'Opções:\n-FIXO\n-MOVEL\n-DADOS\n-DDR\n-LINK DEDICADO\n-FIBRA ÓTICA\n-LINK INTERNET',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_CONTRATO_TIPO_SERVICO`))
+ENGINE = InnoDB
+COMMENT = '	';
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.Contrato`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.Contrato` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.Contrato` (
+  `ID_CONTRATO_OPERADORA` INT NOT NULL AUTO_INCREMENT,
+  `N_CONTA` VARCHAR(20) NULL,
+  `ID_TIPO_CONTRATO` INT NOT NULL COMMENT 'OPÇÕES\n-NOVO\n-INCREMENTO\n-RENOVAÇÃO\n-MIGRAÇÃO DE PLANO\n-TRANSFERÊNCIA DE TITULARIDADE',
+  `ID_EMPRESA` INT NOT NULL,
+  `ID_TIPO_SERVICO` INT NOT NULL,
+  `ID_OPERADORA` INT NOT NULL,
+  `DATA_ASSINATURA` VARCHAR(20) NOT NULL,
+  `DATA_ATIVACAO` VARCHAR(20) NULL,
+  `CARENCIA` VARCHAR(20) NOT NULL,
+  `VALOR_TOTAL_CONTRATO` VARCHAR(20) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_CONTRATO_OPERADORA`),
+  INDEX `CONTRATO_ID_EMPRESA_idx` (`ID_EMPRESA` ASC),
+  INDEX `TIPO_CONTRATO_idx` (`ID_TIPO_CONTRATO` ASC),
+  INDEX `TIPO_SERVICO_CONTRATO_OPERADORA_idx` (`ID_TIPO_SERVICO` ASC),
+  INDEX `ID_OPERADORA_CONTRATO_FK_idx` (`ID_OPERADORA` ASC),
+  CONSTRAINT `ID_TIPO_CONTRATO_OPERADORA_FK`
+    FOREIGN KEY (`ID_TIPO_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.TipoContrato` (`ID_TIPO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_CONTRATO_OPERADORA_ID_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_TIPO_SERVICO_CONTRATO_OPERADORA_FK`
+    FOREIGN KEY (`ID_TIPO_SERVICO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.ContratoTipoServico` (`ID_CONTRATO_TIPO_SERVICO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_OPERADORA_CONTRATO_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_EMPRESA_CONTRATO_OPERADORA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.TipoPlano`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.TipoPlano` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.TipoPlano` (
+  `ID_TIPO_PLANO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(50) NULL COMMENT '--VOZ\n--DADOS\n--SMS',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_PLANO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.PlanoContrato`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.PlanoContrato` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.PlanoContrato` (
+  `ID_PLANO_CONTRATO` INT NOT NULL AUTO_INCREMENT,
+  `ID_CONTRATO_OPERADORA` INT NOT NULL,
+  `ID_TIPO_PLANO` INT NOT NULL,
+  `ID_PLANO_ASSOCIADO` INT NULL,
+  `DESCRITIVO_PLANO` VARCHAR(100) NOT NULL,
+  `QUANTIDADE_PLANO` INT NOT NULL,
+  `VALOR_ASSINATURA_PLANO` VARCHAR(15) NOT NULL,
+  `DESCRITIVO_PACOTE_VOZ` VARCHAR(100) NULL,
+  `TARIFA_LOCAL` VARCHAR(15) NULL,
+  `VOLUME_PLANO` VARCHAR(20) NULL,
+  `MINUTOS` VARCHAR(10) NULL,
+  `VALOR_PAC_MIN` VARCHAR(15) NULL,
+  `DESCONTO_PLANO_12` VARCHAR(15) NULL,
+  `DESCONTO_PLANO_24` VARCHAR(15) NULL,
+  `VALOR_TOTAL_PLANO` VARCHAR(15) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PLANO_CONTRATO`),
+  INDEX `PLANO_CONTRATO_idx` (`ID_CONTRATO_OPERADORA` ASC),
+  INDEX `TIPO_PLANO_CONTRATO_FK_idx` (`ID_TIPO_PLANO` ASC),
+  INDEX `PLANO_ASSOCIADO_FK_idx` (`ID_PLANO_ASSOCIADO` ASC),
+  CONSTRAINT `PLANO_CONTRATO_FK`
+    FOREIGN KEY (`ID_CONTRATO_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Contrato` (`ID_CONTRATO_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `TIPO_PLANO_CONTRATO_FK`
+    FOREIGN KEY (`ID_TIPO_PLANO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.TipoPlano` (`ID_TIPO_PLANO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `PLANO_ASSOCIADO_FK`
+    FOREIGN KEY (`ID_PLANO_ASSOCIADO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.PlanoContrato` (`ID_PLANO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.TipoModulo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.TipoModulo` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.TipoModulo` (
+  `ID_TIPO_MODULO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(50) NULL COMMENT '--VOZ\n--DADOS\n--SMS',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_MODULO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.ModuloContrato`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.ModuloContrato` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.ModuloContrato` (
+  `ID_MODULO_CONTRATO` INT NOT NULL AUTO_INCREMENT,
+  `ID_CONTRATO_OPERADORA` INT NOT NULL,
+  `ID_PLANO_CONTRATO` INT NOT NULL,
+  `ID_TIPO_MODULO` INT NOT NULL,
+  `IS_COMPARTILHADO` INT NOT NULL COMMENT '--OPÇÕES\n-0 - NÃO COMPARTILHADO\n-1 - COMPARTILHADO',
+  `DESCRITIVO_MODULO` VARCHAR(100) NOT NULL,
+  `QUANTIDADE_MODULO` INT NOT NULL,
+  `VOLUME_MODULO` VARCHAR(20) NULL,
+  `VALOR_ASSINATURA_MODULO` VARCHAR(20) NOT NULL,
+  `DESCONTO_MODULO_12` VARCHAR(15) NULL,
+  `DESCONTO_MODULO_24` VARCHAR(15) NULL,
+  `VALOR_TOTAL_MODULO` VARCHAR(15) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_MODULO_CONTRATO`),
+  INDEX `MODULO_TIPO_FK_idx` (`ID_TIPO_MODULO` ASC),
+  INDEX `MODULO_CONTRATO_FK_idx` (`ID_CONTRATO_OPERADORA` ASC),
+  INDEX `MODULO_PLANO_CONTRATO_FK_idx` (`ID_PLANO_CONTRATO` ASC),
+  CONSTRAINT `MODULO_CONTRATO_OPERADORA_FK`
+    FOREIGN KEY (`ID_CONTRATO_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Contrato` (`ID_CONTRATO_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `MODULO_TIPO_FK`
+    FOREIGN KEY (`ID_TIPO_MODULO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.TipoModulo` (`ID_TIPO_MODULO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `MODULO_PLANO_CONTRATO_FK`
+    FOREIGN KEY (`ID_PLANO_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.PlanoContrato` (`ID_PLANO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = '	';
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Patrimonio.Marca`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Patrimonio.Marca` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Patrimonio.Marca` (
+  `ID_MARCA` INT NOT NULL AUTO_INCREMENT,
+  `NOME` VARCHAR(30) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_MARCA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Patrimonio.FormaAquisicao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Patrimonio.FormaAquisicao` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Patrimonio.FormaAquisicao` (
+  `ID_FORMA_AQUISICAO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(30) NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_FORMA_AQUISICAO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Patrimonio.TipoAtivo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Patrimonio.TipoAtivo` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Patrimonio.TipoAtivo` (
+  `ID_TIPO_ATIVO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(30) NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_ATIVO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Patrimonio.LoteAparelho`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Patrimonio.LoteAparelho` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Patrimonio.LoteAparelho` (
+  `ID_LOTE_PATRIMONIO` INT NOT NULL AUTO_INCREMENT,
+  `ID_CONTRATO_OPERADORA` INT NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_LOTE_PATRIMONIO`),
+  INDEX `ID_CONTRATO_OPERADORA_LOTE_idx` (`ID_CONTRATO_OPERADORA` ASC),
+  CONSTRAINT `ID_CONTRATO_OPERADORA_LOTE_FK`
+    FOREIGN KEY (`ID_CONTRATO_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Contrato` (`ID_CONTRATO_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Patrimonio.Patrimonio`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Patrimonio.Patrimonio` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Patrimonio.Patrimonio` (
+  `ID_PATRIMONIO` INT NOT NULL AUTO_INCREMENT,
+  `IMEI` VARCHAR(20) NOT NULL,
+  `ID_LOTE_APARELHO` INT NOT NULL,
+  `ID_MARCA` INT NOT NULL,
+  `MODELO` VARCHAR(50) NULL,
+  `ID_TIPO_ATIVO` INT NOT NULL,
+  `ID_FORMA_AQUISICAO` INT NOT NULL,
+  `DATA_COLETA` VARCHAR(25) NULL,
+  `STATUS_APARELHO` INT NOT NULL,
+  `COMPROVANTE_COLETA` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_PATRIMONIO`),
+  UNIQUE INDEX `IMEI_UNIQUE` (`IMEI` ASC),
+  INDEX `PATRIMONIO_MARCA_idx` (`ID_MARCA` ASC),
+  INDEX `PATRIMONIO_FORMA_AQUISICAO_idx` (`ID_FORMA_AQUISICAO` ASC),
+  INDEX `PATRIMONIO_TIPO_ATIVO_idx` (`ID_TIPO_ATIVO` ASC),
+  INDEX `PATRIMONIO_LOTE_APARELHO_idx` (`ID_LOTE_APARELHO` ASC),
+  CONSTRAINT `PATRIMONIO_MARCA`
+    FOREIGN KEY (`ID_MARCA`)
+    REFERENCES `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `PATRIMONIO_FORMA_AQUISICAO`
+    FOREIGN KEY (`ID_FORMA_AQUISICAO`)
+    REFERENCES `Aires_Solucoes`.`Patrimonio.FormaAquisicao` (`ID_FORMA_AQUISICAO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `PATRIMONIO_TIPO_ATIVO`
+    FOREIGN KEY (`ID_TIPO_ATIVO`)
+    REFERENCES `Aires_Solucoes`.`Patrimonio.TipoAtivo` (`ID_TIPO_ATIVO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `PATRIMONIO_LOTE_APARELHO`
+    FOREIGN KEY (`ID_LOTE_APARELHO`)
+    REFERENCES `Aires_Solucoes`.`Patrimonio.LoteAparelho` (`ID_LOTE_PATRIMONIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Patrimonio.LoteChip`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Patrimonio.LoteChip` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Patrimonio.LoteChip` (
+  `ID_LOTE_CHIP` INT NOT NULL AUTO_INCREMENT,
+  `ID_CONTRATO_OPERADORA` INT NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  INDEX `ID_CONTRATO_OPERADORA_CHIP_idx` (`ID_CONTRATO_OPERADORA` ASC),
+  PRIMARY KEY (`ID_LOTE_CHIP`),
+  CONSTRAINT `ID_CONTRATO_OPERADORA_CHIP`
+    FOREIGN KEY (`ID_CONTRATO_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Contrato` (`ID_CONTRATO_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Patrimonio.Chip`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Patrimonio.Chip` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Patrimonio.Chip` (
+  `ID_CHIP` INT NOT NULL AUTO_INCREMENT,
+  `ID_LOTE_CHIP` INT NOT NULL,
+  `N_CHIP` VARCHAR(30) NOT NULL,
+  `STATUS_CHIP` VARCHAR(20) NULL COMMENT 'Status possíveis:\n-Branco\n-Vinculado\n-Substituído',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_CHIP`),
+  UNIQUE INDEX `N_CHIP_UNIQUE` (`N_CHIP` ASC),
+  INDEX `ID_CHIP_LOTE_idx` (`ID_LOTE_CHIP` ASC),
+  CONSTRAINT `ID_CHIP_LOTE_FK`
+    FOREIGN KEY (`ID_LOTE_CHIP`)
+    REFERENCES `Aires_Solucoes`.`Patrimonio.LoteChip` (`ID_LOTE_CHIP`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Cliente.UsuarioLinhaTelefonica`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Cliente.UsuarioLinhaTelefonica` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Cliente.UsuarioLinhaTelefonica` (
+  `ID_USUARIO_LINHA_TELEFONICA` INT NOT NULL AUTO_INCREMENT,
+  `ID_EMPRESA` INT NOT NULL,
+  `NOME_COMPLETO` VARCHAR(50) NOT NULL,
+  `TIPO_LINHA` INT NOT NULL COMMENT '--LINHA INDIVIDUAL: UMA ÚNICA PESSOA MANIPULA A LINHA \n\n--LINHA ROTATIVA: UM DEPTO TEM ACESSO A LINHA',
+  `IMEI_ATIVO` VARCHAR(20) NOT NULL,
+  `TERMO_RESPONSABILIDADE` VARCHAR(255) NULL,
+  `STATUS_DEVOLUCAO` INT NOT NULL COMMENT '(TROCA DE CHIP/TROCA DE APARELHO/DEVOLUÇÃO COMPLETA) \n\n--TROCA DE CHIP/APARELHO = TERMO DE SUBSTITUIÇÃO // TERMO DE ENTREGA = DEVOLUÇÃO COMPLETA',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_USUARIO_LINHA_TELEFONICA`),
+  INDEX `USUARIO_IMEI_ATIVO_idx` (`IMEI_ATIVO` ASC),
+  INDEX `USUARIO_LINHA_CNPJ_idx` (`ID_EMPRESA` ASC),
+  CONSTRAINT `USUARIO_LINHA_CNPJ_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `USUARIO_IMEI_ATIVO_FK`
+    FOREIGN KEY (`IMEI_ATIVO`)
+    REFERENCES `Aires_Solucoes`.`Patrimonio.Patrimonio` (`IMEI`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Atendimento.TipoServico`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Atendimento.TipoServico` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Atendimento.TipoServico` (
+  `ID_TIPO_SERVICO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRITIVO` VARCHAR(30) NULL COMMENT '--OPÇÕES\n-Contestação ( muda de acordo com o login)\n-Cancelamento\n-Suspensão\n-Alteração de serviços\n-Troca de Aparelho - solicitação / cancelamento\n-Troca de Chip – solicitação / cancelamento\n-Transferência de linhas\n-Cotação\n-Liberação de créditos / Linh /* comment truncated */ /*as
+-Outros – campo de inserção (obs)*/',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_SERVICO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Atendimento.Atendimento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Atendimento.Atendimento` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Atendimento.Atendimento` (
+  `ID_ATENDIMENTO` INT NOT NULL AUTO_INCREMENT,
+  `PROTOCOLO_ATENDIMENTO` VARCHAR(50) NOT NULL,
+  `CNPJ` VARCHAR(18) NOT NULL,
+  `ID_OPERADORA` INT NOT NULL,
+  `TIPO_ATENDIMENTO` INT NOT NULL,
+  `TIPO_SERVICO` INT NOT NULL,
+  `MODO_ATENDIMENTO` INT NULL COMMENT '--TELEFONE\n--E-MAIL',
+  `NOME_ATENDENTE` VARCHAR(50) NULL,
+  `DATA_HORARIO_ATENDIMENTO` VARCHAR(20) NULL,
+  `DATA_ABERTURA_PROTOCOLO` VARCHAR(20) NULL,
+  `DATA_RESOLUCAO_PREVISTA` VARCHAR(20) NULL,
+  `HISTORICO` VARCHAR(1000) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_ATENDIMENTO`),
+  INDEX `ATENDIMENTO_ID_OPERADORA_idx` (`ID_OPERADORA` ASC),
+  INDEX `ATENDIMENTO_TIPO_SERVICO_idx` (`TIPO_SERVICO` ASC),
+  CONSTRAINT `ATENDIMENTO_ID_OPERADORA_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ATENDIMENTO_TIPO_SERVICO_FK`
+    FOREIGN KEY (`TIPO_SERVICO`)
+    REFERENCES `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Atendimento.Processo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Atendimento.Processo` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Atendimento.Processo` (
+  `ID_PROCESSO` INT NOT NULL AUTO_INCREMENT,
+  `ID_ATENDIMENTO` INT NULL,
+  `PROTOCOLO_PROCESSO` VARCHAR(50) NULL,
+  `TIPO_PROCESSO` INT NULL COMMENT '--OUVIDORIA\n--ANATEL',
+  `MODO_ATENDIMENTO` INT NULL COMMENT '--TELEFONE\n--E-MAIL',
+  `NOME_ATENDENTE` VARCHAR(50) NULL,
+  `DATA_HORARIO_ATENDIMENTO` VARCHAR(20) NULL,
+  `DATA_ABERTURA_PROTOCOLO` VARCHAR(20) NULL,
+  `DATA_RESOLUCAO` VARCHAR(20) NULL,
+  `STATUS_PROCESSO` INT NULL COMMENT '--PENDENTE\n--CONCLUÍDO',
+  `ANEXO` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PROCESSO`),
+  INDEX `PROCESSO_ATENDIMENTO_idx` (`ID_ATENDIMENTO` ASC),
+  CONSTRAINT `PROCESSO_ATENDIMENTO_FK`
+    FOREIGN KEY (`ID_ATENDIMENTO`)
+    REFERENCES `Aires_Solucoes`.`Atendimento.Atendimento` (`ID_ATENDIMENTO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Atendimento.InfoAtendimento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Atendimento.InfoAtendimento` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Atendimento.InfoAtendimento` (
+  `ID_INFO_ATENDIMENTO` INT NOT NULL AUTO_INCREMENT,
+  `ID_OPERADORA` INT NOT NULL,
+  `CNPJ_EMPRESA` VARCHAR(18) NOT NULL,
+  `RAZAO_SOCIAL` VARCHAR(50) NOT NULL,
+  `NOME_COMPLETO` VARCHAR(50) NULL,
+  `EMAIL` VARCHAR(100) NULL,
+  `SENHA_ATENDIMENTO` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Apenas contatos da operadora possuem esta senha',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_INFO_ATENDIMENTO`),
+  INDEX `INFO_ATENDIMENTO_OPERADORA_idx` (`ID_OPERADORA` ASC),
+  INDEX `INFO_ATENDIMENTO_CNPJ_idx` (`CNPJ_EMPRESA` ASC),
+  CONSTRAINT `INFO_ATENDIMENTO_OPERADORA_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `INFO_ATENDIMENTO_CNPJ_FK`
+    FOREIGN KEY (`CNPJ_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`CNPJ`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = '		';
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`OS.TipoServico`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`OS.TipoServico` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`OS.TipoServico` (
+  `ID_TIPO_SERVICO` INT NOT NULL AUTO_INCREMENT,
+  `NOME_SERVICO` VARCHAR(30) NULL COMMENT '--Contestação ( muda de acordo com o login)\n--Cancelamento\n--Suspensão\n--Alteração de serviços\n--Troca de Aparelho - solicitação / cancelamento\n--Troca de Chip – solicitação / cancelamento\n--Transferência de linhas\n--Cotação\n--Liberação de créditos / Linh /* comment truncated */ /*as
+--Outros – campo de inserção (obs)*/',
+  `DESCRITIVO` VARCHAR(1000) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_SERVICO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`OS.OrdemServico`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`OS.OrdemServico` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`OS.OrdemServico` (
+  `ID_OS` INT NOT NULL AUTO_INCREMENT,
+  `ID_OPERADORA` INT NOT NULL,
+  `ID_EMPRESA` INT NOT NULL,
+  `CPF` VARCHAR(15) NOT NULL,
+  `NOME_COMPLETO` VARCHAR(50) NOT NULL,
+  `TIPO_SERVICO` INT NOT NULL,
+  `DESCRITIVO` VARCHAR(500) NULL,
+  `DATA_ABERTURA_OS` VARCHAR(20) NULL,
+  `STATUS` INT NULL COMMENT '--ABERTA\n--PENDENTE\n--CONCLUIDA',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_OS`),
+  INDEX `OS_TIPO_SERVICO_idx` (`TIPO_SERVICO` ASC),
+  INDEX `OS_ID_EMPRESA_idx` (`ID_EMPRESA` ASC),
+  INDEX `OD_ID_OPERADORA_idx` (`ID_OPERADORA` ASC),
+  CONSTRAINT `OS_ID_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `OS_TIPO_SERVICO_FK`
+    FOREIGN KEY (`TIPO_SERVICO`)
+    REFERENCES `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `OD_ID_OPERADORA_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Cotacao.Cotacao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Cotacao.Cotacao` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Cotacao.Cotacao` (
+  `ID_COTACAO` INT NOT NULL AUTO_INCREMENT,
+  `ID_EMPRESA` INT NOT NULL,
+  `DESCRITIVO` VARCHAR(2000) NOT NULL,
+  `DATA_ABERTURA_COTACAO` VARCHAR(20) NOT NULL COMMENT 'DATA GERADA AUTOMATICAMENTE PELO SISTEMA',
+  `STATUS_COTACAO` INT NULL COMMENT '--1) PENDENTE\n--2) CONCLUIDA',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_COTACAO`),
+  INDEX `COTACAO_ID_EMPRESA_idx` (`ID_EMPRESA` ASC),
+  CONSTRAINT `COTACAO_ID_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Cotacao.TipoCotacao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Cotacao.TipoCotacao` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Cotacao.TipoCotacao` (
+  `ID_TIPO_COTACAO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRITIVO` VARCHAR(30) NOT NULL COMMENT '--FIXO\n--MOVEL\n--DADOS\n--LINK INTERNET',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_COTACAO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`GestorEmpresarial.Infos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`GestorEmpresarial.Infos` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`GestorEmpresarial.Infos` (
+  `ID_GESTOR_EMPRESARIAL` INT NOT NULL AUTO_INCREMENT,
+  `TIPO_GESTOR` INT NULL COMMENT '--ATENDIMENTO\n--GESTOR WEB\n--CONTA ONLINE',
+  `ID_EMPRESA` INT NOT NULL,
+  `ID_OPERADORA` INT NOT NULL,
+  `WEBSITE` INT NOT NULL,
+  `GestorEmpresarial.Infoscol` VARCHAR(500) NULL,
+  `LOGIN` VARCHAR(30) NULL,
+  `SENHA_ATENDIMENTO` VARCHAR(30) NULL,
+  `CPF` VARCHAR(15) NULL,
+  `NOME_COMPLETO` VARCHAR(50) NULL,
+  `DATA_NASCIMENTO` VARCHAR(20) NULL,
+  `EMAIL` VARCHAR(100) NULL,
+  `TELEFONE` VARCHAR(15) NULL,
+  `CENTRO_CUSTO` VARCHAR(50) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_GESTOR_EMPRESARIAL`),
+  INDEX `GESTOR_OPERADORA_idx` (`ID_OPERADORA` ASC),
+  INDEX `GESTOR_ID_EMPRESA_idx` (`ID_EMPRESA` ASC),
+  CONSTRAINT `GESTOR_ID_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `GESTOR_OPERADORA_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Book.AuxBookModulo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Book.AuxBookModulo` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Book.AuxBookModulo` (
+  `ID_AUX_PLANO_MODULO` INT NOT NULL AUTO_INCREMENT,
+  `ID_BOOK` INT NULL,
+  `ID_MODULO` INT NULL,
+  `VALOR_CAMPOS` VARCHAR(500) NULL COMMENT 'VALORES DE TODOS OS CAMPOS COM SEPARADORES.',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_AUX_PLANO_MODULO`),
+  INDEX `AUX_MODULO_idx` (`ID_MODULO` ASC),
+  INDEX `AUX_BOOK_MODULO_idx` (`ID_BOOK` ASC),
+  CONSTRAINT `AUX_BOOK_MODULO`
+    FOREIGN KEY (`ID_BOOK`)
+    REFERENCES `Aires_Solucoes`.`Book.Book` (`ID_BOOK`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `AUX_MODULO`
+    FOREIGN KEY (`ID_MODULO`)
+    REFERENCES `Aires_Solucoes`.`Book.ModuloBook` (`ID_MODULO_BOOK`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Book.TipoTarifa`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Book.TipoTarifa` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Book.TipoTarifa` (
+  `ID_TIPO_TARIFA` INT NOT NULL,
+  `DESCRITIVO` VARCHAR(30) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_TARIFA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Book.SubtipoTarifa`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Book.SubtipoTarifa` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Book.SubtipoTarifa` (
+  `ID_SUBTIPO_TARIFA` INT NOT NULL,
+  `DESCRITIVO` VARCHAR(30) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_SUBTIPO_TARIFA`))
+ENGINE = InnoDB
+COMMENT = '	';
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Book.PlataformaLD`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Book.PlataformaLD` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Book.PlataformaLD` (
+  `ID_PLATAFORMA_LD` INT NOT NULL AUTO_INCREMENT,
+  `ID_OPERADORA` INT NOT NULL,
+  `ID_DEGRAU_LD` INT NOT NULL COMMENT '--REFERÊNCIA AOS PLANOS PREVIAMENTE CADASTRADOS EM CONTRATO.',
+  `IS_PLANO` INT NULL COMMENT '--DEFINE SE O DEGRAU SE REFERE A PLANO OU MÓDULO\n1 => PLANO\n0 => MÓDULO',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PLATAFORMA_LD`),
+  INDEX `ID_OPERADORA_idx` (`ID_OPERADORA` ASC),
+  CONSTRAINT `ID_OPERADORA_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Book.Tarifa`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Book.Tarifa` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Book.Tarifa` (
+  `ID_TARIFA` INT NOT NULL AUTO_INCREMENT,
+  `ID_PLATAFORMA_LD` INT NOT NULL COMMENT '--OPÇÕES\n-VC1 MÓVEL\n-VC1 FIXO\n-VC1 INTRA-REDE\n\n-VC2 MÓVEL TARIFA REDUZIDA\n-VC2 MÓVEL TARIFA NORMAL\n-VC2 FIXO TARIFA REDUZIDA\n-VC2 FIXO TARIFA NORMAL\n-VC2 INTRA-REDE TARIFA REDUZIDA\n-VC2 INTRA-REDE TARIFA NORMAL\n\n-VC3 MÓVEL TARIFA REDUZIDA\n-VC3 MÓVEL TARIF /* comment truncated */ /*A NORMAL
+-VC3 FIXO TARIFA REDUZIDA
+-VC3 FIXO TARIFA NORMAL
+-VC3 INTRA-REDE TARIFA REDUZIDA
+-VC3 INTRA-REDE TARIFA NORMAL
+
+-DSL1 TARIFA REDUZIDA
+-DSL1 TARIFA NORMAL
+
+-DSL2 TARIFA REDUZIDA
+-DSL2 TARIFA NORMAL
+
+-AD TARIFA REDUZIDAL
+-AD TARIFA NORMAL*/',
+  `ID_TIPO_TARIFA` INT NULL,
+  `ID_SUBTIPO_TARIFA` INT NULL,
+  `VOLUME` VARCHAR(20) NULL,
+  `TIPO_COMPARTILHAMENTO` VARCHAR(20) NULL,
+  `TARIFA_UNICA` VARCHAR(15) NULL,
+  `TARIFA_EXCEDENTE` VARCHAR(15) NULL,
+  `TARIFA_AC` VARCHAR(50) NULL,
+  `TARIFA_AP` VARCHAR(50) NULL,
+  `TARIFA_AM` VARCHAR(50) NULL,
+  `TARIFA_BA` VARCHAR(50) NULL,
+  `TARIFA_AL` VARCHAR(50) NULL,
+  `TARIFA_CE` VARCHAR(50) NULL,
+  `TARIFA_DF` VARCHAR(50) NULL,
+  `TARIFA_ES` VARCHAR(50) NULL,
+  `TARIFA_GO` VARCHAR(50) NULL,
+  `TARIFA_MA` VARCHAR(50) NULL,
+  `TARIFA_MS` VARCHAR(50) NULL,
+  `TARIFA_MT` VARCHAR(50) NULL,
+  `TARIFA_MG` VARCHAR(50) NULL,
+  `TARIFA_PA` VARCHAR(50) NULL,
+  `TARIFA_PB` VARCHAR(50) NULL,
+  `TARIFA_PR` VARCHAR(50) NULL,
+  `TARIFA_PE` VARCHAR(50) NULL,
+  `TARIFA_PI` VARCHAR(50) NULL,
+  `TARIFA_RJ` VARCHAR(50) NULL,
+  `TARIFA_RN` VARCHAR(50) NULL,
+  `TARIFA_RS` VARCHAR(50) NULL,
+  `TARIFA_RO` VARCHAR(50) NULL,
+  `TARIFA_RR` VARCHAR(50) NULL,
+  `TARIFA_SC` VARCHAR(50) NULL,
+  `TARIFA_SP` VARCHAR(50) NULL,
+  `TARIFA_SE` VARCHAR(50) NULL,
+  `TARIFA_TO` VARCHAR(50) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TARIFA`),
+  INDEX `TIPO_TARIFA_idx` (`ID_TIPO_TARIFA` ASC),
+  INDEX `PLATAFORMA_LD_idx` (`ID_PLATAFORMA_LD` ASC),
+  INDEX `SUBTIPO_TARIFA_idx` (`ID_SUBTIPO_TARIFA` ASC),
+  CONSTRAINT `TIPO_TARIFA_FK`
+    FOREIGN KEY (`ID_TIPO_TARIFA`)
+    REFERENCES `Aires_Solucoes`.`Book.TipoTarifa` (`ID_TIPO_TARIFA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `SUBTIPO_TARIFA_FK`
+    FOREIGN KEY (`ID_SUBTIPO_TARIFA`)
+    REFERENCES `Aires_Solucoes`.`Book.SubtipoTarifa` (`ID_SUBTIPO_TARIFA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `PLATAFORMA_LD_FK`
+    FOREIGN KEY (`ID_PLATAFORMA_LD`)
+    REFERENCES `Aires_Solucoes`.`Book.PlataformaLD` (`ID_PLATAFORMA_LD`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Aires.AuxAnexoContrato`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Aires.AuxAnexoContrato` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Aires.AuxAnexoContrato` (
+  `ID_ANEXO_CONTRATO` INT NOT NULL AUTO_INCREMENT,
+  `ID_AUX_CONTRATO` INT NOT NULL,
+  `ANEXO` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_ANEXO_CONTRATO`),
+  INDEX `ID_ANEXO_AUX_CONTRATO_AIRES_idx` (`ID_AUX_CONTRATO` ASC),
+  CONSTRAINT `ID_ANEXO_AUX_CONTRATO_AIRES_FK`
+    FOREIGN KEY (`ID_AUX_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Aires.AuxContrato` (`ID_AUX_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Info.Estados`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Info.Estados` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Info.Estados` (
+  `ID_ESTADO` INT NOT NULL AUTO_INCREMENT,
+  `UF` VARCHAR(2) NOT NULL,
+  `NOME` VARCHAR(50) NULL,
+  `LISTA_DDD` VARCHAR(100) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_ESTADO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Patrimonio.LoteAparelhoAnexo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Patrimonio.LoteAparelhoAnexo` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Patrimonio.LoteAparelhoAnexo` (
+  `ID_ANEXO_LOTE_APARELHO` INT NOT NULL AUTO_INCREMENT,
+  `ID_LOTE_APARELHO` INT NOT NULL,
+  `ANEXO` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_ANEXO_LOTE_APARELHO`),
+  INDEX `ID_ANEXO_LOTE_APARELHO_idx` (`ID_LOTE_APARELHO` ASC),
+  CONSTRAINT `ID_ANEXO_LOTE_APARELHO_FK`
+    FOREIGN KEY (`ID_LOTE_APARELHO`)
+    REFERENCES `Aires_Solucoes`.`Patrimonio.LoteAparelho` (`ID_LOTE_PATRIMONIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Patrimonio.LoteChipAnexo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Patrimonio.LoteChipAnexo` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Patrimonio.LoteChipAnexo` (
+  `ID_ANEXO_LOTE_CHIP` INT NOT NULL AUTO_INCREMENT,
+  `ID_LOTE_CHIP` INT NOT NULL,
+  `ANEXO` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_ANEXO_LOTE_CHIP`),
+  INDEX `ID_ANEXO_LOTE_CHIP_idx` (`ID_LOTE_CHIP` ASC),
+  CONSTRAINT `ID_ANEXO_LOTE_CHIP`
+    FOREIGN KEY (`ID_LOTE_CHIP`)
+    REFERENCES `Aires_Solucoes`.`Patrimonio.LoteChip` (`ID_LOTE_CHIP`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.ContratoQtdLinha`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.ContratoQtdLinha` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.ContratoQtdLinha` (
+  `ID_CONTRATO_QTD_LINHA` INT NOT NULL AUTO_INCREMENT,
+  `ID_CONTRATO_OPERADORA` INT NOT NULL COMMENT 'OPÇÕES\n-NOVO\n-INCREMENTO\n-RENOVAÇÃO\n-MIGRAÇÃO DE PLANO\n-TRANSFERÊNCIA DE TITULARIDADE',
+  `ID_PLANO_LINHA` INT NOT NULL,
+  `DDD` INT NOT NULL,
+  `QTD_LINHA` INT NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_CONTRATO_QTD_LINHA`),
+  INDEX `ID_CONTRATO_QTD_LINHA_idx` (`ID_CONTRATO_OPERADORA` ASC),
+  INDEX `ID_PLANO_LINHA_FK_idx` (`ID_PLANO_LINHA` ASC),
+  CONSTRAINT `ID_CONTRATO_QTD_LINHA_FK`
+    FOREIGN KEY (`ID_CONTRATO_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Contrato` (`ID_CONTRATO_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PLANO_LINHA_FK`
+    FOREIGN KEY (`ID_PLANO_LINHA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.PlanoContrato` (`ID_PLANO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Book.ModuloBookCampos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Book.ModuloBookCampos` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Book.ModuloBookCampos` (
+  `ID_MODULO_BOOK_CAMPO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRITIVO` VARCHAR(100) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_MODULO_BOOK_CAMPO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.Pec`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.Pec` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.Pec` (
+  `ID_PEC` INT NOT NULL AUTO_INCREMENT,
+  `N_CONTA` VARCHAR(30) NOT NULL,
+  `CENTRO_CUSTO` VARCHAR(30) NULL,
+  `ID_EMPRESA` INT NOT NULL,
+  `ID_OPERADORA` INT NOT NULL,
+  `MES_REFERENCIA` VARCHAR(10) NOT NULL,
+  `DATA_VENCIMENTO` VARCHAR(20) NOT NULL,
+  `PERIODO` VARCHAR(30) NULL,
+  `ANEXO` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PEC`),
+  INDEX `PEC_EMPRESA_idx` (`ID_EMPRESA` ASC),
+  INDEX `PEC_OPERADORA_idx` (`ID_OPERADORA` ASC),
+  CONSTRAINT `PEC_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `PEC_OPERADORA_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.Servicos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.Servicos` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.Servicos` (
+  `ID_PEC_SERVICO` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `DESCRICAO` VARCHAR(100) NOT NULL,
+  `TIPO` VARCHAR(20) NULL COMMENT '--INDIVIDUAL/COMPARTILHADO',
+  `QUANTIDADE` VARCHAR(20) NULL,
+  `IS_CONTESTADO` INT NULL,
+  `N_DIAS` VARCHAR(5) NULL,
+  `DURACAO` VARCHAR(20) NULL,
+  `VOLUME` VARCHAR(20) NULL,
+  `PERIODO` VARCHAR(20) NULL,
+  `ICMS` VARCHAR(10) NULL,
+  `PIS_COFINS` VARCHAR(10) NULL,
+  `VALOR` VARCHAR(20) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PEC_SERVICO`),
+  INDEX `ID_PEC_SERVICO_idx` (`ID_PEC` ASC),
+  CONSTRAINT `ID_SERVICO_PEC_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.Linhas`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.Linhas` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.Linhas` (
+  `ID_PEC_LINHA` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `LINHA` VARCHAR(30) NULL,
+  `ID_RADIO` VARCHAR(30) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  INDEX `ID_PEC_LINHA_idx` (`ID_PEC` ASC),
+  PRIMARY KEY (`ID_PEC_LINHA`),
+  CONSTRAINT `ID_PEC_LINHA`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.ServicoLinha`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.ServicoLinha` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.ServicoLinha` (
+  `ID_PEC_SERVICO_LINHA` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `ID_SERVICO` INT NOT NULL,
+  `ID_LINHA` INT NOT NULL,
+  `MINUTOS` VARCHAR(20) NULL DEFAULT NULL,
+  `FRANQUIA_REAIS` VARCHAR(20) NULL DEFAULT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  INDEX `ID_PEC_SERVICO_LINHA_idx` (`ID_PEC` ASC),
+  INDEX `ID_PEC_SERVICO_idx` (`ID_SERVICO` ASC),
+  PRIMARY KEY (`ID_PEC_SERVICO_LINHA`),
+  CONSTRAINT `ID_PEC_SERVICO_LINHA_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PEC_SERVICO_FK`
+    FOREIGN KEY (`ID_SERVICO`)
+    REFERENCES `Aires_Solucoes`.`PEC.Servicos` (`ID_PEC_SERVICO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.ServicoCobrado`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.ServicoCobrado` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.ServicoCobrado` (
+  `ID_PEC_SERVICO_COBRADO` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC_SERVICO_LINHA` INT NOT NULL,
+  `PERIODO` VARCHAR(30) NULL COMMENT '--TODOS',
+  `DURACAO` VARCHAR(20) NULL,
+  `VOLUME` VARCHAR(20) NULL,
+  `ICMS` VARCHAR(10) NULL,
+  `PIS_COFINS` VARCHAR(10) NULL,
+  `DESCRITIVO` VARCHAR(50) NULL,
+  `VALOR` VARCHAR(20) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PEC_SERVICO_COBRADO`),
+  INDEX `ID_PEC_SERVICO_COBRADO_LINHA_idx` (`ID_PEC_SERVICO_LINHA` ASC),
+  CONSTRAINT `ID_PEC_SERVICO_COBRADO_LINHA_FK`
+    FOREIGN KEY (`ID_PEC_SERVICO_LINHA`)
+    REFERENCES `Aires_Solucoes`.`PEC.ServicoLinha` (`ID_PEC_SERVICO_LINHA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.DetTipoUtilizacao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.DetTipoUtilizacao` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.DetTipoUtilizacao` (
+  `ID_PEC_TIPO_UTILIZACAO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(100) NOT NULL,
+  `REGEX` VARCHAR(200) NULL,
+  `DELIMITADOR` VARCHAR(100) NULL,
+  `DELIMITADOR2` VARCHAR(100) NULL,
+  `DELIMITADOR3` VARCHAR(100) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PEC_TIPO_UTILIZACAO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.DetTipoLigacao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.DetTipoLigacao` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.DetTipoLigacao` (
+  `ID_PEC_TIPO_LIGACAO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(100) NOT NULL,
+  `CSP` VARCHAR(5) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PEC_TIPO_LIGACAO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.DetTipoChamada`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.DetTipoChamada` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.DetTipoChamada` (
+  `ID_PEC_TIPO_CHAMADA` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(100) NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PEC_TIPO_CHAMADA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.TipoDet`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.TipoDet` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.TipoDet` (
+  `ID_TIPO_DET` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(50) NULL COMMENT '--VOZ\n--DADOS\n--SMS',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_DET`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.Det`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.Det` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.Det` (
+  `ID_PEC_DET` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `ID_TIPO_DET` INT NOT NULL,
+  `ID_LINHA` INT NOT NULL,
+  `ID_TIPO_UTILIZACAO` INT NOT NULL,
+  `ID_TIPO_LIGACAO` INT NOT NULL,
+  `ID_TIPO_CHAMADA` INT NOT NULL,
+  `DESCRITIVO` VARCHAR(50) NULL,
+  `INCLUSO` VARCHAR(20) NULL,
+  `UTILIZADO` VARCHAR(20) NULL,
+  `EXCEDENTE` VARCHAR(20) NULL,
+  `CSP` VARCHAR(4) NULL,
+  `DATA` VARCHAR(20) NULL,
+  `HORA` VARCHAR(10) NULL,
+  `ORIGEM` VARCHAR(50) NULL,
+  `DESTINO` VARCHAR(50) NULL,
+  `ORIGEM_DESTINO` VARCHAR(100) NULL,
+  `PAIS_OPERADORA` VARCHAR(100) NULL,
+  `SERVICO` VARCHAR(50) NULL,
+  `N_CHAMADO` VARCHAR(20) NULL,
+  `TARIFA` VARCHAR(10) NULL,
+  `DURACAO` VARCHAR(10) NULL,
+  `TARIFADO` VARCHAR(20) NULL,
+  `TIPO` VARCHAR(30) NULL,
+  `QUANTIDADE` VARCHAR(30) NULL,
+  `VALOR` VARCHAR(20) NULL,
+  `VALOR_COBRADO` VARCHAR(20) NULL,
+  `INTERCONEXAO` VARCHAR(20) NULL,
+  `TIPO_INFO_DET` INT NULL COMMENT 'DEFINE THE TYPE OF INFORMATION\n--1 => SUBTOTAL\n--2 => DETALHAMENTO',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PEC_DET`),
+  INDEX `ID_PEC_DET_VOZ_LINHA_FK_idx` (`ID_LINHA` ASC),
+  INDEX `ID_PEC_DET_VOZ_FK_idx` (`ID_PEC` ASC),
+  INDEX `ID_PEC_TIPO_UTILIZACAO_FK_idx` (`ID_TIPO_UTILIZACAO` ASC),
+  INDEX `ID_PEC_TIPO_LIGACAO_FK_idx` (`ID_TIPO_LIGACAO` ASC),
+  INDEX `ID_PEC_TIPO_CHAMADA_FK_idx` (`ID_TIPO_CHAMADA` ASC),
+  INDEX `ID_PEC_TIPO_DET_FK_idx` (`ID_TIPO_DET` ASC),
+  CONSTRAINT `ID_PEC_DET_VOZ_LINHA_FK`
+    FOREIGN KEY (`ID_LINHA`)
+    REFERENCES `Aires_Solucoes`.`PEC.Linhas` (`ID_PEC_LINHA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PEC_DET_VOZ_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PEC_TIPO_UTILIZACAO_FK`
+    FOREIGN KEY (`ID_TIPO_UTILIZACAO`)
+    REFERENCES `Aires_Solucoes`.`PEC.DetTipoUtilizacao` (`ID_PEC_TIPO_UTILIZACAO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PEC_TIPO_LIGACAO_FK`
+    FOREIGN KEY (`ID_TIPO_LIGACAO`)
+    REFERENCES `Aires_Solucoes`.`PEC.DetTipoLigacao` (`ID_PEC_TIPO_LIGACAO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PEC_TIPO_CHAMADA_FK`
+    FOREIGN KEY (`ID_TIPO_CHAMADA`)
+    REFERENCES `Aires_Solucoes`.`PEC.DetTipoChamada` (`ID_PEC_TIPO_CHAMADA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PEC_TIPO_DET_FK`
+    FOREIGN KEY (`ID_TIPO_DET`)
+    REFERENCES `Aires_Solucoes`.`PEC.TipoDet` (`ID_TIPO_DET`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.Log`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.Log` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.Log` (
+  `ID_LOG_PEC` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `DESCRICAO` VARCHAR(50) NULL COMMENT '--VOZ\n--DADOS\n--SMS',
+  `TEMPO_PROCESSAMENTO` VARCHAR(20) NULL,
+  `DATA_HORA` VARCHAR(30) NULL,
+  `STATUS` VARCHAR(45) NULL COMMENT 'STATUS\n--SUCCESS\n--ERROR\n--INFO',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  INDEX `ID_PEC_LOG_FK_idx` (`ID_PEC` ASC),
+  PRIMARY KEY (`ID_LOG_PEC`),
+  CONSTRAINT `ID_PEC_LOG_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.TipoLancamento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.TipoLancamento` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.TipoLancamento` (
+  `ID_TIPO_LANCAMENTO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(50) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_LANCAMENTO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.OutrosLancamentos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.OutrosLancamentos` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.OutrosLancamentos` (
+  `ID_PEC_OUTRO_LANCAMENTO` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `DESCRICAO` VARCHAR(100) NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_PEC_OUTRO_LANCAMENTO`),
+  INDEX `ID_PEC_SERVICO_idx` (`ID_PEC` ASC),
+  CONSTRAINT `ID_OUTRO_LANCAMENTO_PEC_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.OutroLancamentoLinha`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.OutroLancamentoLinha` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.OutroLancamentoLinha` (
+  `ID_PEC_OUTRO_LANCAMENTO_LINHA` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `ID_OUTRO_LANCAMENTO` INT NOT NULL,
+  `ID_LINHA` INT NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  INDEX `ID_PEC_SERVICO_LINHA_idx` (`ID_PEC` ASC),
+  PRIMARY KEY (`ID_PEC_OUTRO_LANCAMENTO_LINHA`),
+  INDEX `ID_PEC_OUTRO_LANCAMENTO_FK_idx` (`ID_OUTRO_LANCAMENTO` ASC),
+  CONSTRAINT `ID_PEC_OUTRO_LANCAMENTO_LINHA_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PEC_OUTRO_LANCAMENTO_FK`
+    FOREIGN KEY (`ID_OUTRO_LANCAMENTO`)
+    REFERENCES `Aires_Solucoes`.`PEC.OutrosLancamentos` (`ID_PEC_OUTRO_LANCAMENTO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.OutrosLancamentosDet`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.OutrosLancamentosDet` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.OutrosLancamentosDet` (
+  `ID_OUTROS_LANCAMENTOS_DET` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `ID_LANCAMENTO` INT NOT NULL,
+  `ID_TIPO_LANCAMENTO` INT NOT NULL,
+  `ID_LINHA` INT NULL,
+  `DESCRITIVO` VARCHAR(50) NULL,
+  `DURACAO` VARCHAR(20) NULL,
+  `VOLUME` VARCHAR(20) NULL,
+  `ICMS` VARCHAR(10) NULL,
+  `PIS_COFINS` VARCHAR(10) NULL,
+  `PERIODO` VARCHAR(20) NULL,
+  `TIPO` VARCHAR(30) NULL,
+  `DATA_PAGAMENTO` VARCHAR(20) NULL,
+  `DATA_CREDITO` VARCHAR(20) NULL,
+  `UTILIZADO` VARCHAR(20) NULL,
+  `DADOS` VARCHAR(20) NULL,
+  `SMS` VARCHAR(20) NULL,
+  `DATA` VARCHAR(20) NULL,
+  `N_SOLICITACAO` VARCHAR(20) NULL,
+  `IMEI_APARELHO` VARCHAR(5000) NULL,
+  `IMEI_SIM` VARCHAR(5000) NULL,
+  `LOCAL` VARCHAR(30) NULL,
+  `NOTA_FISCAL` VARCHAR(20) NULL,
+  `PARCELA` VARCHAR(10) NULL,
+  `VALOR_DESCONTO` VARCHAR(20) NULL,
+  `VALOR_TOTAL` VARCHAR(20) NULL,
+  `VALOR_PARCELA` VARCHAR(20) NULL,
+  `VALOR` VARCHAR(20) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_OUTROS_LANCAMENTOS_DET`),
+  INDEX `ID_PEC_DET_VOZ_FK_idx` (`ID_PEC` ASC),
+  INDEX `ID_PEC_TIPO_DET_OUTRO_LANCAMENTO_FK_idx` (`ID_TIPO_LANCAMENTO` ASC),
+  INDEX `ID_OUTRO_LANCAMENTO_DET_LANCAMENTO_FK_idx` (`ID_LANCAMENTO` ASC),
+  CONSTRAINT `ID_PEC_DET_OUTRO_LANCAMENTO_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PEC_TIPO_DET_OUTRO_LANCAMENTO_FK`
+    FOREIGN KEY (`ID_TIPO_LANCAMENTO`)
+    REFERENCES `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_OUTRO_LANCAMENTO_DET_LANCAMENTO_FK`
+    FOREIGN KEY (`ID_LANCAMENTO`)
+    REFERENCES `Aires_Solucoes`.`PEC.OutrosLancamentos` (`ID_PEC_OUTRO_LANCAMENTO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.TipoEquipamentoNegociacao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.TipoEquipamentoNegociacao` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.TipoEquipamentoNegociacao` (
+  `ID_TIPO_EQUIP_NEGOCIACAO` INT NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` VARCHAR(50) NULL COMMENT '--VOZ\n--DADOS\n--SMS',
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_TIPO_EQUIP_NEGOCIACAO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.ContratoEquipamentos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.ContratoEquipamentos` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.ContratoEquipamentos` (
+  `ID_CONTRATO_EQUIPAMENTO` INT NOT NULL AUTO_INCREMENT,
+  `ID_CONTRATO_OPERADORA` INT NOT NULL,
+  `ID_TIPO_NEGOCIACAO` INT NOT NULL COMMENT 'OPÇÕES\n-Locação\n-Venda\n-Comodato',
+  `QTD_APARELHOS` INT NOT NULL,
+  `QTD_CHIPS` INT NOT NULL,
+  `N_PARCELAS` INT NOT NULL,
+  `VALOR_PARCELA_EQUIP` VARCHAR(20) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_CONTRATO_EQUIPAMENTO`),
+  INDEX `ID_CONTRATO_EQUIPAMENTO_FK_idx` (`ID_CONTRATO_OPERADORA` ASC),
+  INDEX `ID_TIPO_EQUIPAMENTO_NEGOCIACAO_FK_idx` (`ID_TIPO_NEGOCIACAO` ASC),
+  CONSTRAINT `ID_CONTRATO_EQUIPAMENTO_FK`
+    FOREIGN KEY (`ID_CONTRATO_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Contrato` (`ID_CONTRATO_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_TIPO_EQUIPAMENTO_NEGOCIACAO_FK`
+    FOREIGN KEY (`ID_TIPO_NEGOCIACAO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.TipoEquipamentoNegociacao` (`ID_TIPO_EQUIP_NEGOCIACAO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.ContratoAnexo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.ContratoAnexo` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.ContratoAnexo` (
+  `ID_ANEXO_CONTRATO` INT NOT NULL AUTO_INCREMENT,
+  `ID_CONTRATO` INT NOT NULL,
+  `ANEXO` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_ANEXO_CONTRATO`),
+  INDEX `ID_ANEXO_CONTRATO_OPERADORA_FK_idx` (`ID_CONTRATO` ASC),
+  CONSTRAINT `ID_ANEXO_CONTRATO_OPERADORA_FK`
+    FOREIGN KEY (`ID_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Contrato` (`ID_CONTRATO_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Contestacao.Equivalencia`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Contestacao.Equivalencia` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Contestacao.Equivalencia` (
+  `ID_EQUIVALENCIA` INT NOT NULL AUTO_INCREMENT,
+  `ID_OPERADORA` INT NOT NULL,
+  `DESC_SERVICO` VARCHAR(100) NULL,
+  `ID_PLANO_CONTRATO` INT NULL,
+  `ID_MODULO_CONTRATO` INT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_EQUIVALENCIA`),
+  INDEX `ID_EQUIVALENCIA_CONTRATO_PLANO_FK_idx` (`ID_PLANO_CONTRATO` ASC),
+  INDEX `ID_EQUIVALENCIA_CONTRATO_MODULO_FK_idx` (`ID_MODULO_CONTRATO` ASC),
+  INDEX `ID_OPERADORA_TBLEQUIV_FK_idx` (`ID_OPERADORA` ASC),
+  CONSTRAINT `ID_EQUIVALENCIA_CONTRATO_PLANO_FK`
+    FOREIGN KEY (`ID_PLANO_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.PlanoContrato` (`ID_PLANO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_EQUIVALENCIA_CONTRATO_MODULO_FK`
+    FOREIGN KEY (`ID_MODULO_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.ModuloContrato` (`ID_MODULO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_OPERADORA_TBLEQUIV_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Operadora.AssocLinha`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Operadora.AssocLinha` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Operadora.AssocLinha` (
+  `ID_ASSOC` INT NOT NULL AUTO_INCREMENT,
+  `N_CONTA` VARCHAR(20) NOT NULL,
+  `LINHA` VARCHAR(20) NOT NULL,
+  `ID_PLANO_CONTRATO` INT NULL,
+  `ID_MODULO_CONTRATO` INT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_ASSOC`),
+  INDEX `ID_EQUIVALENCIA_CONTRATO_PLANO_FK_idx` (`ID_PLANO_CONTRATO` ASC),
+  INDEX `ID_EQUIVALENCIA_CONTRATO_MODULO_FK_idx` (`ID_MODULO_CONTRATO` ASC),
+  CONSTRAINT `ID_ASSOCLINHA_CONTRATO_PLANO_FK`
+    FOREIGN KEY (`ID_PLANO_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.PlanoContrato` (`ID_PLANO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_ASSOCLINHA_CONTRATO_MODULO_FK`
+    FOREIGN KEY (`ID_MODULO_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.ModuloContrato` (`ID_MODULO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.LinhasContestacao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.LinhasContestacao` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.LinhasContestacao` (
+  `ID_LINHA_CONTESTACAO` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `ID_LINHA` INT NOT NULL,
+  `ID_PLANO_CONTRATO` INT NULL,
+  `ID_MODULO_CONTRATO` INT NULL,
+  `IS_CONTESTACAO` INT NOT NULL COMMENT '--ESSE CAMPO INDICA SE É UMA CONTESTAÇÃO/ADEQUAÇÃO\n0 => NÃO CONTESTAÇÃO\n1 => CONTESTAÇÃO\n2 => ADEQUAÇÃO',
+  `JUSTIFICATIVA` VARCHAR(500) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_LINHA_CONTESTACAO`),
+  INDEX `ID_PEC_LINHA_CONTESTACAO_idx` (`ID_PEC` ASC),
+  INDEX `ID_LINHA_CONTESTACAO_FK_idx` (`ID_LINHA` ASC),
+  INDEX `ID_PLANO_CONTRATO_CONTESTACAO_FK_idx` (`ID_PLANO_CONTRATO` ASC),
+  INDEX `ID_MODULO_CONTRATO_CONTESTACAO_idx` (`ID_MODULO_CONTRATO` ASC),
+  CONSTRAINT `ID_PEC_LINHA_CONTESTACAO_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_LINHA_CONTESTACAO_FK`
+    FOREIGN KEY (`ID_LINHA`)
+    REFERENCES `Aires_Solucoes`.`PEC.Linhas` (`ID_PEC_LINHA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PLANO_CONTRATO_CONTESTACAO_FK`
+    FOREIGN KEY (`ID_PLANO_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.PlanoContrato` (`ID_PLANO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_MODULO_CONTRATO_CONTESTACAO`
+    FOREIGN KEY (`ID_MODULO_CONTRATO`)
+    REFERENCES `Aires_Solucoes`.`Operadora.ModuloContrato` (`ID_MODULO_CONTRATO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.OutrosLancamentosContestacao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.OutrosLancamentosContestacao` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.OutrosLancamentosContestacao` (
+  `ID_OUTROS_LANCAMENTOS_CONTESTACAO` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `ID_LINHA` INT NOT NULL,
+  `ID_OUTROS_LANCAMENTOS_DET` INT NOT NULL,
+  `IS_CONTESTACAO` INT NOT NULL COMMENT '--ESSE CAMPO INDICA SE É UMA CONTESTAÇÃO/ADEQUAÇÃO\n0 => NÃO CONTESTAÇÃO\n1 => CONTESTAÇÃO\n2 => ADEQUAÇÃO',
+  `JUSTIFICATIVA` VARCHAR(500) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_OUTROS_LANCAMENTOS_CONTESTACAO`),
+  INDEX `ID_PEC_LINHA_CONTESTACAO_idx` (`ID_PEC` ASC),
+  INDEX `ID_LINHA_CONTESTACAO_FK_idx` (`ID_LINHA` ASC),
+  INDEX `ID_OUTRO_LANCAMENTO_CONTESTACAO_DET_FK_idx` (`ID_OUTROS_LANCAMENTOS_DET` ASC),
+  CONSTRAINT `ID_PEC_OUTRO_LANCAMENTO_CONTESTACAO_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_OUTRO_LANCAMENTO_CONTESTACAO_FK`
+    FOREIGN KEY (`ID_LINHA`)
+    REFERENCES `Aires_Solucoes`.`PEC.Linhas` (`ID_PEC_LINHA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_OUTRO_LANCAMENTO_CONTESTACAO_DET_FK`
+    FOREIGN KEY (`ID_OUTROS_LANCAMENTOS_DET`)
+    REFERENCES `Aires_Solucoes`.`PEC.OutrosLancamentosDet` (`ID_OUTROS_LANCAMENTOS_DET`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`PEC.DetContestacao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`PEC.DetContestacao` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`PEC.DetContestacao` (
+  `ID_DETALHAMENTO_CONTESTACAO` INT NOT NULL AUTO_INCREMENT,
+  `ID_PEC` INT NOT NULL,
+  `ID_LINHA` INT NOT NULL,
+  `ID_PEC_DET` INT NOT NULL,
+  `IS_CONTESTACAO` INT NOT NULL COMMENT '--ESSE CAMPO INDICA SE É UMA CONTESTAÇÃO/ADEQUAÇÃO\n0 => NÃO CONTESTAÇÃO\n1 => CONTESTAÇÃO\n2 => ADEQUAÇÃO',
+  `JUSTIFICATIVA` VARCHAR(500) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_DETALHAMENTO_CONTESTACAO`),
+  INDEX `ID_PEC_LINHA_CONTESTACAO_idx` (`ID_PEC` ASC),
+  INDEX `ID_LINHA_CONTESTACAO_FK_idx` (`ID_LINHA` ASC),
+  INDEX `ID_PEC_CONTESTACAO_DET_FK_idx` (`ID_PEC_DET` ASC),
+  CONSTRAINT `ID_PEC_DET_CONTESTACAO_FK`
+    FOREIGN KEY (`ID_PEC`)
+    REFERENCES `Aires_Solucoes`.`PEC.Pec` (`ID_PEC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_DET_CONTESTACAO_FK`
+    FOREIGN KEY (`ID_LINHA`)
+    REFERENCES `Aires_Solucoes`.`PEC.Linhas` (`ID_PEC_LINHA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_PEC_CONTESTACAO_DET_FK`
+    FOREIGN KEY (`ID_PEC_DET`)
+    REFERENCES `Aires_Solucoes`.`PEC.Det` (`ID_PEC_DET`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Cliente.EmpresaAnexo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Cliente.EmpresaAnexo` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Cliente.EmpresaAnexo` (
+  `ID_ANEXO_EMPRESA` INT NOT NULL AUTO_INCREMENT,
+  `ID_EMPRESA` INT NOT NULL,
+  `ANEXO` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_ANEXO_EMPRESA`),
+  INDEX `ID_ANEXO_EMPRESA_FK_idx` (`ID_EMPRESA` ASC),
+  CONSTRAINT `ID_ANEXO_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Cliente.AcessoOperadora`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Cliente.AcessoOperadora` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Cliente.AcessoOperadora` (
+  `ID_ACESSO` INT NOT NULL AUTO_INCREMENT,
+  `ID_EMPRESA` INT NOT NULL,
+  `ID_OPERADORA` INT NOT NULL,
+  `ID_GESTOR` INT NOT NULL,
+  `SENHA_ATENDIMENTO` VARCHAR(30) NULL,
+  `LINHA_GESTOR` VARCHAR(15) NULL,
+  `USUARIO` VARCHAR(30) NULL,
+  `USUARIO2` VARCHAR(30) NULL,
+  `SENHA2` VARCHAR(30) NULL,
+  `SENHA` VARCHAR(30) NULL,
+  `EMPRESA` VARCHAR(50) NULL,
+  `PERFIL_TIM` VARCHAR(30) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_ACESSO`),
+  INDEX `ID_GESTORSENHA_EMPRESA_FK_idx` (`ID_EMPRESA` ASC),
+  INDEX `ID_GESTORSENHA_OPERADORA_FK_idx` (`ID_OPERADORA` ASC),
+  INDEX `ID_GESTORSENHA_GESTOR_FK_idx` (`ID_GESTOR` ASC),
+  CONSTRAINT `ID_GESTORSENHA_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_GESTORSENHA_OPERADORA_FK`
+    FOREIGN KEY (`ID_OPERADORA`)
+    REFERENCES `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ID_GESTORSENHA_GESTOR_FK`
+    FOREIGN KEY (`ID_GESTOR`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Gestor` (`ID_GESTOR`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Aires.Funcionario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Aires.Funcionario` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Aires.Funcionario` (
+  `ID_FUNCIONARIO` INT NOT NULL AUTO_INCREMENT,
+  `ID_EMPRESA` INT NOT NULL,
+  `NOME_COMPLETO` VARCHAR(100) NOT NULL,
+  `CPF` VARCHAR(15) NOT NULL,
+  `RG` VARCHAR(15) NULL,
+  `RESERVISTA` VARCHAR(12) NULL,
+  `PIS` VARCHAR(15) NULL,
+  `CTPS` VARCHAR(6) NULL,
+  `SERIE_CTPS` VARCHAR(5) NULL,
+  `UF_CTPS` CHAR(2) NULL,
+  `TITULO_ELEITOR` VARCHAR(12) NULL,
+  `ZONA` VARCHAR(3) NULL,
+  `SECAO` VARCHAR(3) NULL,
+  `SEXO` VARCHAR(1) NOT NULL,
+  `DATA_NASCIMENTO` VARCHAR(10) NULL,
+  `DATA_INGRESSO` VARCHAR(10) NULL,
+  `CARGO` VARCHAR(30) NULL,
+  `ENDERECO` VARCHAR(100) NULL,
+  `NUMERO` INT NULL,
+  `CEP` VARCHAR(9) NULL,
+  `BAIRRO` VARCHAR(50) NULL,
+  `CIDADE` VARCHAR(50) NULL,
+  `UF` CHAR(2) NULL,
+  `EMAIL` VARCHAR(100) NOT NULL,
+  `TELEFONE` VARCHAR(15) NULL,
+  `CELULAR` VARCHAR(15) NULL,
+  `FOTO` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_FUNCIONARIO`),
+  UNIQUE INDEX `CPF_UNIQUE` (`CPF` ASC),
+  UNIQUE INDEX `RG_UNIQUE` (`RG` ASC),
+  INDEX `ID_FUNCIONARIO_EMPRESA_FK_idx` (`ID_EMPRESA` ASC),
+  CONSTRAINT `ID_FUNCIONARIO_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Aires.FuncionarioAnexo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Aires.FuncionarioAnexo` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Aires.FuncionarioAnexo` (
+  `ID_ANEXO_FUNCIONARIO` INT NOT NULL AUTO_INCREMENT,
+  `ID_FUNCIONARIO` INT NOT NULL,
+  `ANEXO` VARCHAR(255) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_ANEXO_FUNCIONARIO`),
+  INDEX `ID_ANEXO_FUNCIONARIO_FK_idx` (`ID_FUNCIONARIO` ASC),
+  CONSTRAINT `ID_ANEXO_FUNCIONARIO_FK`
+    FOREIGN KEY (`ID_FUNCIONARIO`)
+    REFERENCES `Aires_Solucoes`.`Aires.Funcionario` (`ID_FUNCIONARIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Aires.Usuario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Aires.Usuario` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Aires.Usuario` (
+  `ID_USUARIO` INT NOT NULL AUTO_INCREMENT,
+  `ID_EMPRESA` INT NOT NULL,
+  `ID_GESTOR` INT NULL,
+  `ID_FUNCIONARIO` INT NULL,
+  `SENHA` VARCHAR(100) NOT NULL,
+  `DATA_CRIACAO` VARCHAR(20) NOT NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_USUARIO`),
+  INDEX `ID_USUARIO_EMPRESA_FK_idx` (`ID_EMPRESA` ASC),
+  CONSTRAINT `ID_USUARIO_EMPRESA_FK`
+    FOREIGN KEY (`ID_EMPRESA`)
+    REFERENCES `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aires_Solucoes`.`Aires.UsuarioAcesso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Aires_Solucoes`.`Aires.UsuarioAcesso` ;
+
+CREATE TABLE IF NOT EXISTS `Aires_Solucoes`.`Aires.UsuarioAcesso` (
+  `ID_USUARIO_ACESSO` INT NOT NULL AUTO_INCREMENT,
+  `ID_USUARIO` INT NOT NULL,
+  `SESSION_ID` VARCHAR(200) NULL,
+  `DOMINIO` VARCHAR(20) NULL,
+  `OPERACAO` VARCHAR(20) NULL COMMENT 'LOGIN / LOGOUT',
+  `DATA_HORA` VARCHAR(20) NULL,
+  `DATA_FECHA` VARCHAR(20) NULL,
+  PRIMARY KEY (`ID_USUARIO_ACESSO`),
+  INDEX `ID_USUARIO_ACESSO_FK_idx` (`ID_USUARIO` ASC),
+  CONSTRAINT `ID_USUARIO_ACESSO_FK`
+    FOREIGN KEY (`ID_USUARIO`)
+    REFERENCES `Aires_Solucoes`.`Aires.Usuario` (`ID_USUARIO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Cliente.Empresa`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Cliente.Empresa` (`ID_CLIENTE`, `TIPO_CLIENTE`, `MODALIDADE_EMPRESA`, `CNPJ`, `INSCRICAO_ESTADUAL`, `RAZAO_SOCIAL`, `NOME_FANTASIA`, `DATA_ABERTURA`, `N_FUNCIONARIOS`, `PORTE`, `ENDERECO`, `NUMERO`, `CEP`, `BAIRRO`, `CIDADE`, `UF`, `TELEFONE_EMPRESA`, `TELEFONE`, `TELEFONE2`, `RAMAL`, `RAMAL2`, `CELULAR`, `CELULAR2`, `EMAIL`, `EMAIL2`, `NOME_CONTATO`, `NOME_CONTATO2`, `DATA_FECHA`) VALUES (1, 1, 1, '10.665.530/0001-02', 'Isento', 'Detail Data & Gestão de Custos e Serviços Ltda-Me', 'Detail Data & Gestão de Custos', '', '3', 1, 'Rua dos Buritis', 128, '04321-000', 'Jabaquara', 'São Paulo', 'SP', '(11)5183-3500', '(11)5183-3500', '(11)9809-4525', NULL, NULL, '(11)99495-6465', NULL, 'rilla.aires@airessolucoes.com.br', 'caio.oliveira@airessolucoes.com.br', 'Rilla Aires', 'Caio Oliveira', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Operadora.Operadora`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (1, 'Claro', 2, 21, '1052 ', '1052 ', '1052 ', '1052 ', '1052 ', '1052 ', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (2, 'Intelig', 9, 23, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (3, 'Oi', 5, 31, '1057', '144', '1057', '1057', '1057', '1057', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (4, 'Vivo', 1, 15, '10315', '1058', '10666', '08007726000', '10315', '10315', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (5, 'BrT Móvel', 12, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (6, 'TIM', 4, 41, '1056', '144', '1056', '1056', '1056', '1056', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (7, 'Algar', 11, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (8, 'GVT', 6, 25, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (9, 'Transit', 10, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (10, 'Nextel', 3, 00, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (11, 'Embratel', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.Operadora` (`ID_OPERADORA`, `NOME_OPERADORA`, `ORDEM`, `CSP`, `CONTATO_FIXO`, `CONTATO_MOVEL`, `CONTATO_LINK_DEDICADO`, `CONTATO_DADOS`, `CONTATO_DDR`, `CONTATO_OUVIDORIA`, `DATA_FECHA`) VALUES (12, 'Net', 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Operadora.TipoContrato`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoContrato` (`ID_TIPO_CONTRATO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (1, 'Novo', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoContrato` (`ID_TIPO_CONTRATO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (2, 'Renovação', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoContrato` (`ID_TIPO_CONTRATO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (3, 'Migração de Plano', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoContrato` (`ID_TIPO_CONTRATO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (4, 'Transferência de Titularidade', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoContrato` (`ID_TIPO_CONTRATO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (5, 'Incremento', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Operadora.ContratoTipoServico`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Operadora.ContratoTipoServico` (`ID_CONTRATO_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (1, 'Fixo', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.ContratoTipoServico` (`ID_CONTRATO_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (2, 'Móvel', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.ContratoTipoServico` (`ID_CONTRATO_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (3, 'Dados', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.ContratoTipoServico` (`ID_CONTRATO_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (4, 'DDR', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.ContratoTipoServico` (`ID_CONTRATO_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (5, 'Link Dedicado', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.ContratoTipoServico` (`ID_CONTRATO_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (6, 'Fibra Ótica', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.ContratoTipoServico` (`ID_CONTRATO_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (7, 'Link Internet', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Operadora.TipoPlano`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoPlano` (`ID_TIPO_PLANO`, `DESCRICAO`, `DATA_FECHA`) VALUES (1, 'INDIVIDUAL', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoPlano` (`ID_TIPO_PLANO`, `DESCRICAO`, `DATA_FECHA`) VALUES (2, 'COMPARTILHADO', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoPlano` (`ID_TIPO_PLANO`, `DESCRICAO`, `DATA_FECHA`) VALUES (3, 'PLANO PRONTO', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Operadora.TipoModulo`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoModulo` (`ID_TIPO_MODULO`, `DESCRICAO`, `DATA_FECHA`) VALUES (1, 'VOZ', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoModulo` (`ID_TIPO_MODULO`, `DESCRICAO`, `DATA_FECHA`) VALUES (2, 'DADOS', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoModulo` (`ID_TIPO_MODULO`, `DESCRICAO`, `DATA_FECHA`) VALUES (3, 'SMS', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoModulo` (`ID_TIPO_MODULO`, `DESCRICAO`, `DATA_FECHA`) VALUES (4, 'BÔNUS', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Patrimonio.Marca`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (1, 'Acer', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (2, 'Alcatel', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (3, 'Allview', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (4, 'Amazon', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (5, 'Amoi', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (6, 'Apple', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (7, 'Archos', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (8, 'Asus', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (9, 'AT&T', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (10, 'Benefon', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (11, 'BenQ', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (12, 'BenQ-Siemens', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (13, 'Bird', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (14, 'BlackBerry', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (15, 'BLU', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (16, 'Bosch', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (17, 'Casio', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (18, 'Cat', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (19, 'Celkon', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (20, 'Chea', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (21, 'Dell', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (22, 'Emporia', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (23, 'Ericsson', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (24, 'Eten', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (25, 'Fujitsu', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (26, 'Garmin-Asus', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (27, 'Gigabyte', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (28, 'Gionee', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (29, 'Haier', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (30, 'HP', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (31, 'HTC', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (32, 'Huawei', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (33, 'i-mate phones', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (34, 'i-mobile', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (35, 'Icemobile', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (36, 'Innostream', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (37, 'iNQ', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (38, 'Jolla', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (39, 'Karbonn', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (40, 'Kyocera', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (41, 'Lava', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (42, 'Lenovo', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (43, 'LG', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (44, 'Maxon', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (45, 'Maxwest', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (46, 'Meizu', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (47, 'Micromax', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (48, 'Microsoft', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (49, 'Mitac', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (50, 'Mitsubishi', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (51, 'Modu', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (52, 'Motorola', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (53, 'MWg', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (54, 'NEC', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (55, 'Neonode', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (56, 'NIU NIU', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (57, 'Nvidia', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (58, 'O2', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (59, 'OnePlus', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (60, 'Oppo', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (61, 'Orange', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (62, 'Palm', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (63, 'Panasonic', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (64, 'Pantech', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (65, 'Parla', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (66, 'Philips', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (67, 'Plum', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (68, 'Posh', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (69, 'Prestigio', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (70, 'Qtek', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (71, 'Sagem', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (72, 'Samsung', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (73, 'Sendo', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (74, 'Sewon', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (75, 'Sharp', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (76, 'Siemens', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (77, 'Sonim', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (78, 'Sony', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (79, 'Sony Ericsson', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (80, 'Spice', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (81, 'T-Mobile', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (82, 'Tel.Me.', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (83, 'Telit', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (84, 'Thuraya', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (85, 'Toshiba', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (86, 'Unnecto', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (87, 'Vertu', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (88, 'verykool', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (89, 'vivo', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (90, 'VK Mobile', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (91, 'Vodafone', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (92, 'Wiko', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (93, 'WND', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (94, 'XCute', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (95, 'Xiaomi', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (96, 'XOLO', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (97, 'Yezz', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (98, 'Yota', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.Marca` (`ID_MARCA`, `NOME`, `DATA_FECHA`) VALUES (99, 'ZTE', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Patrimonio.FormaAquisicao`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Patrimonio.FormaAquisicao` (`ID_FORMA_AQUISICAO`, `DESCRICAO`, `DATA_FECHA`) VALUES (1, 'Quitado', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.FormaAquisicao` (`ID_FORMA_AQUISICAO`, `DESCRICAO`, `DATA_FECHA`) VALUES (2, 'Subsídiado', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.FormaAquisicao` (`ID_FORMA_AQUISICAO`, `DESCRICAO`, `DATA_FECHA`) VALUES (3, 'Locação', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.FormaAquisicao` (`ID_FORMA_AQUISICAO`, `DESCRICAO`, `DATA_FECHA`) VALUES (4, 'Comodato', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Patrimonio.TipoAtivo`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Patrimonio.TipoAtivo` (`ID_TIPO_ATIVO`, `DESCRICAO`, `DATA_FECHA`) VALUES (1, 'Aparelho básico', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.TipoAtivo` (`ID_TIPO_ATIVO`, `DESCRICAO`, `DATA_FECHA`) VALUES (2, 'Smartphone', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.TipoAtivo` (`ID_TIPO_ATIVO`, `DESCRICAO`, `DATA_FECHA`) VALUES (3, 'Tablet', NULL);
+INSERT INTO `Aires_Solucoes`.`Patrimonio.TipoAtivo` (`ID_TIPO_ATIVO`, `DESCRICAO`, `DATA_FECHA`) VALUES (4, 'Modem', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Atendimento.TipoServico`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (1, 'Contestação', NULL);
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (2, 'Cancelamento', NULL);
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (3, 'Suspensão', NULL);
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (4, 'Alteração de serviços', NULL);
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (5, 'Troca de Aparelho', NULL);
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (6, 'Troca de Chip', NULL);
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (7, 'Transferência de linhas', NULL);
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (8, 'Cotação', NULL);
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (9, 'Liberação de créditos / Linhas', NULL);
+INSERT INTO `Aires_Solucoes`.`Atendimento.TipoServico` (`ID_TIPO_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (10, 'Outros', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`OS.TipoServico`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (1, 'Contestação', NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (2, 'Cancelamento', NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (3, 'Suspensão', NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (4, 'Alteração de serviços', NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (5, 'Troca de Aparelho', NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (6, 'Troca de Chip', NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (7, 'Transferência de linhas', NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (8, 'Cotação', NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (9, 'Liberação de créditos / Linhas', NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`OS.TipoServico` (`ID_TIPO_SERVICO`, `NOME_SERVICO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (10, 'Outros', NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Cotacao.TipoCotacao`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Cotacao.TipoCotacao` (`ID_TIPO_COTACAO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (1, 'Fixo', NULL);
+INSERT INTO `Aires_Solucoes`.`Cotacao.TipoCotacao` (`ID_TIPO_COTACAO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (2, 'Móvel', NULL);
+INSERT INTO `Aires_Solucoes`.`Cotacao.TipoCotacao` (`ID_TIPO_COTACAO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (3, 'Dados', NULL);
+INSERT INTO `Aires_Solucoes`.`Cotacao.TipoCotacao` (`ID_TIPO_COTACAO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (4, 'Link dedicado/internet', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Book.TipoTarifa`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Book.TipoTarifa` (`ID_TIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (1, 'VC1', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.TipoTarifa` (`ID_TIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (2, 'VC2', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.TipoTarifa` (`ID_TIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (3, 'VC3', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.TipoTarifa` (`ID_TIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (4, 'DADOS', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.TipoTarifa` (`ID_TIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (5, 'SMS', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.TipoTarifa` (`ID_TIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (6, 'VOZ', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.TipoTarifa` (`ID_TIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (7, 'MMS', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Book.SubtipoTarifa`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Book.SubtipoTarifa` (`ID_SUBTIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (1, 'Normal', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.SubtipoTarifa` (`ID_SUBTIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (2, 'Diferenciado', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.SubtipoTarifa` (`ID_SUBTIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (3, 'Reduzida', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.SubtipoTarifa` (`ID_SUBTIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (4, 'Super reduzida', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.SubtipoTarifa` (`ID_SUBTIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (5, 'Dentro do pacote', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.SubtipoTarifa` (`ID_SUBTIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (6, 'Tarifa excedente', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.SubtipoTarifa` (`ID_SUBTIPO_TARIFA`, `DESCRITIVO`, `DATA_FECHA`) VALUES (7, 'Avulsa', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Info.Estados`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (1, 'AC', 'Acre', '68//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (2, 'AL', 'Alagoas', '82//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (3, 'AP', 'Amapá', '96//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (4, 'AM', 'Amazonas', '92//97//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (5, 'BA', 'Bahia', '71//73//74//75//77//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (6, 'CE', 'Ceará', '85//88//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (7, 'DF', 'Distrito Federal', '61//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (8, 'ES', 'Espirito Santo', '27//28//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (9, 'GO', 'Goiás', '61//62//64//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (10, 'MA', 'Maranhão', '98//99//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (11, 'MT', 'Mato Grosso', '65//66//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (12, 'MS', 'Mato Grosso do Sul', '67//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (13, 'MG', 'Minas Gerais', '31//32//33//34//35//37//38//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (14, 'PA', 'Pará', '91//93//94//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (15, 'PB', 'Paraiba', '83//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (16, 'PR', 'Paraná', '41//42//43//44//45//46//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (17, 'PE', 'Pernambuco', '81//87//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (18, 'PI', 'Piauí', '86//89//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (19, 'RJ', 'Rio de Janeiro', '21//22//24//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (20, 'RN', 'Rio Grande do Norte', '84//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (21, 'RS', 'Rio Grande do Sul', '51//53//54//55//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (22, 'RO', 'Rondônia', '69//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (23, 'RR', 'Roraima', '95//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (24, 'SC', 'Santa Catarina', '47//48//49//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (25, 'SP', 'São Paulo', '11///12//13//14//15///16//17//18//19//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (26, 'SE', 'Sergipe', '79//', NULL);
+INSERT INTO `Aires_Solucoes`.`Info.Estados` (`ID_ESTADO`, `UF`, `NOME`, `LISTA_DDD`, `DATA_FECHA`) VALUES (27, 'TO', 'Tocantis', '63//', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Book.ModuloBookCampos`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (1, 'Minutos dentro do módulo', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (2, 'Velocidade Internet', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (3, 'Valor até 9 linhas', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (4, 'Valor de 10 à 49 linhas', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (5, 'Valor a partir de 50 linhas', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (6, 'Desconto', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (7, 'Tarifa', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (8, 'Valor por SMS', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (9, 'Valor por SMS Excedente', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (10, 'Valor mensal', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (11, 'Valor anual', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (12, 'Valor Total com Desconto', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (13, 'Torpedo', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (14, 'Faixa de uso Torpedo', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (15, 'Bônus', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (16, 'MB/SMS/Torpedo - Excedente', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (17, 'Valor Prateleira', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (18, 'Valor até 5.000', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (19, 'Valor de 5.001 à 30.000', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (20, 'Valor Acima de 30.001', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (21, 'Pacote SMS', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (22, 'Valor por VOZ/SMS/MB', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (23, 'Excedente', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (24, 'Valor por VOZ/SMS/MB - Excedente', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (25, 'Voz', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (26, 'Web', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (27, 'MB - Excedente', NULL);
+INSERT INTO `Aires_Solucoes`.`Book.ModuloBookCampos` (`ID_MODULO_BOOK_CAMPO`, `DESCRITIVO`, `DATA_FECHA`) VALUES (28, 'Pacote SMS - Valor até 9 linhas', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`PEC.DetTipoUtilizacao`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`PEC.DetTipoUtilizacao` (`ID_PEC_TIPO_UTILIZACAO`, `DESCRICAO`, `REGEX`, `DELIMITADOR`, `DELIMITADOR2`, `DELIMITADOR3`, `DATA_FECHA`) VALUES (1, 'NÃO DEFINIDA', '/NÃO+\\s+DEFINIDA/', NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.DetTipoUtilizacao` (`ID_PEC_TIPO_UTILIZACAO`, `DESCRICAO`, `REGEX`, `DELIMITADOR`, `DELIMITADOR2`, `DELIMITADOR3`, `DATA_FECHA`) VALUES (2, 'UTILIZAÇÃO DENTRO DO PLANO/PACOTE', '/Utilização+\\s+Dentro+\\s+do+\\s+Plano\\/Pacote/', 'PACOTE LD 01', 'PACOTE LD 1', '/Período+\\s+Incluso+\\s+Plano\\/Pacote/', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.DetTipoUtilizacao` (`ID_PEC_TIPO_UTILIZACAO`, `DESCRICAO`, `REGEX`, `DELIMITADOR`, `DELIMITADOR2`, `DELIMITADOR3`, `DATA_FECHA`) VALUES (3, 'UTILIZAÇÃO ACIMA DO CONTRATADO', '/UTILIZAÇÃO+\\s+ACIMA+\\s+DO+\\s+CONTRATADO/', 'SERVIÇOS UTILIZADOS EM PERÍODOS ANTERIORES', NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.DetTipoUtilizacao` (`ID_PEC_TIPO_UTILIZACAO`, `DESCRICAO`, `REGEX`, `DELIMITADOR`, `DELIMITADOR2`, `DELIMITADOR3`, `DATA_FECHA`) VALUES (4, 'SERVIÇOS UTILIZADOS EM PERÍODOS ANTERIORES', '/SERVIÇOS+\\s+UTILIZADOS+\\s+EM+\\s+PERÍODOS+\\s+ANTERIORES/', NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.DetTipoUtilizacao` (`ID_PEC_TIPO_UTILIZACAO`, `DESCRICAO`, `REGEX`, `DELIMITADOR`, `DELIMITADOR2`, `DELIMITADOR3`, `DATA_FECHA`) VALUES (5, 'SERVIÇOS DE TERCEIROS TELEFÔNICA DATA', '/SERVIÇOS+\\s+DE+\\s+TERCEIROS+\\s+TELEFÔNICA+\\s+DATA/', NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.DetTipoUtilizacao` (`ID_PEC_TIPO_UTILIZACAO`, `DESCRICAO`, `REGEX`, `DELIMITADOR`, `DELIMITADOR2`, `DELIMITADOR3`, `DATA_FECHA`) VALUES (6, 'NO BRASIL - EM ROAMING', '/NO+\\s+BRASIL+\\s+-+\\s+EM+\\s+ROAMING/', 'UTILIZAÇÃO ACIMA DO CONTRATADO', NULL, NULL, '2015-08-26 14:56:28');
+INSERT INTO `Aires_Solucoes`.`PEC.DetTipoUtilizacao` (`ID_PEC_TIPO_UTILIZACAO`, `DESCRICAO`, `REGEX`, `DELIMITADOR`, `DELIMITADOR2`, `DELIMITADOR3`, `DATA_FECHA`) VALUES (7, 'OUTROS LANÇAMENTOS', '/OUTROS+\\s+LANÇAMENTOS/', NULL, NULL, NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`PEC.DetTipoLigacao`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`PEC.DetTipoLigacao` (`ID_PEC_TIPO_LIGACAO`, `DESCRICAO`, `CSP`, `DATA_FECHA`) VALUES (1, 'NÃO DEFINIDA', NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`PEC.DetTipoChamada`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`PEC.DetTipoChamada` (`ID_PEC_TIPO_CHAMADA`, `DESCRICAO`, `DATA_FECHA`) VALUES (1, 'NÃO DEFINIDA', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`PEC.TipoDet`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`PEC.TipoDet` (`ID_TIPO_DET`, `DESCRICAO`, `DATA_FECHA`) VALUES (1, 'NÃO IDENTIFICADO', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoDet` (`ID_TIPO_DET`, `DESCRICAO`, `DATA_FECHA`) VALUES (2, 'VOZ', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoDet` (`ID_TIPO_DET`, `DESCRICAO`, `DATA_FECHA`) VALUES (3, 'DADOS', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoDet` (`ID_TIPO_DET`, `DESCRICAO`, `DATA_FECHA`) VALUES (4, 'SMS', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`PEC.TipoLancamento`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (2, 'FINANCEIRO', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (3, 'CANCELAMENTO', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (4, 'DESCONTO', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (5, 'DIVERSO', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (6, 'PARCELAMENTO', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (7, 'CONTESTAÇÃO', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (1, 'NÃO DEFINIDO', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (8, 'PLANOS E SERVIÇOS', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (9, 'EQUIPAMENTOS / ACESSÓRIOS', NULL);
+INSERT INTO `Aires_Solucoes`.`PEC.TipoLancamento` (`ID_TIPO_LANCAMENTO`, `DESCRICAO`, `DATA_FECHA`) VALUES (10, 'LOCAÇÃO', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Operadora.TipoEquipamentoNegociacao`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoEquipamentoNegociacao` (`ID_TIPO_EQUIP_NEGOCIACAO`, `DESCRICAO`, `DATA_FECHA`) VALUES (1, 'LOCAÇÃO', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoEquipamentoNegociacao` (`ID_TIPO_EQUIP_NEGOCIACAO`, `DESCRICAO`, `DATA_FECHA`) VALUES (2, 'VENDA', NULL);
+INSERT INTO `Aires_Solucoes`.`Operadora.TipoEquipamentoNegociacao` (`ID_TIPO_EQUIP_NEGOCIACAO`, `DESCRICAO`, `DATA_FECHA`) VALUES (3, 'COMODATO', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Aires.Funcionario`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Aires.Funcionario` (`ID_FUNCIONARIO`, `ID_EMPRESA`, `NOME_COMPLETO`, `CPF`, `RG`, `RESERVISTA`, `PIS`, `CTPS`, `SERIE_CTPS`, `UF_CTPS`, `TITULO_ELEITOR`, `ZONA`, `SECAO`, `SEXO`, `DATA_NASCIMENTO`, `DATA_INGRESSO`, `CARGO`, `ENDERECO`, `NUMERO`, `CEP`, `BAIRRO`, `CIDADE`, `UF`, `EMAIL`, `TELEFONE`, `CELULAR`, `FOTO`, `DATA_FECHA`) VALUES (1, 1, 'Rilla Aires', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'rilla.aires@airessolucoes.com.br', NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`Aires.Funcionario` (`ID_FUNCIONARIO`, `ID_EMPRESA`, `NOME_COMPLETO`, `CPF`, `RG`, `RESERVISTA`, `PIS`, `CTPS`, `SERIE_CTPS`, `UF_CTPS`, `TITULO_ELEITOR`, `ZONA`, `SECAO`, `SEXO`, `DATA_NASCIMENTO`, `DATA_INGRESSO`, `CARGO`, `ENDERECO`, `NUMERO`, `CEP`, `BAIRRO`, `CIDADE`, `UF`, `EMAIL`, `TELEFONE`, `CELULAR`, `FOTO`, `DATA_FECHA`) VALUES (2, 1, 'Caio Oliveira', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'caio.oliveira@airessolucoes.com.br', NULL, NULL, NULL, NULL);
+INSERT INTO `Aires_Solucoes`.`Aires.Funcionario` (`ID_FUNCIONARIO`, `ID_EMPRESA`, `NOME_COMPLETO`, `CPF`, `RG`, `RESERVISTA`, `PIS`, `CTPS`, `SERIE_CTPS`, `UF_CTPS`, `TITULO_ELEITOR`, `ZONA`, `SECAO`, `SEXO`, `DATA_NASCIMENTO`, `DATA_INGRESSO`, `CARGO`, `ENDERECO`, `NUMERO`, `CEP`, `BAIRRO`, `CIDADE`, `UF`, `EMAIL`, `TELEFONE`, `CELULAR`, `FOTO`, `DATA_FECHA`) VALUES (3, 1, 'Igor Brandão', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'igorabrandao@gmail.com', NULL, NULL, NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Aires_Solucoes`.`Aires.Usuario`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Aires_Solucoes`;
+INSERT INTO `Aires_Solucoes`.`Aires.Usuario` (`ID_USUARIO`, `ID_EMPRESA`, `ID_GESTOR`, `ID_FUNCIONARIO`, `SENHA`, `DATA_CRIACAO`, `DATA_FECHA`) VALUES (1, 1, NULL, 1, '$2a$08$weakPRO9bb4AU9HaMVV.Wu3qcl20OFK8vduI6xTnzi4D2YmsN20ym', '11-07-2016 10:32:56', NULL);
+INSERT INTO `Aires_Solucoes`.`Aires.Usuario` (`ID_USUARIO`, `ID_EMPRESA`, `ID_GESTOR`, `ID_FUNCIONARIO`, `SENHA`, `DATA_CRIACAO`, `DATA_FECHA`) VALUES (2, 1, NULL, 2, '$2a$08$weakPRO9bb4AU9HaMVV.Wu3qcl20OFK8vduI6xTnzi4D2YmsN20ym', '11-07-2016 10:35:12', NULL);
+INSERT INTO `Aires_Solucoes`.`Aires.Usuario` (`ID_USUARIO`, `ID_EMPRESA`, `ID_GESTOR`, `ID_FUNCIONARIO`, `SENHA`, `DATA_CRIACAO`, `DATA_FECHA`) VALUES (3, 1, NULL, 3, '$2a$08$weakPRO9bb4AU9HaMVV.Wu3qcl20OFK8vduI6xTnzi4D2YmsN20ym', '11-07-2016 10:37:28', NULL);
+
+COMMIT;
+

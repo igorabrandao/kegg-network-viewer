@@ -18,7 +18,7 @@
 	define( 'FULL_PERMISSION', 0777 );
 
 	// HOME URI
-	define( 'HOME_URI', 'http://localhost:2380/Teste_Interativa' );
+	define( 'HOME_URI', 'http://scotch-box/kegg-network-viewer' );
 
 	// ACTIVE TAB
 	$GLOBALS['ACTIVE_TAB'] = 'Painel_Controle';

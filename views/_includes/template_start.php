@@ -23,7 +23,7 @@
 
         <!-- Icons -->
         <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-        <link rel="shortcut icon" href="img/favicon.png">
+        <link rel="shortcut icon" href="<?php echo HOME_URI;?>/assets/img/favicon.png">
         <link rel="apple-touch-icon" href="<?php echo HOME_URI;?>/assets/img/icon57.png" sizes="57x57"/>
         <link rel="apple-touch-icon" href="<?php echo HOME_URI;?>/assets/img/icon72.png" sizes="72x72">
         <link rel="apple-touch-icon" href="<?php echo HOME_URI;?>/assets/img/icon76.png" sizes="76x76">

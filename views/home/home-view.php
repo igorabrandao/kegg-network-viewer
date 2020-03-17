@@ -45,7 +45,7 @@
             </div>
         </div>
         <!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
-        <img src="img/placeholders/headers/dashboard_header.jpg" alt="header image" class="animation-pulseSlow">
+        <img src="<?php echo HOME_URI;?>/assets/img/placeholders/headers/dashboard_header.jpg" alt="header image" class="animation-pulseSlow">
     </div>
     <!-- END Dashboard Header -->
 
@@ -183,12 +183,12 @@
                                     <div class="row push">
                                         <div class="col-sm-6 col-md-4">
                                             <a href="img/placeholders/photos/photo1.jpg" data-toggle="lightbox-image">
-                                                <img src="img/placeholders/photos/photo1.jpg" alt="image">
+                                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo1.jpg" alt="image">
                                             </a>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <a href="img/placeholders/photos/photo22.jpg" data-toggle="lightbox-image">
-                                                <img src="img/placeholders/photos/photo22.jpg" alt="image">
+                                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo22.jpg" alt="image">
                                             </a>
                                         </div>
                                     </div>
@@ -220,7 +220,7 @@
                                     <div class="row push">
                                         <div class="col-sm-6 col-md-4">
                                             <a href="img/placeholders/photos/photo23.jpg" data-toggle="lightbox-image">
-                                                <img src="img/placeholders/photos/photo23.jpg" alt="image">
+                                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo23.jpg" alt="image">
                                             </a>
                                         </div>
                                     </div>
@@ -338,7 +338,7 @@
                     <!-- Widget Header -->
                     <div class="widget-header text-left">
                         <!-- For best results use an image with at least 150 pixels in height (with the width relative to how big your widget will be!) - Here I'm using a 1200x150 pixels image -->
-                        <img src="img/placeholders/headers/widget5_header.jpg" alt="background" class="widget-background animation-pulseSlow">
+                        <img src="<?php echo HOME_URI;?>/assets/img/placeholders/headers/widget5_header.jpg" alt="background" class="widget-background animation-pulseSlow">
                         <h3 class="widget-content widget-content-image widget-content-light clearfix">
                             <span class="widget-icon pull-right">
                                 <i class="fa fa-sun-o animation-pulse"></i>
@@ -404,22 +404,22 @@
                             <div class="row">
                                 <div class="col-xs-6 col-sm-3">
                                     <a href="img/placeholders/photos/photo15.jpg" class="gallery-link" title="Image Info">
-                                        <img src="img/placeholders/photos/photo15.jpg" alt="image">
+                                        <img src="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo15.jpg" alt="image">
                                     </a>
                                 </div>
                                 <div class="col-xs-6 col-sm-3">
                                     <a href="img/placeholders/photos/photo5.jpg" class="gallery-link" title="Image Info">
-                                        <img src="img/placeholders/photos/photo5.jpg" alt="image">
+                                        <img src="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo5.jpg" alt="image">
                                     </a>
                                 </div>
                                 <div class="col-xs-6 col-sm-3">
                                     <a href="img/placeholders/photos/photo6.jpg" class="gallery-link" title="Image Info">
-                                        <img src="img/placeholders/photos/photo6.jpg" alt="image">
+                                        <img src="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo6.jpg" alt="image">
                                     </a>
                                 </div>
                                 <div class="col-xs-6 col-sm-3">
                                     <a href="img/placeholders/photos/photo13.jpg" class="gallery-link" title="Image Info">
-                                        <img src="img/placeholders/photos/photo13.jpg" alt="image">
+                                        <img src="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo13.jpg" alt="image">
                                     </a>
                                 </div>
                             </div>
@@ -435,8 +435,8 @@
 </div>
 <!-- END Page Content -->
 
-<?php include 'inc/page_footer.php'; ?>
-<?php include 'inc/template_scripts.php'; ?>
+<?php include ABSPATH . '/views/_includes/page_footer.php'; ?>
+<?php include ABSPATH . '/views/_includes/template_scripts.php'; ?>
 
 <!-- Google Maps API Key (you will have to obtain a Google Maps API key to use Google Maps) -->
 <!-- For more info please have a look at https://developers.google.com/maps/documentation/javascript/get-api-key#key -->
@@ -444,5 +444,5 @@
 <script src="<?php echo HOME_URI;?>/assets/js/helpers/gmaps.min.js"></script>
 
 <!-- Load and execute javascript code used only in this page -->
-<script src="<?php echo HOME_URI;?>/assets/js/helpers/index.js"></script>
+<script src="<?php echo HOME_URI;?>/assets/js/pages/index.js"></script>
 <script>$(function(){ Index.init(); });</script>

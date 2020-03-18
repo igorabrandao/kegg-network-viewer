@@ -10,12 +10,12 @@
 
 /* Template variables */
 $template = array(
-    'name'              => 'ProUI',
-    'version'           => '3.8',
-    'author'            => 'pixelcave',
+    'name'              => 'KNV - KEGG Network Viewer',
+    'version'           => '0.1',
+    'author'            => 'Igor Brandão',
     'robots'            => 'noindex, nofollow',
-    'title'             => 'ProUI - Responsive Bootstrap Admin Template',
-    'description'       => 'ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest.',
+    'title'             => 'KNV - KEGG Network Viewer',
+    'description'       => 'KNV is an online tool to visualize and interact with KEGG metabolic pathways.',
     // true                     enable page preloader
     // false                    disable page preloader
     'page_preloader'    => false,

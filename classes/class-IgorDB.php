@@ -10,8 +10,8 @@
 	{
 		/** DB properties */
 		public $host      = 'localhost', 		//!< Database's Host
-			   $db_name   = 'Teste_Interativa', //!< Database's Name
-			   $password  = 'yuyuhakusho',      //!< Database's User password
+			   $db_name   = 'test', 			//!< Database's Name
+			   $password  = 'test',      		//!< Database's User password
 			   $user      = 'root',      		//!< Database's Username
 			   $charset   = 'utf8',      		//!< Database's Charset
 			   $pdo       = null,        		//!< Database's connection

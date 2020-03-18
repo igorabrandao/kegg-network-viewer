@@ -36,8 +36,6 @@
 			require ABSPATH . '/views/pathway_module/pathway_list-view.php';
 
 			// Load the page footer
-			require ABSPATH . '/views/_includes/page_footer.php';
-			require ABSPATH . '/views/_includes/template_scripts.php';
 			require ABSPATH . '/views/_includes/template_end.php';
 
 		} // list
@@ -71,8 +69,6 @@
 			require ABSPATH . '/views/pathway_module/pathway_viewer-view.php';
 
 			// Load the page footer
-			require ABSPATH . '/views/pathway_module/page_footer.php';
-			require ABSPATH . '/views/pathway_module/template_scripts.php';
 			require ABSPATH . '/views/_includes/template_end.php';
 
 		} // viewer

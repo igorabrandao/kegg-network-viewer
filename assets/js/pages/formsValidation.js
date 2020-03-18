@@ -1,6 +1,6 @@
 /*
  *  Document   : formsValidation.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Forms Validation page
  */
 

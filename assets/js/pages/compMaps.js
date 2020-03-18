@@ -1,6 +1,6 @@
 /*
  *  Document   : compMaps.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Maps page
  */
 

@@ -1,6 +1,6 @@
 /*
  *  Document   : ecomProducts.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in eCommerce Products page
  */
 

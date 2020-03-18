@@ -1,6 +1,6 @@
 /*
  *  Document   : compCalendar.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Calendar page
  */
 
@@ -142,7 +142,7 @@ var CompCalendar = function() {
                         title: 'Follow me on Twitter',
                         start: new Date(y, m, 20),
                         end: new Date(y, m, 24),
-                        url: 'http://twitter.com/pixelcave',
+                        url: 'http://twitter.com/igorbrandao',
                         color: '#e74c3c'
                     }
                 ]

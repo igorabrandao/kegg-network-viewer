@@ -1,6 +1,6 @@
 /*
  *  Document   : readyTimeline.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Timeline page
  */
 

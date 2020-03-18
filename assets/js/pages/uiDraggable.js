@@ -1,6 +1,6 @@
 /*
  *  Document   : uiDraggable.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Draggable Blocks page
  */
 

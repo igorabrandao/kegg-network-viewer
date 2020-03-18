@@ -2,7 +2,7 @@
 /**
  * template_end.php
  *
- * Author: pixelcave
+ * Author: igorbrandao
  *
  * The last block of code used in every page of the template
  *

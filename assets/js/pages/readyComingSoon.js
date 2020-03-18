@@ -1,6 +1,6 @@
 /*
  *  Document   : readyComingSoon.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Coming Soon page
  */
 

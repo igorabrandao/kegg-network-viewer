@@ -1,6 +1,6 @@
 /*
  *  Document   : index.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Dashboard page
  */
 

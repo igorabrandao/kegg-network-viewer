@@ -2,7 +2,7 @@
 /**
  * page_head.php
  *
- * Author: pixelcave
+ * Author: igorbrandao
  *
  * Header and Sidebar of each page
  *
@@ -21,7 +21,9 @@
     <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
     <!-- Used only if page preloader is enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
     <div class="preloader themed-background">
-        <h1 class="push-top-bottom text-light text-center"><strong>Pro</strong>UI</h1>
+        <h1 class="push-top-bottom text-light text-center"><strong>KPV </strong> - KEGG Pathway Viewer
+            <br><small>by Igor Brandão</small>
+        </h1>
         <div class="inner">
             <h3 class="text-light visible-lt-ie10"><strong>Loading..</strong></h3>
             <div class="preloader-spinner hidden-lt-ie10"></div>
@@ -90,186 +92,6 @@
         }
     ?>
     <div id="page-container"<?php if ($page_classes) { echo ' class="' . $page_classes . '"'; } ?>>
-        <!-- Alternative Sidebar -->
-        <div id="sidebar-alt">
-            <!-- Wrapper for scrolling functionality -->
-            <div id="sidebar-alt-scroll">
-                <!-- Sidebar Content -->
-                <div class="sidebar-content">
-                    <!-- Chat -->
-                    <!-- Chat demo functionality initialized in js/app.js -> chatUi() -->
-                    <a href="page_ready_chat.php" class="sidebar-title">
-                        <i class="gi gi-comments pull-right"></i> <strong>Chat</strong>UI
-                    </a>
-                    <!-- Chat Users -->
-                    <ul class="chat-users clearfix">
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-online">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar12.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-online">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar15.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-online">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar10.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-online">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar4.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-away">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar7.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-away">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar9.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-busy">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar16.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar1.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar4.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar3.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar13.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar5.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- END Chat Users -->
-
-                    <!-- Chat Talk -->
-                    <div class="chat-talk display-none">
-                        <!-- Chat Info -->
-                        <div class="chat-talk-info sidebar-section">
-                            <button id="chat-talk-close-btn" class="btn btn-xs btn-default pull-right">
-                                <i class="fa fa-times"></i>
-                            </button>
-                            <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar5.jpg" alt="avatar" class="img-circle pull-left">
-                            <strong>John</strong> Doe
-                        </div>
-                        <!-- END Chat Info -->
-
-                        <!-- Chat Messages -->
-                        <ul class="chat-talk-messages">
-                            <li class="text-center"><small>Yesterday, 18:35</small></li>
-                            <li class="chat-talk-msg animation-slideRight">Hey admin?</li>
-                            <li class="chat-talk-msg animation-slideRight">How are you?</li>
-                            <li class="text-center"><small>Today, 7:10</small></li>
-                            <li class="chat-talk-msg chat-talk-msg-highlight themed-border animation-slideLeft">I'm fine, thanks!</li>
-                        </ul>
-                        <!-- END Chat Messages -->
-
-                        <!-- Chat Input -->
-                        <form action="index.php" method="post" id="sidebar-chat-form" class="chat-form">
-                            <input type="text" id="sidebar-chat-message" name="sidebar-chat-message" class="form-control form-control-borderless" placeholder="Type a message..">
-                        </form>
-                        <!-- END Chat Input -->
-                    </div>
-                    <!--  END Chat Talk -->
-                    <!-- END Chat -->
-
-                    <!-- Activity -->
-                    <a href="javascript:void(0)" class="sidebar-title">
-                        <i class="fa fa-globe pull-right"></i> <strong>Activity</strong>UI
-                    </a>
-                    <div class="sidebar-section">
-                        <div class="alert alert-danger alert-alt">
-                            <small>just now</small><br>
-                            <i class="fa fa-thumbs-up fa-fw"></i> Upgraded to Pro plan
-                        </div>
-                        <div class="alert alert-info alert-alt">
-                            <small>2 hours ago</small><br>
-                            <i class="gi gi-coins fa-fw"></i> You had a new sale!
-                        </div>
-                        <div class="alert alert-success alert-alt">
-                            <small>3 hours ago</small><br>
-                            <i class="fa fa-plus fa-fw"></i> <a href="page_ready_user_profile.php"><strong>John Doe</strong></a> would like to become friends!<br>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary"><i class="fa fa-check"></i> Accept</a>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-times"></i> Ignore</a>
-                        </div>
-                        <div class="alert alert-warning alert-alt">
-                            <small>2 days ago</small><br>
-                            Running low on space<br><strong>18GB in use</strong> 2GB left<br>
-                            <a href="page_ready_pricing_tables.php" class="btn btn-xs btn-primary"><i class="fa fa-arrow-up"></i> Upgrade Plan</a>
-                        </div>
-                    </div>
-                    <!-- END Activity -->
-
-                    <!-- Messages -->
-                    <a href="page_ready_inbox.php" class="sidebar-title">
-                        <i class="fa fa-envelope pull-right"></i> <strong>Messages</strong>UI (5)
-                    </a>
-                    <div class="sidebar-section">
-                        <div class="alert alert-alt">
-                            Debra Stanley<small class="pull-right">just now</small><br>
-                            <a href="<?php echo HOME_URI;?>/assets/page_ready_inbox_message.php"><strong>New Follower</strong></a>
-                        </div>
-                        <div class="alert alert-alt">
-                            Sarah Cole<small class="pull-right">2 min ago</small><br>
-                            <a href="<?php echo HOME_URI;?>/assets/page_ready_inbox_message.php"><strong>Your subscription was updated</strong></a>
-                        </div>
-                        <div class="alert alert-alt">
-                            Bryan Porter<small class="pull-right">10 min ago</small><br>
-                            <a href="<?php echo HOME_URI;?>/assets/page_ready_inbox_message.php"><strong>A great opportunity</strong></a>
-                        </div>
-                        <div class="alert alert-alt">
-                            Jose Duncan<small class="pull-right">30 min ago</small><br>
-                            <a href="<?php echo HOME_URI;?>/assets/page_ready_inbox_message.php"><strong>Account Activation</strong></a>
-                        </div>
-                        <div class="alert alert-alt">
-                            Henry Ellis<small class="pull-right">40 min ago</small><br>
-                            <a href="<?php echo HOME_URI;?>/assets/page_ready_inbox_message.php"><strong>You reached 10.000 Followers!</strong></a>
-                        </div>
-                    </div>
-                    <!-- END Messages -->
-                </div>
-                <!-- END Sidebar Content -->
-            </div>
-            <!-- END Wrapper for scrolling functionality -->
-        </div>
-        <!-- END Alternative Sidebar -->
-
         <!-- Main Sidebar -->
         <div id="sidebar">
             <!-- Wrapper for scrolling functionality -->
@@ -278,7 +100,7 @@
                 <div class="sidebar-content">
                     <!-- Brand -->
                     <a href="index.php" class="sidebar-brand">
-                        <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Pro</strong>UI</span>
+                        <i class="gi gi-share_alt"></i><span class="sidebar-nav-mini-hide"><strong>KPV</strong></span>
                     </a>
                     <!-- END Brand -->
 
@@ -286,10 +108,10 @@
                     <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
                         <div class="sidebar-user-avatar">
                             <a href="page_ready_user_profile.php">
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar2.jpg" alt="avatar">
+                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/network_avatar.jpg" alt="avatar">
                             </a>
                         </div>
-                        <div class="sidebar-user-name">John Doe</div>
+                        <div class="sidebar-user-name"><?php echo $template["user_name"]; ?></div>
                         <div class="sidebar-user-links">
                             <a href="page_ready_user_profile.php" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
                             <a href="page_ready_inbox.php" data-toggle="tooltip" data-placement="bottom" title="Messages"><i class="gi gi-envelope"></i></a>
@@ -299,59 +121,6 @@
                         </div>
                     </div>
                     <!-- END User Info -->
-
-                    <!-- Theme Colors -->
-                    <!-- Change Color Theme functionality can be found in js/app.js - templateOptions() -->
-                    <ul class="sidebar-section sidebar-themes clearfix sidebar-nav-mini-hide">
-                        <!-- You can also add the default color theme
-                        <li class="active">
-                            <a href="javascript:void(0)" class="themed-background-dark-default themed-border-default" data-theme="default" data-toggle="tooltip" title="Default Blue"></a>
-                        </li>
-                        -->
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-night themed-border-night" data-theme="css/themes/night.css" data-toggle="tooltip" title="Night"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-amethyst themed-border-amethyst" data-theme="css/themes/amethyst.css" data-toggle="tooltip" title="Amethyst"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-modern themed-border-modern" data-theme="css/themes/modern.css" data-toggle="tooltip" title="Modern"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-autumn themed-border-autumn" data-theme="css/themes/autumn.css" data-toggle="tooltip" title="Autumn"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-flatie themed-border-flatie" data-theme="css/themes/flatie.css" data-toggle="tooltip" title="Flatie"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-spring themed-border-spring" data-theme="css/themes/spring.css" data-toggle="tooltip" title="Spring"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-fancy themed-border-fancy" data-theme="css/themes/fancy.css" data-toggle="tooltip" title="Fancy"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-fire themed-border-fire" data-theme="css/themes/fire.css" data-toggle="tooltip" title="Fire"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-coral themed-border-coral" data-theme="css/themes/coral.css" data-toggle="tooltip" title="Coral"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-lake themed-border-lake" data-theme="css/themes/lake.css" data-toggle="tooltip" title="Lake"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-forest themed-border-forest" data-theme="css/themes/forest.css" data-toggle="tooltip" title="Forest"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-waterlily themed-border-waterlily" data-theme="css/themes/waterlily.css" data-toggle="tooltip" title="Waterlily"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-emerald themed-border-emerald" data-theme="css/themes/emerald.css" data-toggle="tooltip" title="Emerald"></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="themed-background-dark-blackberry themed-border-blackberry" data-theme="css/themes/blackberry.css" data-toggle="tooltip" title="Blackberry"></a>
-                        </li>
-                    </ul>
-                    <!-- END Theme Colors -->
 
                     <?php if ($primary_nav) { ?>
                     <!-- Sidebar Navigation -->
@@ -465,7 +234,7 @@
                         <span class="sidebar-header-options clearfix">
                             <a href="javascript:void(0)" data-toggle="tooltip" title="Refresh"><i class="gi gi-refresh"></i></a>
                         </span>
-                        <span class="sidebar-header-title">Activity</span>
+                        <span class="sidebar-header-title">Development Activity</span>
                     </div>
                     <div class="sidebar-section sidebar-nav-mini-hide">
                         <div class="alert alert-success alert-alt">
@@ -643,91 +412,10 @@
                 <!-- Search Form -->
                 <form action="page_ready_search_results.php" method="post" class="navbar-form-custom">
                     <div class="form-group">
-                        <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
+                        <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search...">
                     </div>
                 </form>
                 <!-- END Search Form -->
-
-                <!-- Right Header Navigation -->
-                <ul class="nav navbar-nav-custom pull-right">
-                    <!-- Alternative Sidebar Toggle Button -->
-                    <li>
-                        <!-- If you do not want the main sidebar to open when the alternative sidebar is closed, just remove the second parameter: App.sidebar('toggle-sidebar-alt'); -->
-                        <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar-alt', 'toggle-other');this.blur();">
-                            <i class="gi gi-share_alt"></i>
-                            <span class="label label-primary label-indicator animation-floating">4</span>
-                        </a>
-                    </li>
-                    <!-- END Alternative Sidebar Toggle Button -->
-
-                    <!-- User Dropdown -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar2.jpg" alt="avatar"> <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-                            <li class="dropdown-header text-center">Account</li>
-                            <li>
-                                <a href="page_ready_timeline.php">
-                                    <i class="fa fa-clock-o fa-fw pull-right"></i>
-                                    <span class="badge pull-right">10</span>
-                                    Updates
-                                </a>
-                                <a href="page_ready_inbox.php">
-                                    <i class="fa fa-envelope-o fa-fw pull-right"></i>
-                                    <span class="badge pull-right">5</span>
-                                    Messages
-                                </a>
-                                <a href="page_ready_pricing_tables.php"><i class="fa fa-magnet fa-fw pull-right"></i>
-                                    <span class="badge pull-right">3</span>
-                                    Subscriptions
-                                </a>
-                                <a href="page_ready_faq.php"><i class="fa fa-question fa-fw pull-right"></i>
-                                    <span class="badge pull-right">11</span>
-                                    FAQ
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="page_ready_user_profile.php">
-                                    <i class="fa fa-user fa-fw pull-right"></i>
-                                    Profile
-                                </a>
-                                <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.php in PHP version) -->
-                                <a href="#modal-user-settings" data-toggle="modal">
-                                    <i class="fa fa-cog fa-fw pull-right"></i>
-                                    Settings
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="page_ready_lock_screen.php"><i class="fa fa-lock fa-fw pull-right"></i> Lock Account</a>
-                                <a href="login.php"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a>
-                            </li>
-                            <li class="dropdown-header text-center">Activity</li>
-                            <li>
-                                <div class="alert alert-success alert-alt">
-                                    <small>5 min ago</small><br>
-                                    <i class="fa fa-thumbs-up fa-fw"></i> You had a new sale ($10)
-                                </div>
-                                <div class="alert alert-info alert-alt">
-                                    <small>10 min ago</small><br>
-                                    <i class="fa fa-arrow-up fa-fw"></i> Upgraded to Pro plan
-                                </div>
-                                <div class="alert alert-warning alert-alt">
-                                    <small>3 hours ago</small><br>
-                                    <i class="fa fa-exclamation fa-fw"></i> Running low on space<br><strong>18GB in use</strong> 2GB left
-                                </div>
-                                <div class="alert alert-danger alert-alt">
-                                    <small>Yesterday</small><br>
-                                    <i class="fa fa-bug fa-fw"></i> <a href="javascript:void(0)" class="alert-link">New bug submitted</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- END User Dropdown -->
-                </ul>
-                <!-- END Right Header Navigation -->
                 <?php } ?>
             </header>
             <!-- END Header -->

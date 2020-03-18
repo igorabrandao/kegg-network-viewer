@@ -1,6 +1,6 @@
 /*
  *  Document   : compAnimations.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Animations page
  */
 

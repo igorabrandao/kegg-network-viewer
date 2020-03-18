@@ -1,6 +1,6 @@
 /*
  *  Document   : tablesDatatables.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Tables Datatables page
  */
 

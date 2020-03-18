@@ -2,7 +2,7 @@
 /**
  * template_scripts.php
  *
- * Author: pixelcave
+ * Author: igorbrandao
  *
  * All vital JS scripts are included here
  *

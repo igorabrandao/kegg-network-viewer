@@ -1,6 +1,6 @@
 /*
  *  Document   : readyProfile.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in User Profile page
  */
 

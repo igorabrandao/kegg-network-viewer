@@ -1,6 +1,6 @@
 /*
  *  Document   : widgetsSocial.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Social Widgets page
  */
 

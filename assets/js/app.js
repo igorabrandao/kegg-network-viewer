@@ -1,6 +1,6 @@
 /*
  *  Document   : app.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom scripts and plugin initializations (available to all pages)
  *
  *  Feel free to remove the plugin initilizations from uiInit() if you would like to

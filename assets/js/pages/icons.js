@@ -1,6 +1,6 @@
 /*
  *  Document   : icons.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Icons pages (Font Awesome and Glyphicons Pro)
  */
 

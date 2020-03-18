@@ -1,6 +1,6 @@
 /*
  *  Document   : readyFiles.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Files page
  */
 

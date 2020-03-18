@@ -1,6 +1,6 @@
 /*
  *  Document   : ecomDashboard.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in eCommerce Dashboard page
  */
 

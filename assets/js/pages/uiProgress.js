@@ -1,6 +1,6 @@
 /*
  *  Document   : uiProgress.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Progress & Loading page
  */
 

@@ -1,6 +1,6 @@
 /*
  *  Document   : ecomOrders.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in eCommerce Orders page
  */
 

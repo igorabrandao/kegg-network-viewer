@@ -1,6 +1,6 @@
 /*
  *  Document   : readyInboxCompose.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Inbox Compose page
  */
 

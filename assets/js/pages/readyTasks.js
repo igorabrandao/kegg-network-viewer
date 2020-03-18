@@ -1,6 +1,6 @@
 /*
  *  Document   : readyTasks.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Tasks page
  */
 

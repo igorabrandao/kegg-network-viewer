@@ -1,6 +1,6 @@
 /*
  *  Document   : readyChat.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Chat page
  */
 

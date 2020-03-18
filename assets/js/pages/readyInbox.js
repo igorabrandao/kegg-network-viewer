@@ -1,6 +1,6 @@
 /*
  *  Document   : readyInbox.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Inbox page
  */
 

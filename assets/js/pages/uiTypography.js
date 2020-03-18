@@ -1,6 +1,6 @@
 /*
  *  Document   : uitypography.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Typography page
  */
 

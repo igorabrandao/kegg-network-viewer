@@ -1,6 +1,6 @@
 /*
  *  Document   : widgetsStats.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Statistic Widgets page
  */
 

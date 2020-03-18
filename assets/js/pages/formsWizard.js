@@ -1,6 +1,6 @@
 /*
  *  Document   : formsWizard.js
- *  Author     : pixelcave
+ *  Author     : igorbrandao
  *  Description: Custom javascript code used in Forms Wizard page
  */
 

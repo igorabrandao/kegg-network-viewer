@@ -15,6 +15,7 @@
  *      (#m09res) RESPONSIVE
  *      (#m10rts) RETINA
  *      (#m11prs) PRINT
+ *      (#m12prs) IFRAME
  */
 
 /*
@@ -4142,4 +4143,16 @@ only screen and (min-device-pixel-ratio: 1.5) {
     #main-container {margin: 0 !important;}
     .block, .block.full {border: none !important; padding: 0 !important;}
     .block-title {margin: 0 0 20px !important;}
+}
+
+/*
+=================================================================
+(#m12prs) IFRAME
+=================================================================
+*/
+
+.iframe-network-viewer {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }

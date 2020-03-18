@@ -14,6 +14,9 @@
 	// UPLOAD URI
 	define( 'UP_ABSPATH', ABSPATH . '/resources/' );
 
+	// NETOWRKS URI
+	define( 'NETWORK_ABSPATH', ABSPATH . '/resources/networks/' );
+
 	// CHMOD FULL PERMISSION
 	define( 'FULL_PERMISSION', 0777 );
 

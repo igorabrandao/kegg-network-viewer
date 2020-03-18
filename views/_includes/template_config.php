@@ -52,7 +52,7 @@ $template = array(
     'cookies'           => '',
     // 'night', 'amethyst', 'modern', 'autumn', 'flatie', 'spring', 'fancy', 'fire', 'coral', 'lake',
     // 'forest', 'waterlily', 'emerald', 'blackberry' or '' leave empty for the Default Blue theme
-    'theme'             => '',
+    'theme'             => 'flatie',
     // ''                       for default content in header
     // 'horizontal-menu'        for a horizontal menu in header
     // This option is just used for feature demostration and you can remove it if you like. You can keep or alter header's content in page_head.php

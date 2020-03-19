@@ -68,6 +68,9 @@
 			// Load the page itself
 			require ABSPATH . '/views/pathway_module/pathway_viewer-view.php';
 
+			// Load the modal page
+			require ABSPATH . '/views/modal/modal_network.php';
+
 			// Load the page footer
 			require ABSPATH . '/views/_includes/template_end.php';
 

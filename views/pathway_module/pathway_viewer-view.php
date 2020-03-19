@@ -95,7 +95,7 @@
                         </div>
                         
                         <div class="col-sm-12 hidden-xs">
-                            <button type="button" class="btn btn-block btn-danger">
+                            <button type="button" class="btn btn-block btn-danger" onclick="$('#modal-network-info').modal('show');">
                                 Click here to see the pathway information
                             </button>
                         </div>

@@ -30,10 +30,18 @@
 		 * @since 0.1
 		 * @access public
 		*/
-		public function get_pathways_count()
+		public function get_pathways_count( $has_network_ = 1 )
 		{
 			// Select the necessary data from DB
-			$sql = "SELECT COUNT(`ID`) FROM `pathway_data` WHERE `DATA_FECHA` IS NULL";
+			$sql = "SELECT COUNT(P.`code`)
+			FROM 
+				`pathway_data` as P";
+
+			// Check the category filter
+			if ( isset($has_network_) && strcmp($has_network_, "") != 0 )
+			{
+				$sql .= " WHERE P.`has_network` = " . $has_network_;
+			}
 
 			// Execute the query
 			$query = $this->db->query($sql);

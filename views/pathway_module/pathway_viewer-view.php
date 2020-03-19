@@ -47,50 +47,50 @@
                         <div class="col-xs-4 col-sm-3">
                             <h2 class="animation-hatch">
                                 <strong><?php echo $pathway_info["eukaryotes_count"]; ?></strong><br>
-                                <small><i class="fa fa-thumbs-o-up"></i> EUKARYOTES</small>
+                                <small>EUKARYOTES</small>
                             </h2>
                         </div>
                         <div class="col-xs-4 col-sm-3">
                             <h2 class="animation-hatch">
                             <strong><?php echo $pathway_info["prokaryotes_count"]; ?></strong><br>
-                                <small><i class="fa fa-heart-o"></i> PROKARYOTES</small>
+                                <small>PROKARYOTES</small>
                             </h2>
                         </div>
                         <div class="col-xs-4 col-sm-3">
                             <h2 class="animation-hatch">
                             <strong><?php echo $pathway_info["animals_count"]; ?></strong><br>
-                                <small><i class="fa fa-calendar-o"></i> ANIMALS</small>
+                                <small>ANIMALS</small>
                             </h2>
                         </div>
                         <!-- We hide the last stat to fit the other 3 on small devices -->
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
                             <strong><?php echo $pathway_info["plants_count"]; ?></strong><br>
-                                <small><i class="fa fa-map-marker"></i> PLANTS</small>
+                                <small>PLANTS</small>
                             </h2>
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
                             <strong><?php echo $pathway_info["fungi_count"]; ?></strong><br>
-                                <small><i class="fa fa-map-marker"></i> FUNGI</small>
+                                <small>FUNGI</small>
                             </h2>
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
                             <strong><?php echo $pathway_info["protists_count"]; ?></strong><br>
-                                <small><i class="fa fa-map-marker"></i> PROTISTS</small>
+                                <small>PROTISTS</small>
                             </h2>
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
                             <strong><?php echo $pathway_info["bacteria_count"]; ?></strong><br>
-                                <small><i class="fa fa-map-marker"></i> BACTERIA</small>
+                                <small>BACTERIA</small>
                             </h2>
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
                             <strong><?php echo $pathway_info["archaea_count"]; ?></strong><br>
-                                <small><i class="fa fa-map-marker"></i> ARCHAEA</small>
+                                <small>ARCHAEA</small>
                             </h2>
                         </div>
                         

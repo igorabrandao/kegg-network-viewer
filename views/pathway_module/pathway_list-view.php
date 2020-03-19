@@ -1,4 +1,7 @@
 <?php
+    // Remove!!!!
+    //$pathway_model->pathway_has_network();
+
     // Get the entire pathway list
     $data_value = $pathway_model->get_pathways_list();
 ?>

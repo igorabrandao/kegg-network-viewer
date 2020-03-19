@@ -51,7 +51,7 @@
 		 * @since 0.1
 		 * @access public
 		*/
-		public function get_pathways_list( $id_category_ = null )
+		public function get_pathways_list( $has_network_ = 1 )
 		{
 			// Select the necessary data from DB
 			$sql = "SELECT P.`*`
@@ -59,9 +59,9 @@
 				`pathway_data` as P";
 
 			// Check the category filter
-			if ( isset($id_category_) && strcmp($id_category_, "") != 0 )
+			if ( isset($has_network_) && strcmp($has_network_, "") != 0 )
 			{
-				$sql .= "AND P.`ID_CATEGORIA` = " . $id_category_;
+				$sql .= " WHERE P.`has_network` = " . $has_network_;
 			}
 
 			// Execute the query
@@ -99,6 +99,54 @@
 			else
 				return 0;
 		} // get_pathway_info
+
+		/**
+		 * Function to check if a given pathway has an associated HTML network file
+		 *
+		 * @since 0.1
+		 * @access public
+		*/
+		public function pathway_has_network()
+		{
+			// Select all pathways code from DB
+			$sql = "SELECT P.`code`
+			FROM 
+				`pathway_data` as P";
+
+			// Execute the query
+			$query = $this->db->query($sql);
+
+			// Check if query worked
+			if ( $query ) {
+				// Store the pathways code list
+				$pathwayList = $query->fetchAll();
+
+				foreach ($pathwayList as $item) {
+					// Initialize the network filename
+					$network_filename = '';
+
+					// Run through the HTML netowrk directory to check if the pathway has the associated file
+					foreach (glob(NETWORK_ABSPATH . "*" . $item["code"] . ".*") as $filename) {  
+						$network_filename = basename($filename);
+					}
+
+					// Check if a network file was found and update the pathway status
+					if ( isset($network_filename) && strcmp($network_filename, "") != 0 )
+					{
+						// Prepare the array to update the information
+						$arr_data['has_network'] = 1;
+
+						// Update the data in DB
+						$this->db->update( 'pathway_data', 'code', $item["code"], $arr_data);
+					}
+				}
+
+				return true;
+			} else {
+				return false;
+			}
+
+		} // pathway_has_network
 	}
 
 ?>

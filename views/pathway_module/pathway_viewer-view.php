@@ -46,51 +46,51 @@
                     <div class="row text-center">
                         <div class="col-xs-4 col-sm-3">
                             <h2 class="animation-hatch">
-                                <strong><?php echo $pathway_info["eukaryotes_count"]; ?></strong><br>
-                                <small>EUKARYOTES</small>
+                                <strong><?php echo $pathway_info["nodes"]; ?></strong><br>
+                                <small>NODES</small>
                             </h2>
                         </div>
                         <div class="col-xs-4 col-sm-3">
                             <h2 class="animation-hatch">
-                            <strong><?php echo $pathway_info["prokaryotes_count"]; ?></strong><br>
-                                <small>PROKARYOTES</small>
+                            <strong><?php echo $pathway_info["edges"]; ?></strong><br>
+                                <small>EDGES</small>
                             </h2>
                         </div>
                         <div class="col-xs-4 col-sm-3">
                             <h2 class="animation-hatch">
-                            <strong><?php echo $pathway_info["animals_count"]; ?></strong><br>
-                                <small>ANIMALS</small>
+                            <strong><?php echo $pathway_info["total_species"]; ?></strong><br>
+                                <small>ORGANISMS</small>
                             </h2>
                         </div>
                         <!-- We hide the last stat to fit the other 3 on small devices -->
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
-                            <strong><?php echo $pathway_info["plants_count"]; ?></strong><br>
-                                <small>PLANTS</small>
+                            <strong><?php echo $pathway_info["community"]; ?></strong><br>
+                                <small>COMMUNITIES</small>
                             </h2>
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
-                            <strong><?php echo $pathway_info["fungi_count"]; ?></strong><br>
-                                <small>FUNGI</small>
+                            <strong><?php echo $pathway_info["mean_degree"]; ?></strong><br>
+                                <small>AVG. DEGREE</small>
                             </h2>
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
-                            <strong><?php echo $pathway_info["protists_count"]; ?></strong><br>
-                                <small>PROTISTS</small>
+                            <strong><?php echo $pathway_info["mean_betweenness"]; ?></strong><br>
+                                <small>AVG. BETWEENNESS</small>
                             </h2>
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
-                            <strong><?php echo $pathway_info["bacteria_count"]; ?></strong><br>
-                                <small>BACTERIA</small>
+                            <strong><?php echo ($pathway_info["ap_number"] + $pathway_info["hap_number"]); ?></strong><br>
+                                <small>ARTICULATION POINTS</small>
                             </h2>
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
-                            <strong><?php echo $pathway_info["archaea_count"]; ?></strong><br>
-                                <small>ARCHAEA</small>
+                            <strong><?php echo ($pathway_info["hub_number"] + $pathway_info["others_number"]); ?></strong><br>
+                                <small>OTHER NODES</small>
                             </h2>
                         </div>
                         

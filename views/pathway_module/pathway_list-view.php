@@ -49,15 +49,14 @@
                 <table id="example-datatable" class="table table-striped table-vcenter">
                     <thead>
                         <tr>
-                            <th ><i class="fa fa-briefcase"></i> PATHWAY</th>
-                            <th class="text-center hidden-xs" style="width: 8%;">EUKARYOTES</th>
-                            <th class="text-center hidden-xs" style="width: 8%;">PROKARYOTES</th>
-                            <th class="text-center hidden-xs" style="width: 8%;">ANIMALS</th>
-                            <th class="text-center hidden-xs" style="width: 8%;">PLANTS</th>
-                            <th class="text-center hidden-xs" style="width: 8%;">FUNGI</th>
-                            <th class="text-center hidden-xs" style="width: 8%;">PROTISTS</th>
-                            <th class="text-center hidden-xs" style="width: 8%;">BACTERIA</th>
-                            <th class="text-center hidden-xs" style="width: 8%;">ARCHAEA</th>
+                            <th ><i class="gi gi-share_alt"></i> PATHWAY</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">NODES</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">EDGES</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">ORGANISMS</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">COMMUNITIES</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">AVG. DEGREE</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">AVG. BETWEENNESS</th>
+                            <th class="text-center hidden-xs" style="width: 10%;">ARTICULATION POINTS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,36 +81,40 @@
 
                                         <h3><a href='" . $view_url . "'><strong>[" . $value["code"] . "] - " . $value["name"] . "</strong></a></h3>
                                         <p>
-                                            <a class='label label-default'>" . substr($value['class'], 0, 100) . "</a>
+                                            <a class='label label-default'><strong>" . substr($value['class'], 0, 100) . "</strong></a>
                                         </p>
                                         <p>
                                             <a class='label label-warning'>" . substr($value['module'], 0, 100) . "</a>
                                         </p>
                                         <p><em>" . substr($value['description'], 0, 500)  . "...</em></p>
+                                        <p>
+                                            <strong>
+                                                Present in:
+                                                <span class='text-warning'>" . $value["eukaryotes_count"] . " eukaryotes</span>&nbsp;/&nbsp;
+                                                <span class='text-success'>" . $value["prokaryotes_count"] . " prokaryotes</span>
+                                            </strong>
+                                        </p>
                                         </td>
                                         <td class='text-center hidden-xs'>
-                                            <h3 class='animation-pullDown'>" . $value["eukaryotes_count"] . "</h3>
+                                            <h3 class='animation-pullDown'>" . $value["nodes"] . "</h3>
                                         </td>
                                         <td class='text-center hidden-xs'>
-                                            <h3 class='animation-pullDown'>" . $value["prokaryotes_count"] . "</h3>
+                                            <h3 class='animation-pullDown'>" . $value["edges"] . "</h3>
                                         </td>
                                         <td class='text-center hidden-xs'>
-                                            <h3 class='animation-pullDown'>" . $value["animals_count"] . "</h3>
+                                            <h3 class='animation-pullDown'>" . $value["total_species"] . "</h3>
                                         </td>
                                         <td class='text-center hidden-xs'>
-                                            <h3 class='animation-pullDown'>" . $value["plants_count"] . "</h3>
+                                            <h3 class='animation-pullDown'>" . $value["community"] . "</h3>
                                         </td>
                                         <td class='text-center hidden-xs'>
-                                            <h3 class='animation-pullDown'>" . $value["fungi_count"] . "</h3>
+                                            <h3 class='animation-pullDown'>" . $value["mean_degree"] . "</h3>
                                         </td>
                                         <td class='text-center hidden-xs'>
-                                            <h3 class='animation-pullDown'>" . $value["protists_count"] . "</h3>
+                                            <h3 class='animation-pullDown'>" . $value["mean_betweenness"] . "</h3>
                                         </td>
                                         <td class='text-center hidden-xs'>
-                                            <h3 class='animation-pullDown'>" . $value["bacteria_count"] . "</h3>
-                                        </td>
-                                        <td class='text-center hidden-xs'>
-                                            <h3 class='animation-pullDown'>" . $value["archaea_count"] . "</h3>
+                                            <h3 class='animation-pullDown'>" . ($value["ap_number"] + $value["hap_number"]) . "</h3>
                                         </td>
                                     </td>";
 

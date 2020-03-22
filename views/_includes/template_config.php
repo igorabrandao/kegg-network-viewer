@@ -10,8 +10,9 @@
 
 /* Template variables */
 $template = array(
-    'name'              => 'KPV - KEGG Pathway Viewer',
-    'version'           => '0.2',
+    'initials'          => 'KPV',
+    'name'              => 'KEGG Pathway Viewer',
+    'version'           => 'v0.2',
     'author'            => 'Igor Brandão',
     'robots'            => 'noindex, nofollow',
     'title'             => 'KPV - KEGG Pathway Viewer',
@@ -78,6 +79,11 @@ $primary_nav = array(
         'name'  => 'Home page',
         'url'   => HOME_URI,
         'icon'  => 'gi gi-home'
+    ),
+    array(
+        'name'  => 'About ' . $template['initials'],
+        'url'   => HOME_URI . '/general_pages/about',
+        'icon'  => 'gi gi-circle_info'
     ),
     array(
         'name'  => 'Network visualization',

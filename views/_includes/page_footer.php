@@ -14,7 +14,7 @@
                     Crafted with <i class="fa fa-heart text-danger"></i> by <a href="http://igorabrandao.com.br" target="_blank" rel="noopener">Igor Brandão</a>
                 </div>
                 <div class="pull-left">
-                    <span id="year-copy"></span> &copy; <a href="http://igorabrandao.com.br" target="_blank"><?php echo $template['name'] . ' ' . $template['version']; ?></a>
+                    <span id="year-copy"></span> &copy; <a href="<?php echo HOME_URI; ?>"><?php echo $template['name'] . ' ' . $template['version']; ?></a>
                 </div>
             </footer>
             <!-- END Footer -->

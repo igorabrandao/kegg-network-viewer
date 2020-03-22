@@ -14,7 +14,9 @@
             <div class="row">
                 <!-- Main Title (hidden on small devices for the statistics to fit) -->
                 <div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
-                    <h1>KPV - <strong>KEGG Pathway Viewer</strong><br><small>version <?php echo $template["version"]; ?></small></h1>
+                    <h1>KPV - <strong>KEGG Pathway Viewer</strong><br>
+                        <p style="font-size: 16px;"><?php echo $template["headline"]; ?></p>
+                        <small>version <?php echo $template["version"]; ?></small></h1>
                 </div>
                 <!-- END Main Title -->
 

@@ -11,11 +11,17 @@
 /* Template variables */
 $template = array(
     'name'              => 'KPV - KEGG Pathway Viewer',
-    'version'           => '0.1',
+    'version'           => '0.2',
     'author'            => 'Igor Brandão',
     'robots'            => 'noindex, nofollow',
     'title'             => 'KPV - KEGG Pathway Viewer',
-    'description'       => 'KPV is an online tool to visualize and interact with KEGG metabolic pathways.',
+    'headline'          => 'The online tool to visualize and interact with KEGG metabolic pathways.',
+    'description'       => 'KPV is the online tool to visualize and interact with KEGG metabolic pathways.',
+    'full_description'  => 'KPV is the online tool to visualize and interact with KEGG metabolic pathways. The network elaborated in our study contemplates protein classifications according to the AP detection algorithm,
+    facilitating the visual identification of the most important proteins of a network (points of articulation). 
+    Additionally, our proposal provides a dynamic HTML visualizations of KEGG pathways enabling the simulation of basic operations 
+    such as nodes removal and edge addition.',
+
     // true                     enable page preloader
     // false                    disable page preloader
     'page_preloader'    => true,
@@ -75,7 +81,7 @@ $primary_nav = array(
     ),
     array(
         'name'  => 'Network visualization',
-        'opt'   => '<a href="javascript:void(0)" data-toggle="tooltip" title="Pages related to KEGG pathways visualization"><i class="gi gi-lightbulb"></i></a>',
+        'opt'   => '<a href="javascript:void(0)" data-toggle="tooltip" title="Use the menu below to navigate between pages related to KEGG pathways visualization"><i class="gi gi-lightbulb"></i></a>',
         'url'   => 'header',
     ),
     array(

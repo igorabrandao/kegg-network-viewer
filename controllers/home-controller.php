@@ -19,6 +19,7 @@
 			$parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
 			// Load models
+			$settings_model = $this->load_model('settings-model');
 			$pathway_model = $this->load_model('pathway-model');
 
 			/** Load files from view **/

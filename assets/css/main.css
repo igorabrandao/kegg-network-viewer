@@ -3278,6 +3278,7 @@ fieldset[disabled] .btn-info.active:focus {
 /* Panels */
 .panel {
     margin-bottom: 20px;
+    font-size: 15px;
 }
 
 .panel-heading {
@@ -3285,11 +3286,17 @@ fieldset[disabled] .btn-info.active:focus {
 }
 
 .panel-title {
-    font-size: 14px;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 .panel-default > .panel-heading {
     background-color: #f9f9f9;
+}
+
+.panel-default-dark > .panel-heading {
+    background-color: #32323a;
+    color: #ffffff;
 }
 
 .panel-group {

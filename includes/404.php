@@ -1,44 +1,23 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<?php include ABSPATH . '/views/_includes/template_config.php';?>
+<?php include ABSPATH . '/views/_includes/template_start.php'; ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>404 | Bootstrap Based Admin Template - Material Design</title>
-    <!-- Favicon-->
-    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap Core Css -->
-    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Waves Effect Css -->
-    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
-
-    <!-- Custom Css -->
-    <link href="../../css/style.css" rel="stylesheet">
-</head>
-
-<body class="four-zero-four">
-    <div class="four-zero-four-container">
-        <div class="error-code">404</div>
-        <div class="error-message">This page doesn't exist</div>
-        <div class="button-place">
-            <a href="../../index.html" class="btn btn-default btn-lg waves-effect">GO TO HOMEPAGE</a>
+<!-- Error Container -->
+<div id="error-container">
+    <div class="error-options">
+        <h3><i class="fa fa-chevron-circle-left text-muted"></i> <a href="<?php echo HOME_URI; ?>">Go Back</a></h3>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <h1><i class="fa fa-exclamation-triangle text-info animation-pulse"></i> 400</h1>
+            <h2 class="h3">Oops, the page you are looking seems to not exists...</h2>
+        </div>
+        <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+            <form action="page_ready_search_results.php" method="post">
+                <input type="text" id="search-term" name="search-term" class="form-control input-lg" placeholder="Search in entire website...">
+            </form>
         </div>
     </div>
+</div>
+<!-- END Error Container -->
 
-    <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core Js -->
-    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <script src="../../plugins/node-waves/waves.js"></script>
-</body>
-
-</html>
+<?php include ABSPATH . '/views/_includes/template_end.php'; ?>

@@ -235,33 +235,39 @@
                     </div>
 
                     <div class="sidebar-section sidebar-nav-mini-hide">
-                    <?php 
-                        // Generate the development activity
-                        $activity = $settings_model->parseChangelog();
+                        <?php 
+                            // Generate the development activity
+                            $activity = $settings_model->parseChangelog();
 
-                        // Check if there is some version
-                        if (is_array($activity)) {
-                            // Set the activities colors
-                            $colors = array('alert-success', 'alert-info', 'alert-warning', 'alert-danger');
+                            // Check if there is some version
+                            if (is_array($activity)) {
+                                // Set the activities colors
+                                $colors = array('alert-success', 'alert-info', 'alert-warning', 'alert-danger');
 
-                            // Print the version informations
-                            foreach($activity as $row => $item)
-                            {
-                                // Generate random colors
-                                $randomNumber = rand(0, 3);
+                                // Print the version informations
+                                foreach($activity as $row => $item)
+                                {
+                                    // Generate random colors
+                                    $randomNumber = rand(0, 3);
 
-                                echo "<div class='alert " . $colors[$randomNumber] . " alert-alt'>
-                                        <small><i class='fa fa-arrow-up fa-fw'></i>" . $item['version'] . " / " . $item['date'] . "</small>
-                                        <hr style='margin: 0;'>" . $item['description'] . "</div>";
+                                    echo "<div class='alert " . $colors[$randomNumber] . " alert-alt'>
+                                            <small><i class='fa fa-arrow-up fa-fw'></i>" . $item['version'] . " / " . $item['date'] . "</small>
+                                            <hr style='margin: 0;'>" . $item['description'] . "</div>";
+                                }
+
+                            } else {
+                                echo "<div class='alert alert-danger alert-alt'>
+                                        <small>Today</small><br>
+                                        <i class='fa fa-exclamation fa-fw'></i> <a><strong>" . $activity . "</strong></a>
+                                    </div>";
                             }
-
-                        } else {
-                            echo "<div class='alert alert-danger alert-alt'>
-                                    <small>Yesterday</small><br>
-                                    <i class='fa fa-exclamation fa-fw'></i> <a><strong>" . $activity . "</strong></a>
-                                </div>";
-                        }
-                    ?>
+                        ?>
+                        <hr>
+                        <div class='alert alert-success alert-alt'>
+                            <small>Wanna contribute with this project?</small><br>
+                            <i class='fa fa-thumbs-up fa-fw'></i> Just <a href="https://github.com/igorabrandao/kegg-network-viewer" target="_blank">
+                            <strong>click here </strong> to help!</a>
+                        </div>
                     </div>
                     <!-- END Sidebar Notifications -->
                 </div>

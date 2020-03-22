@@ -36,7 +36,8 @@
 				// Check if the data refers to the version and date or description
 				if($row % 2 == 0) {
 					// Separate version and date
-					$temp = explode('-', $item, 2);
+					$temp = delete_all_between('(', ')', $item);
+					$temp = explode('-', $temp, 2);
 
 					// Version
 					$info[$idx]['version'] = $temp[0];

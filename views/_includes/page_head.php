@@ -113,11 +113,11 @@
                         </div>
                         <div class="sidebar-user-name"><?php echo $template["user_name"]; ?></div>
                         <div class="sidebar-user-links">
-                            <a href="page_ready_user_profile.php" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
-                            <a href="page_ready_inbox.php" data-toggle="tooltip" data-placement="bottom" title="Messages"><i class="gi gi-envelope"></i></a>
+                            <!--<a href="page_ready_user_profile.php" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>-->
+                            <a href="mailto:<?php echo $template["email"]; ?>" data-toggle="tooltip" data-placement="bottom" title="Get in touch"><i class="gi gi-envelope"></i></a>
                             <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.php in PHP version) -->
-                            <a href="javascript:void(0)" class="enable-tooltip" data-placement="bottom" title="Settings" onclick="$('#modal-user-settings').modal('show');"><i class="gi gi-cogwheel"></i></a>
-                            <a href="login.php" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>
+                            <!--<a href="javascript:void(0)" class="enable-tooltip" data-placement="bottom" title="Settings" onclick="$('#modal-user-settings').modal('show');"><i class="gi gi-cogwheel"></i></a>-->
+                            <!--<a href="login.php" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>-->
                         </div>
                     </div>
                     <!-- END User Info -->

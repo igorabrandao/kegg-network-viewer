@@ -144,7 +144,7 @@
             <div class="block">
                 <!-- Info Title -->
                 <div class="block-title">
-                    <h2>About <strong><?php echo $template["author"]; ?></strong> <small>&bull; <i class="fa fa-file-text text-primary"></i> <a href="javascript:void(0)" data-toggle="tooltip" title="Download Bio in PDF">Bio</a></small></h2>
+                    <h2>About <strong><? echo $template["author"]; ?></strong> <small>&bull; <i class="fa fa-file-text text-primary"></i> <a href="javascript:void(0)" data-toggle="tooltip" title="Download Bio in PDF">Bio</a></small></h2>
                 </div>
                 <!-- END Info Title -->
 
@@ -152,24 +152,34 @@
                 <table class="table table-borderless table-striped">
                     <tbody>
                         <tr>
-                            <td style="width: 25%;"><strong>Info</strong></td>
-                            <td>Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non.</td>
+                            <td style="width: 25%;"><strong>Bio</strong></td>
+                            <td> Msc. student in Bioinformatics at Federal University of Rio Grande do Norte (UFRN) / Biome (2019) and develops 
+                                research in the field of Systems Biology. Has specialization in Information Technology Applied to the Legal Area 
+                                by UFRN/Court of Justice of Rio Grande do Norte (TJRN), bachelor degree in Information Technology at UFRN (2018), 
+                                Analysis and Systems Development at Fatec Carapicuíba - Technology College (2012) and bachelor degree in 
+                                Business Administration at Mackenzie Presbyterian University (2013).</td>
                         </tr>
                         <tr>
-                            <td><strong>Founder</strong></td>
-                            <td><a href="javascript:void(0)">Company Inc</a></td>
+                            <td><strong>Affiliation</strong></td>
+                            <td><a style="color: #173F5F;" href="https://www.ufrn.br/" target="_blank"><strong>Federal University of Rio Grande do Norte (UFRN)</strong></a></td>
                         </tr>
                         <tr>
-                            <td><strong>Education</strong></td>
-                            <td><a href="javascript:void(0)">University Name</a></td>
+                            <td><strong>Department</strong></td>
+                            <td><a style="color: #173F5F;" href="https://bioinfo.imd.ufrn.br/" target="_blank"><strong>Bioinformatics Multidisciplinary Environment (BIOME)</strong></a></td>
                         </tr>
                         <tr>
-                            <td><strong>Skills for this project</strong></td>
+                            <td><strong>Advisor</strong></td>
+                            <td><a style="color: #173F5F;" href="https://dalmolingroup.imd.ufrn.br/" target="_blank"><strong>Rodrigo Juliani Siqueira Dalmolin</strong></a></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><strong>Skills used in this project</strong></td>
                             <td>
                                 <a class="label label-info" title="R">R</a>
                                 <a class="label label-warning" title="HTML">HTML</a>
                                 <a class="label label-success" title="CSS">CSS</a>
                                 <a class="label label-danger" title="Javascript">Javascript</a>
+                                <a class="label label-primary" title="Javascript">MySql</a>
                             </td>
                         </tr>
                     </tbody>

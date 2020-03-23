@@ -58,7 +58,7 @@
             <div class="block">
                 <!-- Newsfeed Title -->
                 <div class="block-title">
-                    <h2><strong>Newsfeed</strong></h2>
+                    <h2><strong>How it works?</strong></h2>
                 </div>
                 <!-- END Newsfeed Title -->
 
@@ -66,92 +66,63 @@
                 <div class="block-content-full">
                     <!-- You can remove the class .media-feed-hover if you don't want each event to be highlighted on mouse hover -->
                     <ul class="media-list media-feed media-feed-hover">
-                        <!-- Photos Uploaded -->
-                        <!-- Example effect of the following update showing up in Newsfeed (initialized in js/pages/readyProfile.js) -->
-                        <li id="newsfeed-update-example" class="media display-none">
-                            <a href="page_ready_user_profile.php" class="pull-left">
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="Avatar" class="img-circle">
-                            </a>
-                            <div class="media-body">
-                                <p class="push-bit">
-                                    <span class="text-muted pull-right">
-                                        <small>just now</small>
-                                        <span class="text-success" data-toggle="tooltip" title="From Mobile"><i class="fa fa-mobile"></i></span>
-                                    </span>
-                                    <strong><a href="page_ready_user_profile.php">User</a> uploaded 2 new photos.</strong>
-                                </p>
-                                <div class="row push">
-                                    <div class="col-sm-6 col-md-4">
-                                        <a href="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo13.jpg" data-toggle="lightbox-image">
-                                            <img src="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo13.jpg" alt="image">
-                                        </a>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4">
-                                        <a href="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo23.jpg" data-toggle="lightbox-image">
-                                            <img src="<?php echo HOME_URI;?>/assets/img/placeholders/photos/photo23.jpg" alt="image">
-                                        </a>
-                                    </div>
-                                </div>
-                                <p>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-thumbs-o-up"></i> Like</a>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-comments-o"></i> Comment</a>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-share-square-o"></i> Share</a>
-                                </p>
-                            </div>
-                        </li>
-                        <!-- END Photos Uploaded -->
-
                         <!-- Story Published -->
                         <li class="media">
-                            <a href="page_ready_user_profile.php" class="pull-left">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="Avatar" class="img-circle">
-                            </a>
                             <div class="media-body">
-                                <p class="push-bit">
-                                    <span class="text-muted pull-right">
-                                        <small>45 min now</small>
-                                        <span class="text-danger" data-toggle="tooltip" title="From Web"><i class="fa fa-globe"></i></span>
-                                    </span>
-                                    <strong><a href="page_ready_user_profile.php">Explorer</a> published a new story.</strong>
-                                </p>
-                                <h5><a href="page_ready_article.php"><strong>The Mountain Trip</strong> &bull; Once in a lifetime experience</a></h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus. Mauris tincidunt tincidunt turpis in porta. Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque? Proin rhoncus dui at ligula vestibulum ut facilisis ante sodales! Suspendisse potenti..</p>
-                                <p>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-success"><i class="fa fa-thumbs-up"></i> You Like it</a>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-share-square-o"></i> Share</a>
-                                </p>
-
+                                <h4><a href="#"><strong>For the best use of this tool, follow the instructions below:</strong></a></h4>
+                                <br>
                                 <!-- Comments -->
                                 <ul class="media-list push">
                                     <li class="media">
-                                        <a href="page_ready_user_profile.php" class="pull-left">
-                                            <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="Avatar" class="img-circle">
-                                        </a>
                                         <div class="media-body">
-                                            <a href="page_ready_user_profile.php"><strong>User</strong></a>
-                                            <span class="text-muted"><small><em>29 min ago</em></small></span>
-                                            <p>Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum.</p>
+                                            <h4><strong>1)</strong> Access the menu <strong>"Pathways list"</strong> menu located in sidebar.</h5>
+                                            <p>
+                                                <a href="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial01.jpg" data-toggle="lightbox-image" 
+                                                title="Step 1: Access the menu Pathways list menu located in sidebar.">
+                                                    <img src="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial01.jpg" alt="Step 1">
+                                                </a>
+                                            </p>
                                         </div>
                                     </li>
                                     <li class="media">
-                                        <a href="page_ready_user_profile.php" class="pull-left">
-                                            <img src="img/placeholders/avatars/avatar2.jpg" alt="Avatar" class="img-circle">
-                                        </a>
                                         <div class="media-body">
-                                            <a href="page_ready_user_profile.php"><strong>User</strong></a>
-                                            <span class="text-muted"><small><em>18 min ago</em></small></span>
-                                            <p>In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend</p>
+                                            <h4><strong>2)</strong> In the <strong>"Pathways list"</strong> page, click in the name of the pathway of interest.</h4>
+                                            <p>
+                                                <a href="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial02.jpg" data-toggle="lightbox-image" 
+                                                    title="Step 2: In the Pathways list page, click in the name of the pathway of interest.">
+                                                    <img src="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial02.jpg" alt="Step 2">
+                                                </a>
+                                            </p>
                                         </div>
                                     </li>
                                     <li class="media">
-                                        <a href="page_ready_user_profile.php" class="pull-left">
-                                            <img src="img/placeholders/avatars/avatar.jpg" alt="Avatar" class="img-circle">
-                                        </a>
                                         <div class="media-body">
-                                            <form action="page_ready_user_profile.php" method="post" onsubmit="return false;">
-                                                <textarea id="profile-newsfeed-comment1" name="profile-newsfeed-comment1" class="form-control" rows="2" placeholder="Your comment.."></textarea>
-                                                <button type="submit" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Post Comment</button>
-                                            </form>
+                                            <h4><strong>3)</strong> The <strong>"Pathway viewer"</strong> page, offers the following options:</h4>
+                                            <hr>
+                                            <h4><ul class="media-list push">
+                                                <li class="media"><strong>A - </strong>Open the network details card;</li>
+                                                <li class="media"><strong>B - </strong>Filter, Edit, Delete, Create notes in the current network;</li>
+                                                <li class="media"><strong>C - </strong>Navigate through the network visualization;</li>
+                                                <li class="media"><strong>D - </strong>Adjust the network visualization zoom.</li>
+                                            </ul></h4>
+                                            <p>
+                                                <a href="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial03.jpg" data-toggle="lightbox-image" 
+                                                    title="Step 3: Pathway viewer page.">
+                                                    <img src="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial03.jpg" alt="Step 3">
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <div class="media-body">
+                                        <h4><strong>4)</strong> The <strong>network details card </strong> modal displays detailed informations about the current network.
+                                        Click in each tab to display the information of interest.</h4>
+                                            <p>
+                                                <a href="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial04.jpg" data-toggle="lightbox-image" 
+                                                    title="Step 4: Click in each tab to display the information of interest.">
+                                                    <img src="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial04.jpg" alt="Step 4">
+                                                </a>
+                                            </p>
                                         </div>
                                     </li>
                                 </ul>
@@ -159,83 +130,11 @@
                             </div>
                         </li>
                         <!-- END Story Published -->
-
-                        <!-- Check in -->
-                        <li class="media">
-                            <a href="page_ready_user_profile.php" class="pull-left">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="Avatar" class="img-circle">
-                            </a>
-                            <div class="media-body">
-                                <p class="push-bit">
-                                    <span class="text-muted pull-right">
-                                        <small>1 hour ago</small>
-                                        <span class="text-success" data-toggle="tooltip" title="From Mobile"><i class="fa fa-mobile"></i></span>
-                                    </span>
-                                    <strong><a href="page_ready_user_profile.php">Adventurer</a> checked in at <a href="javascript:void(0)">Cafe-Bar</a>.</strong>
-                                </p>
-                                <div id="gmap-checkin" class="gmap push"></div>
-                                <p>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-thumbs-o-up"></i> Like</a>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-comments-o"></i> Comment</a>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-share-square-o"></i> Share</a>
-                                </p>
-                            </div>
-                        </li>
-                        <!-- END Check in -->
-
-                        <!-- Status Updated -->
-                        <li class="media">
-                            <a href="page_ready_user_profile.php" class="pull-left">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="Avatar" class="img-circle">
-                            </a>
-                            <div class="media-body">
-                                <p class="push-bit">
-                                    <span class="text-muted pull-right">
-                                        <small>5 hours ago</small>
-                                        <span class="text-info" data-toggle="tooltip" title="From Custom App"><i class="fa fa-wrench"></i></span>
-                                    </span>
-                                    <strong><a href="page_ready_user_profile.php">User</a> updated status.</strong>
-                                </p>
-                                <p>Hey there! First post from the new application!</p>
-                                <p>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-thumbs-o-up"></i> Like</a>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-share-square-o"></i> Share</a>
-                                </p>
-                                <!-- Comments -->
-                                <ul class="media-list push">
-                                    <li class="media">
-                                        <a href="page_ready_user_profile.php" class="pull-left">
-                                            <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="Avatar" class="img-circle">
-                                        </a>
-                                        <div class="media-body">
-                                            <a href="page_ready_user_profile.php"><strong>User</strong></a>
-                                            <span class="text-muted"><small><em>1 hour ago</em></small></span>
-                                            <p>Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum.</p>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <a href="page_ready_user_profile.php" class="pull-left">
-                                            <img src="img/placeholders/avatars/avatar.jpg" alt="Avatar" class="img-circle">
-                                        </a>
-                                        <div class="media-body">
-                                            <form action="page_ready_user_profile.php" method="post" onsubmit="return false;">
-                                                <textarea id="profile-newsfeed-comment" name="profile-newsfeed-comment" class="form-control" rows="2" placeholder="Your comment.."></textarea>
-                                                <button type="submit" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Post Comment</button>
-                                            </form>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <!-- END Comments -->
-                            </div>
-                        </li>
-                        <li class="media text-center">
-                            <a href="javascript:void(0)" class="btn btn-xs btn-default push">View more..</a>
-                        </li>
-                        <!-- END Status Updated -->
                     </ul>
                 </div>
                 <!-- END Newsfeed Content -->
             </div>
+            <!-- END Newsfeed Block -->
         </div>
         <!-- END First Column -->
 
@@ -281,7 +180,6 @@
         </div>
         <!-- END Second Column -->
     </div>
-    <!-- END Newsfeed Block -->
     <!-- END Widgets Row -->
 </div>
 <!-- END Page Content -->

@@ -299,15 +299,7 @@
                 <div class="navbar-header">
                     <!-- Horizontal Menu Toggle + Alternative Sidebar Toggle Button, Visible only in small screens (< 768px) -->
                     <ul class="nav navbar-nav-custom pull-right visible-xs">
-                        <li>
-                            <a href="javascript:void(0)" data-toggle="collapse" data-target="#horizontal-menu-collapse">Menu</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar-alt');">
-                                <i class="gi gi-share_alt"></i>
-                                <span class="label label-primary label-indicator animation-floating">4</span>
-                            </a>
-                        </li>
+                        
                     </ul>
                     <!-- END Horizontal Menu Toggle + Alternative Sidebar Toggle Button -->
 
@@ -432,5 +424,21 @@
                 </form>
                 <!-- END Search Form -->
                 <?php } ?>
+
+                <!-- Right Header Navigation -->
+                <ul class="nav navbar-nav-custom pull-right">
+                    <!-- Alternative Sidebar Toggle Button -->
+                    <li>
+                        <a href="javascript:void(0)" aria-label="Increase Font" id="accessibility-font" class="js-accessibility"></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-label="Add Contrast" id="accessibility-contrast" class="js-accessibility">
+                    </li>
+                    <li><a></a></li>
+                    <li><a></a></li>
+                    <!-- END Alternative Sidebar Toggle Button -->
+                    <!-- END User Dropdown -->
+                </ul>
+                <!-- END Right Header Navigation -->
             </header>
             <!-- END Header -->

@@ -710,6 +710,7 @@ var App = function() {
         init: function() {
             uiInit(); // Initialize UI Code
             pageLoading(); // Initialize Page Loading
+            accessibilityButtons(); // Accessibility Buttons
         },
         sidebar: function(mode, extra) {
             handleSidebar(mode, extra); // Handle sidebars - access functionality from everywhere

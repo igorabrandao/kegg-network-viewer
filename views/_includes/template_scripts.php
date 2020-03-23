@@ -13,4 +13,5 @@
 <script src="<?php echo HOME_URI;?>/assets/js/vendor/jquery.min.js"></script>
 <script src="<?php echo HOME_URI;?>/assets/js/vendor/bootstrap.min.js"></script>
 <script src="<?php echo HOME_URI;?>/assets/js/plugins.js"></script>
+<script src="<?php echo HOME_URI;?>/assets/js/accessibility-buttons.js"></script>
 <script src="<?php echo HOME_URI;?>/assets/js/app.js"></script>

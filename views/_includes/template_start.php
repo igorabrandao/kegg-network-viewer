@@ -44,6 +44,9 @@
         <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
         <link rel="stylesheet" href="<?php echo HOME_URI;?>/assets/css/main.css">
 
+        <!-- The accessibility buttons stylesheet -->
+        <link rel="stylesheet" href="<?php echo HOME_URI;?>/assets/css/accessibility-buttons.css">
+
         <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
         <?php if ($template['theme']) { ?><link id="theme-link" rel="stylesheet" 
             href="<?php echo HOME_URI;?>/assets/css/themes/<?php echo $template['theme']; ?>.css"><?php } ?>

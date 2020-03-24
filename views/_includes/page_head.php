@@ -436,6 +436,40 @@
                     </li>
                     <li><a></a></li>
                     <li><a></a></li>
+                    <!-- Language Dropdown -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            Language <i class="fa fa-globe"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                            <li class="dropdown-header text-center">Select the language</li>
+                            <li>
+                                <a href="#googtrans(en|en)" class="lang-en lang-select" data-lang="en">
+                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/United States Minor Outlying.png" alt="English"> English</a>
+
+                                <a href="#googtrans(en|pt)" class="lang-es lang-select" data-lang="pt">
+                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/Brazil.png" alt="Portuguese"> Portuguese</a>
+
+                                <a href="#googtrans(en|es)" class="lang-es lang-select" data-lang="es">
+                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/Spain.png" alt="Spanish"> Spanish</a>
+
+                                <a href="#googtrans(en|de)" class="lang-es lang-select" data-lang="de">
+                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/Germany.png" alt="German"> German</a> 
+
+                                <a href="#googtrans(en|fr)" class="lang-es lang-select" data-lang="fr">
+                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/France.png" alt="French"> French</a> 
+
+                                <a href="#googtrans(en|zh-CN)" class="lang-es lang-select" data-lang="zh-CN">
+                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/China.png" alt="Mandarim"> Chinese Simplified</a>
+
+                                <a href="#googtrans(en|ja)" class="lang-es lang-select" data-lang="ja">
+                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/Japan.png" alt="Japanese"> Japanese</a>
+                            </li>
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
+                    <!-- END Language Dropdown -->
+                    <li><a></a></li>
                     <!-- END Alternative Sidebar Toggle Button -->
                     <!-- END User Dropdown -->
                 </ul>

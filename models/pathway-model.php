@@ -104,7 +104,7 @@
 		/**
 		 * Get the pathways with most AP list
 		 *
-		 * @since 0.1
+		 * @since 0.4
 		 * @access public
 		*/
 		public function get_most_ap( $has_network_ = 1, $limit_ = -1, $order_by_type_ = "" )
@@ -149,7 +149,7 @@
 				return $query->fetchAll();
 			else
 				return 0;
-		} // get_pathways_list
+		} // get_most_ap
 
 		/**
 		 * Get the PATHWAY information
@@ -224,6 +224,38 @@
 			}
 
 		} // pathway_has_network
+
+		/**
+		 * Get the data to pathway size chart
+		 *
+		 * @since 0.5
+		 * @access public
+		*/
+		public function get_chart_pathway_size()
+		{
+			// Select the necessary data from DB
+			$sql = "SELECT P.`code`, P.`nodes`, P.`edges`
+			FROM 
+				`pathway_data` as P
+			WHERE
+				P.`has_network` = 1
+			ORDER BY P.`nodes` ASC";
+
+			// Check the category filter
+			if ( isset($has_network_) && strcmp($has_network_, "") != 0 )
+			{
+				$sql .= " WHERE P.`has_network` = " . $has_network_;
+			}
+
+			// Execute the query
+			$query = $this->db->query($sql);
+
+			// Check if query worked
+			if ( $query )
+				return $query->fetchAll();
+			else
+				return 0;
+		} // get_most_ap
 	}
 
 ?>

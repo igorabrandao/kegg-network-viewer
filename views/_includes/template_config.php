@@ -12,7 +12,7 @@
 $template = array(
     'initials'          => 'KPV',
     'name'              => 'KEGG Pathway Viewer',
-    'version'           => 'v0.3.5',
+    'version'           => 'v0.5',
     'author'            => 'Igor Brandão',
     'email'             => 'igorabrandao@gmail.com',
     'robots'            => 'noindex, nofollow',
@@ -80,6 +80,11 @@ $primary_nav = array(
         'name'  => 'Home page',
         'url'   => HOME_URI,
         'icon'  => 'gi gi-home'
+    ),
+    array(
+        'name'  => 'Tutorial',
+        'url'   => HOME_URI . '/general_pages/tutorial',
+        'icon'  => 'gi gi-kiosk_light'
     ),
     array(
         'name'  => 'About ' . $template['initials'],

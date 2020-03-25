@@ -2,8 +2,22 @@
     // Get the entire pathways count
     $pathway_count = $pathway_model->get_pathways_count(1);
     $pathway_count_without_network = $pathway_model->get_pathways_count(0);
-?>
 
+    // Get the entire pathway list
+    $data_value = $pathway_model->get_pathways_list();
+
+    // Get the Top 10 biggest pathways
+    $biggest_pathways = $pathway_model->get_pathways_list($has_network_ = 1, $limit_ = 10, $order_by_field_ = "nodes", $order_by_type_ = "DESC");
+
+    // Get the Top 10 pathways with most organisms
+    $most_organisms = $pathway_model->get_pathways_list($has_network_ = 1, $limit_ = 10, $order_by_field_ = "total_species", $order_by_type_ = "DESC");
+
+    // Get the pathways with most articulation points
+    $most_ap = $pathway_model->get_most_ap($has_network_ = 1, $limit_ = 10, $order_by_type_ = "DESC");
+
+    // Get the Top 10 articulation points (AP) with most impact
+    $most_ap_impact = $pathway_model->get_pathways_list($has_network_ = 1, $limit_ = 10, $order_by_field_ = "disconnected_nodes", $order_by_type_ = "DESC");
+?>
 
 <!-- Page content -->
 <div id="page-content">
@@ -19,178 +33,359 @@
                         <small>version <?php echo $template["version"]; ?></small></h1>
                 </div>
                 <!-- END Main Title -->
-
-                <!-- Top Stats -->
-                <div class="col-md-8 col-lg-6">
-                    <div class="row text-center">
-                        <div class="col-xs-4 col-sm-3">
-                            <h2 class="animation-hatch">
-                                <strong><?php echo $pathway_count; ?></strong><br>
-                                <small><i class="gi gi-share_alt"></i> Pathways with visualization</small>
-                            </h2>
-                        </div>
-                        <div class="col-xs-4 col-sm-3">
-                            <h2 class="animation-hatch">
-                                <strong><?php echo $pathway_count_without_network; ?></strong><br>
-                                <small>Pathways without visualization</small>
-                            </h2>
-                        </div>
-                        <!-- We hide the last stat to fit the other 3 on small devices -->
-                        <div class="col-sm-3 hidden-xs">
-                            <h2 class="animation-hatch">
-                                <strong><?php echo $pathway_count + $pathway_count_without_network; ?></strong><br>
-                                <small>Total count of pathways</small>
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Top Stats -->
             </div>
         </div>
         <!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
         <img src="<?php echo HOME_URI;?>/assets/img/placeholders/headers/dashboard_header.jpg" alt="header image" class="animation-pulseSlow">
     </div>
 
-    <div class="row">
-        <!-- First Column -->
-        <div class="col-md-8 col-lg-8">
-            <!-- Newsfeed Block -->
-            <div class="block">
-                <!-- Newsfeed Title -->
-                <div class="block-title">
-                    <h2><strong>How it works?</strong></h2>
-                </div>
-                <!-- END Newsfeed Title -->
+    <!-- eCommerce Dashboard Header -->
+    <div class="content-header">
+        <ul class="nav-horizontal text-center">
+            <li class="active">
+                <a href="<?php echo HOME_URI; ?>"><i class="fa fa-bar-chart"></i> <?php echo $template['initials']; ?> Statistics</a>
+            </li>
+            <li>
+                <a href="<?php echo HOME_URI . '/pathway_module/list'; ?>"><i class="gi gi-list"></i> Pathways list</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END eCommerce Dashboard Header -->
 
-                <!-- Newsfeed Content -->
-                <div class="block-content-full">
-                    <!-- You can remove the class .media-feed-hover if you don't want each event to be highlighted on mouse hover -->
-                    <ul class="media-list media-feed media-feed-hover">
-                        <!-- Story Published -->
-                        <li class="media">
-                            <div class="media-body">
-                                <h4><a href="#"><strong>For the best use of this tool, follow the instructions below:</strong></a></h4>
-                                <br>
-                                <!-- Comments -->
-                                <ul class="media-list push">
-                                    <li class="media">
-                                        <div class="media-body">
-                                            <h4><strong>1)</strong> Access the menu <strong>"Pathways list"</strong> menu located in sidebar.</h5>
-                                            <p>
-                                                <a href="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial01.jpg" data-toggle="lightbox-image" 
-                                                title="Step 1: Access the menu Pathways list menu located in sidebar.">
-                                                    <img src="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial01.jpg" alt="Step 1">
-                                                </a>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <div class="media-body">
-                                            <h4><strong>2)</strong> In the <strong>"Pathways list"</strong> page, click in the name of the pathway of interest.</h4>
-                                            <p>
-                                                <a href="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial02.jpg" data-toggle="lightbox-image" 
-                                                    title="Step 2: In the Pathways list page, click in the name of the pathway of interest.">
-                                                    <img src="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial02.jpg" alt="Step 2">
-                                                </a>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <div class="media-body">
-                                            <h4><strong>3)</strong> The <strong>"Pathway viewer"</strong> page, offers the following options:</h4>
-                                            <hr>
-                                            <h4><ul class="media-list push">
-                                                <li class="media"><strong>A - </strong>Open the network details card;</li>
-                                                <li class="media"><strong>B - </strong>Filter, Edit, Delete, Create notes in the current network;</li>
-                                                <li class="media"><strong>C - </strong>Navigate through the network visualization;</li>
-                                                <li class="media"><strong>D - </strong>Adjust the network visualization zoom.</li>
-                                            </ul></h4>
-                                            <p>
-                                                <a href="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial03.jpg" data-toggle="lightbox-image" 
-                                                    title="Step 3: Pathway viewer page.">
-                                                    <img src="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial03.jpg" alt="Step 3">
-                                                </a>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <div class="media-body">
-                                        <h4><strong>4)</strong> The <strong>network details card </strong> modal displays detailed informations about the current network.
-                                        Click in each tab to display the information of interest.</h4>
-                                            <p>
-                                                <a href="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial04.jpg" data-toggle="lightbox-image" 
-                                                    title="Step 4: Click in each tab to display the information of interest.">
-                                                    <img src="<?php echo HOME_URI;?>/assets/img/tutorial/tutorial04.jpg" alt="Step 4">
-                                                </a>
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <!-- END Comments -->
-                            </div>
+    <!-- Quick Stats -->
+    <div class="row text-center">
+        <div class="col-sm-6 col-lg-4">
+            <a href="javascript:void(0)" class="widget widget-hover-effect2">
+                <div class="widget-extra themed-background">
+                    <h4 class="widget-content-light"><i class="gi gi-share_alt"></i> <strong>Pathways</strong> with visualization</h4>
+                </div>
+                <div class="widget-extra-full"><span class="h2 animation-expandOpen"><strong><?php echo $pathway_count; ?></strong></span></div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <a href="javascript:void(0)" class="widget widget-hover-effect2">
+                <div class="widget-extra themed-background-dark">
+                    <h4 class="widget-content-light"><strong>Pathways</strong> without visualization</h4>
+                </div>
+                <div class="widget-extra-full"><span class="h2 themed-color-dark animation-expandOpen"><?php echo $pathway_count_without_network; ?></span></div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <a href="javascript:void(0)" class="widget widget-hover-effect2">
+                <div class="widget-extra themed-background-dark">
+                    <h4 class="widget-content-light"><strong>Total</strong> number of pathways</h4>
+                </div>
+                <div class="widget-extra-full"><span class="h2 themed-color-dark animation-expandOpen"><?php echo ($pathway_count + $pathway_count_without_network); ?></span></div>
+            </a>
+        </div>
+    </div>
+    <!-- END Quick Stats -->
+
+    <!-- eShop Overview Block -->
+    <div class="block full">
+        <!-- eShop Overview Title -->
+        <div class="block-title">
+            <div class="block-options pull-right">
+                <div class="btn-group btn-group-sm">
+                    <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default dropdown-toggle" data-toggle="dropdown">Last Year <span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="active">
+                            <a href="javascript:void(0)">Last Year</a>
                         </li>
-                        <!-- END Story Published -->
+                        <li>
+                            <a href="javascript:void(0)">Last Month</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">This Month</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">Today</a>
+                        </li>
                     </ul>
                 </div>
-                <!-- END Newsfeed Content -->
+                <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="Settings"><i class="fa fa-cog"></i></a>
             </div>
-            <!-- END Newsfeed Block -->
+            <h2><strong>eShop</strong> Overview</h2>
         </div>
-        <!-- END First Column -->
+        <!-- END eShop Overview Title -->
 
-        <!-- Second Column -->
-        <div class="col-md-4 col-lg-4">
-            <!-- Info Block -->
-            <div class="block">
-                <!-- Info Title -->
-                <div class="block-title">
-                    <h2>About <strong><? echo $template["author"]; ?></strong> <small>&bull; <i class="fa fa-file-text text-primary"></i> <a href="javascript:void(0)" data-toggle="tooltip" title="Download Bio in PDF">Bio</a></small></h2>
+        <!-- eShop Overview Content -->
+        <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="row push">
+                        <div class="col-xs-6">
+                            <h3><strong class="animation-fadeInQuick">45.000</strong><br><small class="text-uppercase animation-fadeInQuickInv"><a href="javascript:void(0)">Total Orders</a></small></h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3><strong class="animation-fadeInQuick">$ 1.200,00</strong><br><small class="text-uppercase animation-fadeInQuickInv"><a href="javascript:void(0)">Cart Value</a></small></h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3><strong class="animation-fadeInQuick">1.520.000</strong><br><small class="text-uppercase animation-fadeInQuickInv"><a href="javascript:void(0)">Visits</a></small></h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3><strong class="animation-fadeInQuick">28.000</strong><br><small class="text-uppercase animation-fadeInQuickInv"><a href="javascript:void(0)">Customers</a></small></h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3><strong class="animation-fadeInQuick">3.5%</strong><br><small class="text-uppercase animation-fadeInQuickInv"><a href="javascript:void(0)">Conv. Rate</a></small></h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3><strong class="animation-fadeInQuick">4.250</strong><br><small class="text-uppercase animation-fadeInQuickInv"><a href="javascript:void(0)">Products</a></small></h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3><strong class="animation-fadeInQuick">$ 260.000,00</strong><br><small class="text-uppercase animation-fadeInQuickInv"><a href="javascript:void(0)">Net Profit</a></small></h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3><strong class="animation-fadeInQuick">$ 16.850,00</strong><br><small class="text-uppercase animation-fadeInQuickInv"><a href="javascript:void(0)">Payment Fees</a></small></h3>
+                        </div>
+                    </div>
                 </div>
-                <!-- END Info Title -->
+                <div class="col-md-6 col-lg-8">
+                    <!-- Flot Charts (initialized in js/pages/ecomDashboard.js), for more examples you can check out http://www.flotcharts.org/ -->
+                    <div id="chart-overview" style="height: 350px;"></div>
+                </div>
+            </div>
+        <!-- END eShop Overview Content -->
+    </div>
+    <!-- END eShop Overview Block -->
 
-                <!-- Info Content -->
-                <table class="table table-borderless table-striped">
+    <!-- Top biggest pathways section -->
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Latest Orders Block -->
+            <div class="block">
+                <!-- Latest Orders Title -->
+                <div class="block-title">
+                    <h2>Top 10 <strong>Biggest Pathways</strong></h2>
+                </div>
+                <!-- END Latest Orders Title -->
+
+                <!-- Latest Orders Content -->
+                <table class="table table-borderless table-striped table-vcenter table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center hidden-xs" style="width: 20%;"><i class="gi gi-share_alt"></i> Code</th>
+                            <th class="text-center hidden-xs" style="width: 40%;">Name</th>
+                            <th class="text-center" style="width: 20%;">Nodes</th>
+                            <th class="text-center" style="width: 20%;">Edges</th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <tr>
-                            <td style="width: 25%;"><strong>Bio</strong></td>
-                            <td> Msc. student in Bioinformatics at Federal University of Rio Grande do Norte (UFRN) / Biome (2019) and develops 
-                                research in the field of Systems Biology. Has specialization in Information Technology Applied to the Legal Area 
-                                by UFRN/Court of Justice of Rio Grande do Norte (TJRN), bachelor degree in Information Technology at UFRN (2018), 
-                                Analysis and Systems Development at Fatec Carapicuíba - Technology College (2012) and bachelor degree in 
-                                Business Administration at Mackenzie Presbyterian University (2013).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Affiliation</strong></td>
-                            <td><a style="color: #173F5F;" href="https://www.ufrn.br/" target="_blank"><strong>Federal University of Rio Grande do Norte (UFRN)</strong></a></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Department</strong></td>
-                            <td><a style="color: #173F5F;" href="https://bioinfo.imd.ufrn.br/" target="_blank"><strong>Bioinformatics Multidisciplinary Environment (BIOME)</strong></a></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Advisor</strong></td>
-                            <td><a style="color: #173F5F;" href="https://dalmolingroup.imd.ufrn.br/" target="_blank"><strong>Rodrigo Juliani Siqueira Dalmolin</strong></a></td>
-                        </tr>
-                        
-                        <tr>
-                            <td><strong>Skills used in this project</strong></td>
-                            <td>
-                                <a class="label label-info" title="R">R</a>
-                                <a class="label label-warning" title="HTML">HTML</a>
-                                <a class="label label-success" title="CSS">CSS</a>
-                                <a class="label label-danger" title="Javascript">Javascript</a>
-                                <a class="label label-primary" title="Javascript">MySql</a>
-                            </td>
-                        </tr>
+                        <?php
+                            // Run through posts list
+                            foreach ( $biggest_pathways as $value )
+                            {
+                                // Check if the register exists
+                                if ( isset($value["code"]) && strcmp($value["code"], "") != 0 )
+                                {
+                                    // Init row
+                                    echo "<tr>";
+
+                                    // View url
+                                    $view_url = HOME_URI . '/pathway_module/viewer?pathwayCode=' . encrypt_decrypt('encrypt', $value["code"]);
+
+                                    // Item informations
+                                    echo "
+                                        <td class='text-center' style='width: 100px;'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-left' style='width: 100px;'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
+                                        <td class='text-center text-danger'><strong>" . $value["nodes"] . "</strong></td>
+                                        <td class='text-center'>" . $value["edges"] . "</td>
+                                    ";
+
+                                }
+                            }
+                        ?>
                     </tbody>
                 </table>
-                <!-- END Info Content -->
+                <p style="font-style: italic;"><strong>Note: </strong> in metabolic pathways nodes represent metabolites and edges are reactions that are catalyzed by specific gene products.</p>
+                <!-- END Latest Orders Content -->
             </div>
-            <!-- END Info Block -->
+            <!-- END Latest Orders Block -->
         </div>
-        <!-- END Second Column -->
     </div>
-    <!-- END Widgets Row -->
+    <!-- END Top biggest pathways section -->
+
+    <!-- Top articulation points section -->
+    <div class="row">
+        <div class="col-lg-6">
+            <!-- Top Pathways Block -->
+            <div class="block">
+                <!-- Top Pathways Title -->
+                <div class="block-title">
+                    <h2>Top 10 <strong>Pathways with most Articulation Points (AP)</strong></h2>
+                </div>
+                <!-- END Top Products Title -->
+
+                <!-- Top Products Content -->
+                <table class="table table-borderless table-striped table-vcenter table-bordered">
+                <thead>
+                        <tr>
+                            <th class="text-center" style="width: 15%;"><i class="gi gi-share_alt"></i> Code</th>
+                            <th class="text-center" style="width: 30%;">Name</th>
+                            <th class="text-center" style="width: 14%;">Total AP (A + B)</th>
+                            <th class="text-center hidden-xs" style="width: 11%;">AP (A)</th>
+                            <th class="text-center hidden-xs" style="width: 11%;">HAP (B)</th>
+                            <th class="text-center hidden-xs" style="width: 9%;">HUB</th>
+                            <th class="text-center hidden-xs" style="width: 9%;">Other nodes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            // Run through posts list
+                            foreach ( $most_ap as $value )
+                            {
+                                // Check if the register exists
+                                if ( isset($value["code"]) && strcmp($value["code"], "") != 0 )
+                                {
+                                    // Init row
+                                    echo "<tr>";
+
+                                    // View url
+                                    $view_url = HOME_URI . '/pathway_module/viewer?pathwayCode=' . encrypt_decrypt('encrypt', $value["code"]);
+
+                                    // Item informations
+                                    echo "
+                                        <td class='text-center' style='width: 100px;'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-left' style='width: 100px;'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
+                                        <td class='text-center text-danger'><strong>" . $value["TOTAL_AP"] . "</strong></td>
+                                        <td class='text-center'>" . $value["ap_number"] . "</td>
+                                        <td class='text-center'>" . $value["hap_number"] . "</td>
+                                        <td class='text-center'>" . $value["hub_number"] . "</td>
+                                        <td class='text-center'>" . $value["others_number"] . "</td>
+                                    ";
+
+                                }
+                            }
+                        ?>
+                    </tbody>
+                </table>
+                <p style="font-style: italic;"><strong>Note: </strong> articulation point (AP) is a node when removed from the network disconnect it in N components.</p>
+                <!-- END Top Pathways Content -->
+            </div>
+            <!-- END Top Pathways Block -->
+        </div>
+        <div class="col-lg-6">
+            <!-- Top Pathways Block -->
+            <div class="block">
+                <!-- Top Pathways Title -->
+                <div class="block-title">
+                    <h2>Top 10 <strong>Articulation Points impact</strong></h2>
+                </div>
+                <!-- END Top Products Title -->
+
+                <!-- Top Products Content -->
+                <table class="table table-borderless table-striped table-vcenter table-bordered">
+                <thead>
+                        <tr>
+                            <th class="text-center hidden-xs" style="width: 15%;"><i class="gi gi-share_alt"></i> Code</th>
+                            <th class="text-center hidden-xs" style="width: 40%;">Name</th>
+                            <th class="text-center hidden-xs" style="width: 30%;">Articulation Point</th>
+                            <th class="text-center hidden-xs" style="width: 15%;">Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            // Run through posts list
+                            foreach ( $most_ap_impact as $value )
+                            {
+                                // Check if the register exists
+                                if ( isset($value["code"]) && strcmp($value["code"], "") != 0 )
+                                {
+                                    // Init row
+                                    echo "<tr>";
+
+                                    // View url
+                                    $view_url = HOME_URI . '/pathway_module/viewer?pathwayCode=' . encrypt_decrypt('encrypt', $value["code"]);
+
+                                    // Item informations
+                                    echo "
+                                        <td class='text-center' style='width: 100px;'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-left' style='width: 100px;'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
+                                        <td class='text-center'>" . $value["node_highest_impact"] . "</td>
+                                        <td class='text-center text-danger'><strong>" . $value["disconnected_nodes"] . "</strong></td>
+                                    ";
+
+                                }
+                            }
+                        ?>
+                    </tbody>
+                </table>
+                <p style="font-style: italic;"><strong>Note: </strong> the articulation point (AP) impact refers to the number of nodes that are disconnected when the AP is removed.</p>
+                <!-- END Top Pathways Content -->
+            </div>
+            <!-- END Top Pathways Block -->
+        </div>
+    </div>
+    <!-- Top articulation points section -->
+
+    <!-- Top pathways organisms section -->
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Top Pathways Block -->
+            <div class="block">
+                <!-- Top Pathways Title -->
+                <div class="block-title">
+                    <h2>Top 10 <strong>Pathways with most associated organisms</strong></h2>
+                </div>
+                <!-- END Top Products Title -->
+
+                <!-- Top Products Content -->
+                <table class="table table-borderless table-striped table-vcenter table-bordered">
+                <thead>
+                        <tr>
+                            <th class="text-center hidden-xs" style="width: 8%;"><i class="gi gi-share_alt"></i> Code</th>
+                            <th class="text-center hidden-xs" style="width: 25%;">Name</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">Organisms</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">Eukaryotes</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">Prokaryotes</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">Animals</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">Plants</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">Fungi</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">Protists</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">Bacteria</th>
+                            <th class="text-center hidden-xs" style="width: 8%;">Archaea</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            // Run through posts list
+                            foreach ( $most_organisms as $value )
+                            {
+                                // Check if the register exists
+                                if ( isset($value["code"]) && strcmp($value["code"], "") != 0 )
+                                {
+                                    // Init row
+                                    echo "<tr>";
+
+                                    // View url
+                                    $view_url = HOME_URI . '/pathway_module/viewer?pathwayCode=' . encrypt_decrypt('encrypt', $value["code"]);
+
+                                    // Item informations
+                                    echo "
+                                        <td class='text-center' style='width: 100px;'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-left' style='width: 100px;'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
+                                        <td class='text-center text-danger'><strong>" . $value["total_species"] . "</strong></td>
+                                        <td class='text-center'>" . $value["eukaryotes_count"] . "</td>
+                                        <td class='text-center'>" . $value["prokaryotes_count"] . "</td>
+                                        <td class='text-center'>" . $value["animals_count"] . "</td>
+                                        <td class='text-center'>" . $value["plants_count"] . "</td>
+                                        <td class='text-center'>" . $value["fungi_count"] . "</td>
+                                        <td class='text-center'>" . $value["protists_count"] . "</td>
+                                        <td class='text-center'>" . $value["bacteria_count"] . "</td>
+                                        <td class='text-center'>" . $value["archaea_count"] . "</td>
+                                    ";
+
+                                }
+                            }
+                        ?>
+                    </tbody>
+                </table>
+                <!-- END Top Pathways Content -->
+            </div>
+            <!-- END Top Pathways Block -->
+        </div>
+    </div>
+    <!-- END Top pathways organisms section -->
+
 </div>
 <!-- END Page Content -->
 
@@ -204,4 +399,5 @@
 
 <!-- Load and execute javascript code used only in this page -->
 <script src="<?php echo HOME_URI;?>/assets/js/pages/index.js"></script>
-<script>$(function(){ Index.init(); });</script>
+<script src="<?php echo HOME_URI;?>/assets/js/pages/ecomDashboard.js"></script>
+<script>$(function(){ EcomDashboard.init(); });</script>

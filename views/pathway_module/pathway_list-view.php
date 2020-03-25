@@ -76,7 +76,7 @@
                                     // View url
                                     $view_url = HOME_URI . '/pathway_module/viewer?pathwayCode=' . encrypt_decrypt('encrypt', $value["code"]);
 
-                                    // Action buttons
+                                    // Item informations
                                     echo "<td>
 
                                         <h3><a href='" . $view_url . "'><strong>[" . $value["code"] . "] - " . $value["name"] . "</strong></a></h3>

@@ -37,7 +37,7 @@
 			FROM 
 				`pathway_data` as P";
 
-			// Check the category filter
+			// Check the network filter
 			if ( isset($has_network_) && strcmp($has_network_, "") != 0 )
 			{
 				$sql .= " WHERE P.`has_network` = " . $has_network_;
@@ -59,7 +59,7 @@
 		 * @since 0.1
 		 * @access public
 		*/
-		public function get_pathways_list( $has_network_ = 1 )
+		public function get_pathways_list( $has_network_ = 1, $limit_ = -1, $order_by_field_ = "", $order_by_type_ = "" )
 		{
 			// Select the necessary data from DB
 			$sql = "SELECT P.`*`
@@ -70,6 +70,75 @@
 			if ( isset($has_network_) && strcmp($has_network_, "") != 0 )
 			{
 				$sql .= " WHERE P.`has_network` = " . $has_network_;
+			}
+
+			// Check order by parameter
+			if ( isset($order_by_field_) && strcmp($order_by_type_, "") != 0 )
+			{
+				$order_by_type = "ASC";
+
+				if ( isset($order_by_field_) && strcmp($order_by_type_, "") != 0 )
+				{
+					$order_by_type = $order_by_type_;
+				}
+
+				$sql .= " ORDER BY P.`" . $order_by_field_ . "` " . $order_by_type;
+			}
+
+			// Check the limit
+			if ( isset($limit_) && $limit_ > 0 )
+			{
+				$sql .= " LIMIT " . $limit_;
+			}
+
+			// Execute the query
+			$query = $this->db->query($sql);
+
+			// Check if query worked
+			if ( $query )
+				return $query->fetchAll();
+			else
+				return 0;
+		} // get_pathways_list
+
+		/**
+		 * Get the pathways with most AP list
+		 *
+		 * @since 0.1
+		 * @access public
+		*/
+		public function get_most_ap( $has_network_ = 1, $limit_ = -1, $order_by_type_ = "" )
+		{
+			// Select the necessary data from DB
+			$sql = "SELECT P.`*`, (P.`ap_number` + P.`hap_number`) AS `TOTAL_AP`
+			FROM 
+				`pathway_data` as P";
+
+			// Check the category filter
+			if ( isset($has_network_) && strcmp($has_network_, "") != 0 )
+			{
+				$sql .= " WHERE P.`has_network` = " . $has_network_;
+			}
+
+			$order_by_field_ = "TOTAL_AP";
+
+			// Check order by parameter
+			if ( isset($order_by_field_) && strcmp($order_by_type_, "") != 0 )
+			{
+				$order_by_type = "DESC";
+
+				if ( isset($order_by_field_) && strcmp($order_by_type_, "") != 0 )
+				{
+					$order_by_type = $order_by_type_;
+				}
+
+				$sql .= " ORDER BY `" . $order_by_field_ . "` " . $order_by_type;
+			}
+
+			// Check the limit
+			if ( isset($limit_) && $limit_ > 0 )
+			{
+				$sql .= " LIMIT " . $limit_;
 			}
 
 			// Execute the query

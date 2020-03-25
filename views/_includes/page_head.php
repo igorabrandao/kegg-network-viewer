@@ -124,7 +124,7 @@
 
                     <?php if ($primary_nav) { ?>
                     <!-- Sidebar Navigation -->
-                    <ul class="sidebar-nav">
+                    <ul class="sidebar-nav" data-step="2" data-intro="Use the sidebar to access the website pages">
                         <?php foreach( $primary_nav as $key => $link ) {
                             $link_class = '';
                             $li_active  = '';
@@ -415,12 +415,20 @@
                     <!-- END Template Options -->
 
                     <!-- Dictionary Button -->
-                    <li>
+                    <li data-step="4" data-intro="If you don't understand some term, use our terms dictionary!">
                         <a href="javascript:void(0)" onclick="$('#modal-dictionary').modal('show');">
                             <i class="gi gi-book"></i>
                         </a>
                     </li>
                     <!-- END Dictionary Button -->
+
+                    <!-- Help Button -->
+                    <li data-step="5" data-intro="Click here if you need to watch the tour again">
+                        <a href="javascript:void(0)" onclick="javascript:introJs().setOption('showProgress', true).start();">
+                            Need help <i class="fa fa-question"></i>
+                        </a>
+                    </li>
+                    <!-- END Help Button -->
                 </ul>
                 <!-- END Left Header Navigation -->
 
@@ -434,7 +442,7 @@
                 <?php } ?>
 
                 <!-- Right Header Navigation -->
-                <ul class="nav navbar-nav-custom pull-right">
+                <ul class="nav navbar-nav-custom pull-right" data-step="6" data-intro="Use this options to increase/decrease the font-size, add/remove contrast and change the language">
                     <!-- Alternative Sidebar Toggle Button -->
                     <li>
                         <a href="javascript:void(0)" aria-label="Increase Font" id="accessibility-font" class="js-accessibility"></a>

@@ -50,6 +50,9 @@
         <!-- Fix to flot charts stylesheet -->
         <link rel="stylesheet" href="<?php echo HOME_URI;?>/assets/css/flotcharts-fix.css">
 
+        <!-- Intro js stylesheet -->
+        <link rel="stylesheet" href="<?php echo HOME_URI;?>/assets/css/introjs.css">
+
         <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
         <?php if ($template['theme']) { ?><link id="theme-link" rel="stylesheet" 
             href="<?php echo HOME_URI;?>/assets/css/themes/<?php echo $template['theme']; ?>.css"><?php } ?>

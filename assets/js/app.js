@@ -711,6 +711,29 @@ var App = function() {
             uiInit(); // Initialize UI Code
             pageLoading(); // Initialize Page Loading
             accessibilityButtons(); // Accessibility Buttons
+
+            // User tour guide (first time only)
+            var introguide = introJs();
+
+            // Check for it when deciding whether to start.
+            window.addEventListener('load', function () {
+                var doneTour = localStorage.getItem('KPVTour') === 'Completed';
+                if (doneTour) {
+                    return;
+                }
+                else {
+                    introguide.start()
+            
+                    introguide.oncomplete(function () {
+                        localStorage.setItem('KPVTour', 'Completed');
+                    });
+            
+                    introguide.onexit(function () {
+                        localStorage.setItem('KPVTour', 'Completed');
+                    });
+                }
+            });
+
         },
         sidebar: function(mode, extra) {
             handleSidebar(mode, extra); // Handle sidebars - access functionality from everywhere

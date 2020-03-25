@@ -32,7 +32,7 @@
     <!-- For an image header add the class 'content-header-media' and an image as in the following example -->
     <div class="content-header content-header-media">
         <div class="header-section">
-            <div class="row">
+            <div class="row" data-step="7" data-intro="This is the Pathway general informations.">
                 <!-- Main Title (hidden on small devices for the statistics to fit) -->
                 <div class="col-md-4 col-lg-6">
                     <h1><?php echo $pathway_info["code"]; ?> <strong><?php echo $pathway_info["name"]; ?></strong><br>
@@ -94,7 +94,7 @@
                             </h2>
                         </div>
                         
-                        <div class="col-sm-12 hidden-xs">
+                        <div class="col-sm-12 hidden-xs" data-step="9" data-intro="Click here to see the details about the pathway.">
                             <button type="button" class="btn btn-block btn-danger" onclick="$('#modal-network-info').modal('show');">
                                 Click here to see the pathway information
                             </button>
@@ -110,10 +110,10 @@
     <!-- END Dashboard Header -->
 
     <!-- Widgets Row -->
-    <div class="row">
+    <div class="row" data-step="10" data-intro="">
         <div class="col-md-12">
             <!-- Timeline Widget -->
-            <div class="widget">
+            <div class="widget" data-step="8" data-intro="Use this area to interact with the network, cool hm?">
                 <div class="widget-extra themed-background-dark">
                     <h3 class="widget-content-light">
                         Pathway <strong>Viewer</strong>

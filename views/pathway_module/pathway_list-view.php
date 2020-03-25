@@ -34,7 +34,13 @@
         <!-- END Search Styles Title -->
 
         <!-- Search Styles Content -->
-        <div class="tab-content">
+        <div class="tab-content" data-step="7" data-intro="This is the pathways list, here you can: <br> 
+                    <ul>
+                        <li>Search through any column using the textbox;</li>
+                        <li>Navigate to other table rows via pagination number;</li>
+                        <hr style='margin: 0;'>
+                        <li>Access the detail information of a Pathway clicking in the 'PATHWAY' columns;</li>
+                    </ul>">
             <!-- Projects Search -->
             <div class="tab-pane active" id="tab-pathway-list">
                 <!-- Search Info - Pagination -->
@@ -46,7 +52,7 @@
                 <!-- END Search Info - Pagination -->
 
                 <!-- Projects Results -->
-                <table id="pathways-datatable" class="table table-striped table-vcenter">
+                <table id="pathways-datatable" class="table table-striped table-vcenter" data-step="8" data-intro="">
                     <thead>
                         <tr>
                             <th ><i class="gi gi-share_alt"></i> PATHWAY</th>

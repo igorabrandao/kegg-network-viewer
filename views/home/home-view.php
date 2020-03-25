@@ -42,10 +42,11 @@
     <!-- For an image header add the class 'content-header-media' and an image as in the following example -->
     <div class="content-header content-header-media">
         <div class="header-section">
-            <div class="row">
+            <div class="row" data-step="1" data-intro="Welcome to <?php echo $template["initials"] . ' - ' . $template["name"]; ?>! <br>
+                This is a tour to show you how this tools works, enjoy it :)">
                 <!-- Main Title (hidden on small devices for the statistics to fit) -->
                 <div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
-                    <h1><?php echo $template["initials"]; ?> - <strong>KEGG Pathway Viewer</strong><br>
+                    <h1><?php echo $template["initials"]; ?> - <strong><?php echo $template["name"]; ?></strong><br>
                         <p style="font-size: 16px;"><?php echo $template["headline"]; ?></p>
                         <small>version <?php echo $template["version"]; ?></small></h1>
                 </div>
@@ -58,7 +59,7 @@
 
     <!-- eCommerce Dashboard Header -->
     <div class="content-header">
-        <ul class="nav-horizontal text-center">
+        <ul class="nav-horizontal text-center" data-step="3" data-intro="Or the quick access options">
             <li class="active">
                 <a href="<?php echo HOME_URI; ?>"><i class="fa fa-bar-chart"></i> <?php echo $template['initials']; ?> Statistics</a>
             </li>
@@ -70,7 +71,7 @@
     <!-- END eCommerce Dashboard Header -->
 
     <!-- Quick Stats -->
-    <div class="row text-center">
+    <div class="row text-center" data-step="7" data-intro="This is the quick stats section">
         <div class="col-sm-6 col-lg-4">
             <a href="javascript:void(0)" class="widget widget-hover-effect2">
                 <div class="widget-extra themed-background">
@@ -99,14 +100,14 @@
     <!-- END Quick Stats -->
 
     <!-- eShop Overview Block -->
-    <div class="block full">
+    <div class="block full" data-step="8" data-intro="This is the chart section!">
         <!-- eShop Overview Title -->
         <div class="block-title">
             <h2><strong>Pathways</strong> Overview</h2>
-            <ul class="nav nav-tabs" data-toggle="tabs">
+            <ul class="nav nav-tabs" data-toggle="tabs" data-step="9" data-intro="Use the tabs to see different charts ;)">
                 <li class="active"><a href="#pathway-tabs-size">Number of nodes</a></li>
-                <li><a href="#pathway-tabs-ap">Number of Articulation Points (AP)</a></li>
-                <li><a href="#pathway-tabs-organisms">Number of associated organisms</a></li>
+                <li><a href="#pathway-tabs-ap" data-step="10" data-intro="Click!">Number of Articulation Points (AP)</a></li>
+                <li><a href="#pathway-tabs-organisms" data-step="11" data-intro="Click!">Number of associated organisms</a></li>
             </ul>
         </div>
         <!-- END eShop Overview Title -->
@@ -148,7 +149,7 @@
     <!-- END eShop Overview Block -->
 
     <!-- Top biggest pathways section -->
-    <div class="row">
+    <div class="row" data-step="12" data-intro="Example o statistical table. Click in the 'Code or Ńame' column to visualize the network">
         <div class="col-lg-12">
             <!-- Latest Orders Block -->
             <div class="block">
@@ -189,7 +190,6 @@
                                         <td class='text-center text-danger'><strong>" . $value["nodes"] . "</strong></td>
                                         <td class='text-center'>" . $value["edges"] . "</td>
                                     ";
-
                                 }
                             }
                         ?>
@@ -269,7 +269,7 @@
             </div>
             <!-- END Top Pathways Block -->
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6" data-step="13" data-intro="If you click in the 'Articulation point' you can see the details of the listed protein">
             <!-- Top Pathways Block -->
             <div class="block">
                 <!-- Top Pathways Title -->

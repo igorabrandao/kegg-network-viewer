@@ -161,7 +161,11 @@
 		public function get_pathway_info( $pathway_code_ )
 		{
 			// Select the necessary data from DB
-			$sql = "SELECT `*`
+			$sql = "SELECT P.`id`, P.`code`, P.`name`, P.`description`, P.`class`, P.`pathway_map`, P.`module`, 
+				P.`disease`, P.`dblinks`, P.`ko_pathway`, P.`reference`, P.`eukaryotes_count`, P.`prokaryotes_count`, 
+				P.`animals_count`, P.`plants_count`, P.`fungi_count`, P.`protists_count`, P.`bacteria_count`, P.`archaea_count`, 
+				P.`has_network`, P.`nodes`, P.`edges`, P.`total_species`, P.`node_highest_impact`, P.`disconnected_nodes`, 
+				P.`community`, P.`mean_degree`, P.`mean_betweenness`, P.`ap_number`, P.`hap_number`, P.`hub_number`, P.`others_number`
 			FROM 
 				`pathway_data` 
 			WHERE 
@@ -289,6 +293,39 @@
 			else
 				return 0;
 		} // get_chart_pathway_ap
+
+		/**
+		 * Get the data to pathway size chart
+		 *
+		 * @since 0.5
+		 * @access public
+		*/
+		public function get_chart_pathway_organisms()
+		{
+			// Select the necessary data from DB
+			$sql = "SELECT P.`code`, P.`eukaryotes_count`, P.`prokaryotes_count`, P.`animals_count`, P.`plants_count`, 
+				P.`fungi_count`, P.`protists_count`, P.`bacteria_count`, P.`archaea_count`, P.`total_species`
+			FROM 
+				`pathway_data` as P
+			WHERE
+				P.`has_network` = 1
+			ORDER BY P.`total_species` ASC";
+
+			// Check the category filter
+			if ( isset($has_network_) && strcmp($has_network_, "") != 0 )
+			{
+				$sql .= " WHERE P.`has_network` = " . $has_network_;
+			}
+
+			// Execute the query
+			$query = $this->db->query($sql);
+
+			// Check if query worked
+			if ( $query )
+				return $query->fetchAll();
+			else
+				return 0;
+		} // get_chart_pathway_size
 	}
 
 ?>

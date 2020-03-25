@@ -24,6 +24,7 @@
     
     $chart_pathway_size = $pathway_model->get_chart_pathway_size();
     $chart_pathway_ap = $pathway_model->get_chart_pathway_ap();
+    $chart_pathway_organism = $pathway_model->get_chart_pathway_organisms();
 ?>
 
 <script type="text/javascript">
@@ -31,6 +32,7 @@
     // Pass the carts data to the .js file
     var pathway_chart_size_data = <?php echo json_encode($chart_pathway_size); ?>;
     var pathway_chart_ap_data = <?php echo json_encode($chart_pathway_ap); ?>;
+    var pathway_chart_organism_data = <?php echo json_encode($chart_pathway_organism); ?>;
 
 </script>
 
@@ -125,7 +127,7 @@
             <div class="tab-pane" id="pathway-tabs-ap">
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
-                    <div id="pathway-chart-ap" style="width: 100%; height: 350px;"></div>
+                        <div id="pathway-chart-ap" style="width: 100%; height: 350px;"></div>
                     </div>
                 </div>
             </div>
@@ -135,7 +137,7 @@
             <div class="tab-pane" id="pathway-tabs-organisms">
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
-                        DEF
+                        <div id="pathway-chart-organism" style="width: 100%; height: 350px;"></div>
                     </div>
                 </div>
             </div>

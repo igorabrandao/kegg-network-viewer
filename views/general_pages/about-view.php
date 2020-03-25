@@ -69,7 +69,6 @@
                             <td><strong>Advisor</strong></td>
                             <td><a style="color: #173F5F;" href="https://dalmolingroup.imd.ufrn.br/" target="_blank"><strong>Rodrigo Juliani Siqueira Dalmolin</strong></a></td>
                         </tr>
-                        
                         <tr>
                             <td><strong>Skills used in this project</strong></td>
                             <td>
@@ -78,6 +77,13 @@
                                 <a class="label label-success" title="CSS">CSS</a>
                                 <a class="label label-danger" title="Javascript">Javascript</a>
                                 <a class="label label-primary" title="Javascript">MySql</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='text-center' colspan='2'>
+                                <h4>
+                                    <a style="color: #173F5F;" href="<? echo $template["website"]; ?>" target="_blank"><strong>Author's website</strong></a>
+                                </h4>
                             </td>
                         </tr>
                     </tbody>

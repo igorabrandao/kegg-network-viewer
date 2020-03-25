@@ -15,6 +15,7 @@ $template = array(
     'version'           => 'v0.5',
     'author'            => 'Igor Brandão',
     'email'             => 'igorabrandao@gmail.com',
+    'website'           => 'https://igorabrandao.com.br/',
     'robots'            => 'noindex, nofollow',
     'title'             => 'KPV - KEGG Pathway Viewer',
     'headline'          => 'The online tool to visualize and interact with KEGG metabolic pathways.',

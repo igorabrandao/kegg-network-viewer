@@ -16,3 +16,16 @@ FLOAT CHARTS FIXES
     /*rotation-point:50% 50%;*/ /* CSS3 */
     /*rotation:270deg;*/ /* CSS3 */
 }
+
+/* Rotate the x-axis of pathway-chart-ap chart */
+#pathway-chart-ap div.xAxis div.tickLabel 
+{
+    margin-top: 20px;
+    transform: rotate(-90deg);
+    -ms-transform:rotate(-90deg); /* IE 9 */
+    -moz-transform:rotate(-90deg); /* Firefox */
+    -webkit-transform:rotate(-90deg); /* Safari and Chrome */
+    -o-transform:rotate(-90deg); /* Opera */
+    /*rotation-point:50% 50%;*/ /* CSS3 */
+    /*rotation:270deg;*/ /* CSS3 */
+}

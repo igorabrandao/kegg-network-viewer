@@ -255,7 +255,40 @@
 				return $query->fetchAll();
 			else
 				return 0;
-		} // get_most_ap
+		} // get_chart_pathway_size
+
+		/**
+		 * Get the data to pathway size chart
+		 *
+		 * @since 0.5
+		 * @access public
+		*/
+		public function get_chart_pathway_ap()
+		{
+			// Select the necessary data from DB
+			$sql = "SELECT P.`code`, P.`ap_number`, P.`hap_number`, P.`hub_number`, P.`others_number`,
+				(P.`ap_number` + P.`hap_number`) AS `TOTAL_AP`
+			FROM 
+				`pathway_data` as P
+			WHERE
+				P.`has_network` = 1
+			ORDER BY `TOTAL_AP` ASC";
+
+			// Check the category filter
+			if ( isset($has_network_) && strcmp($has_network_, "") != 0 )
+			{
+				$sql .= " WHERE P.`has_network` = " . $has_network_;
+			}
+
+			// Execute the query
+			$query = $this->db->query($sql);
+
+			// Check if query worked
+			if ( $query )
+				return $query->fetchAll();
+			else
+				return 0;
+		} // get_chart_pathway_ap
 	}
 
 ?>

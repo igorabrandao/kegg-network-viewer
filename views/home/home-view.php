@@ -23,12 +23,14 @@
     // ========================================
     
     $chart_pathway_size = $pathway_model->get_chart_pathway_size();
+    $chart_pathway_ap = $pathway_model->get_chart_pathway_ap();
 ?>
 
 <script type="text/javascript">
     
     // Pass the carts data to the .js file
     var pathway_chart_size_data = <?php echo json_encode($chart_pathway_size); ?>;
+    var pathway_chart_ap_data = <?php echo json_encode($chart_pathway_ap); ?>;
 
 </script>
 
@@ -113,7 +115,7 @@
             <div class="tab-pane active" id="pathway-tabs-size">
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
-                        <div id="pathway-chart-size" style="height: 350px;"></div>
+                        <div id="pathway-chart-size" style="width: 100%; height: 350px;"></div>
                     </div>
                 </div>
             </div>
@@ -123,7 +125,7 @@
             <div class="tab-pane" id="pathway-tabs-ap">
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
-                        ABC
+                    <div id="pathway-chart-ap" style="width: 100%; height: 350px;"></div>
                     </div>
                 </div>
             </div>

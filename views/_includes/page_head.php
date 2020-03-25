@@ -99,7 +99,7 @@
                 <!-- Sidebar Content -->
                 <div class="sidebar-content">
                     <!-- Brand -->
-                    <a href="index.php" class="sidebar-brand">
+                    <a href="<?php echo HOME_URI;?>" class="sidebar-brand">
                         <i class="gi gi-share_alt"></i><span class="sidebar-nav-mini-hide"><strong>KPV</strong></span>
                     </a>
                     <!-- END Brand -->

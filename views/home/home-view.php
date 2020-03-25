@@ -184,8 +184,8 @@
 
                                     // Item informations
                                     echo "
-                                        <td class='text-center' style='width: 100px;'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
-                                        <td class='text-left' style='width: 100px;'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
+                                        <td class='text-center'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-left'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
                                         <td class='text-center text-danger'><strong>" . $value["nodes"] . "</strong></td>
                                         <td class='text-center'>" . $value["edges"] . "</td>
                                     ";
@@ -243,8 +243,8 @@
 
                                     // Item informations
                                     echo "
-                                        <td class='text-center' style='width: 100px;'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
-                                        <td class='text-left' style='width: 100px;'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
+                                        <td class='text-center'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-left'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
                                         <td class='text-center text-danger'><strong>" . $value["TOTAL_AP"] . "</strong></td>
                                         <td class='text-center'>" . $value["ap_number"] . "</td>
                                         <td class='text-center'>" . $value["hap_number"] . "</td>
@@ -304,8 +304,8 @@
 
                                     // Item informations
                                     echo "
-                                        <td class='text-center' style='width: 100px;'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
-                                        <td class='text-left' style='width: 100px;'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
+                                        <td class='text-center'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-left'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
                                         <td class='text-center openProteinModal' style='cursor: zoom-in; text-decoration: underline;' data-toggle='tooltip' 
                                             title='Click here to see more info about " . $value["node_highest_impact"] . "' 
                                             data-id='" . $value["node_highest_impact"] . "' onclick='$(\"#modal-protein-info\").modal(\"show\");'>" . 
@@ -370,8 +370,8 @@
 
                                     // Item informations
                                     echo "
-                                        <td class='text-center' style='width: 100px;'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
-                                        <td class='text-left' style='width: 100px;'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
+                                        <td class='text-center'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-left'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
                                         <td class='text-center text-danger'><strong>" . $value["total_species"] . "</strong></td>
                                         <td class='text-center'>" . $value["eukaryotes_count"] . "</td>
                                         <td class='text-center'>" . $value["prokaryotes_count"] . "</td>
@@ -400,11 +400,6 @@
 
 <?php include ABSPATH . '/views/_includes/page_footer.php'; ?>
 <?php include ABSPATH . '/views/_includes/template_scripts.php'; ?>
-
-<!-- Google Maps API Key (you will have to obtain a Google Maps API key to use Google Maps) -->
-<!-- For more info please have a look at https://developers.google.com/maps/documentation/javascript/get-api-key#key -->
-<script src="https://maps.googleapis.com/maps/api/js?key="></script>
-<script src="<?php echo HOME_URI;?>/assets/js/helpers/gmaps.min.js"></script>
 
 <!-- Load and execute javascript code used only in this page -->
 <script src="<?php echo HOME_URI;?>/assets/js/pages/index.js"></script>

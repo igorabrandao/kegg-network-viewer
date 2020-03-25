@@ -46,7 +46,7 @@
                 <!-- END Search Info - Pagination -->
 
                 <!-- Projects Results -->
-                <table id="example-datatable" class="table table-striped table-vcenter">
+                <table id="pathways-datatable" class="table table-striped table-vcenter">
                     <thead>
                         <tr>
                             <th ><i class="gi gi-share_alt"></i> PATHWAY</th>

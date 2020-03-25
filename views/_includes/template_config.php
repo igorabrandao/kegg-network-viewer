@@ -12,7 +12,7 @@
 $template = array(
     'initials'          => 'KPV',
     'name'              => 'KEGG Pathway Viewer',
-    'version'           => 'v0.5',
+    'version'           => 'v0.5.2',
     'author'            => 'Igor Brandão',
     'email'             => 'igorabrandao@gmail.com',
     'website'           => 'https://igorabrandao.com.br/',

@@ -413,6 +413,14 @@
                         </ul>
                     </li>
                     <!-- END Template Options -->
+
+                    <!-- Dictionary Button -->
+                    <li>
+                        <a href="javascript:void(0)" onclick="$('#modal-dictionary').modal('show');">
+                            <i class="gi gi-book"></i>
+                        </a>
+                    </li>
+                    <!-- END Dictionary Button -->
                 </ul>
                 <!-- END Left Header Navigation -->
 
@@ -476,3 +484,8 @@
                 <!-- END Right Header Navigation -->
             </header>
             <!-- END Header -->
+
+            <?php 
+                // Load the modal dictionary page
+                require ABSPATH . '/views/modal/modal_dictionary.php';
+            ?>

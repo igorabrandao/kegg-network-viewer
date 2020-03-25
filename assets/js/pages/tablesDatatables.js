@@ -11,8 +11,12 @@ var TablesDatatables = function() {
             /* Initialize Bootstrap Datatables Integration */
             App.datatables();
 
+            // ==============================================
+            // PATHWAY DATATABLE
+            // ==============================================
+
             /* Initialize Datatables */
-            var table = $('#example-datatable').dataTable({
+            var table = $('#pathways-datatable').dataTable({
                 columnDefs: [ { orderable: false, targets: [ 1, 5 ] } ],
                 pageLength: 10,
                 lengthMenu: [[10, 20, 30, 50, 100, 250, -1], [10, 20, 30, 50, 100, 250, 'All']],
@@ -31,7 +35,7 @@ var TablesDatatables = function() {
             });
 
             /* Add placeholder attribute to the search input */
-            $('.dataTables_filter input').attr('placeholder', 'Search in pathways list...');
+            $('.dataTables_filter input').attr('placeholder', 'Search in list...');
         }
     };
 }();

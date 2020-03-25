@@ -136,11 +136,5 @@
 <?php include ABSPATH . '/views/_includes/page_footer.php'; ?>
 <?php include ABSPATH . '/views/_includes/template_scripts.php'; ?>
 
-<!-- Google Maps API Key (you will have to obtain a Google Maps API key to use Google Maps) -->
-<!-- For more info please have a look at https://developers.google.com/maps/documentation/javascript/get-api-key#key -->
-<script src="https://maps.googleapis.com/maps/api/js?key="></script>
-<script src="<?php echo HOME_URI;?>/assets/js/helpers/gmaps.min.js"></script>
-
 <!-- Load and execute javascript code used only in this page -->
 <script src="<?php echo HOME_URI;?>/assets/js/pages/index.js"></script>
-<script>$(function(){ Index.init(); });</script>

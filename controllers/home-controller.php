@@ -36,6 +36,9 @@
 			// Load the page itself
 			require ABSPATH . '/views/home/home-view.php';
 
+			// Load the modal page
+			require ABSPATH . '/views/modal/modal_protein.php';
+
 			// Load the page footer
 			require ABSPATH . '/views/_includes/template_end.php';
 

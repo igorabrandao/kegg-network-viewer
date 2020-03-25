@@ -306,7 +306,10 @@
                                     echo "
                                         <td class='text-center' style='width: 100px;'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
                                         <td class='text-left' style='width: 100px;'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
-                                        <td class='text-center'>" . $value["node_highest_impact"] . "</td>
+                                        <td class='text-center openProteinModal' style='cursor: zoom-in; text-decoration: underline;' data-toggle='tooltip' 
+                                            title='Click here to see more info about " . $value["node_highest_impact"] . "' 
+                                            data-id='" . $value["node_highest_impact"] . "' onclick='$(\"#modal-protein-info\").modal(\"show\");'>" . 
+                                                $value["node_highest_impact"] . "</td>
                                         <td class='text-center text-danger'><strong>" . $value["disconnected_nodes"] . "</strong></td>
                                     ";
 
@@ -407,3 +410,18 @@
 <script src="<?php echo HOME_URI;?>/assets/js/pages/index.js"></script>
 <script src="<?php echo HOME_URI;?>/assets/js/pages/pathwayDashboard.js"></script>
 <script>$(function(){ EcomDashboard.init(); });</script>
+
+<script type="text/javascript">
+
+// JS code to handle the dynamic protein ID click
+$(document).on("click", ".openProteinModal", function () {
+    var proteinID = $(this).data('id');
+    var keggURL = 'https://www.kegg.jp/dbget-bin/www_bget?';
+
+    // Set the modal attributes
+    $(".modal-protein-dialog #proteinId").val( proteinID );
+    $(".modal-protein-dialog #proteinTitle").html('<i class="gi gi-circle_info"></i> Enzyme ' + proteinID + ' details');
+    $(".modal-protein-dialog #proteinIframe").attr('src', keggURL + proteinID);
+});
+
+</script>

@@ -63,10 +63,13 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="active">
-                                                    <td class='text-center hidden-xs'>
+                                                    <td class="text-center openProteinModal" style="cursor: zoom-in; text-decoration: underline;" 
+                                                        data-toggle="tooltip" title="Click here to see more info about <?php echo $pathway_info["node_highest_impact"]; ?>"
+                                                        data-id="<?php echo $pathway_info["node_highest_impact"]; ?>"
+                                                        onclick="$('#modal-protein-info').modal('show');" >
                                                         <h3 class='animation-pullDown'><?php echo $pathway_info["node_highest_impact"]; ?></h3>
                                                     </td>
-                                                    <td class='text-center hidden-xs'>
+                                                    <td class='text-center'>
                                                         <h3 class='animation-pullDown'><?php echo $pathway_info["disconnected_nodes"]; ?></h3>
                                                     </td>
                                                 </tr>
@@ -299,3 +302,18 @@
     </div>
 </div>
 <!-- END Modal -->
+
+<script type="text/javascript">
+
+// JS code to handle the dynamic protein ID click
+$(document).on("click", ".openProteinModal", function () {
+    var proteinID = $(this).data('id');
+    var keggURL = 'https://www.kegg.jp/dbget-bin/www_bget?';
+
+    // Set the modal attributes
+    $(".modal-protein-dialog #proteinId").val( proteinID );
+    $(".modal-protein-dialog #proteinTitle").html('<i class="gi gi-circle_info"></i> Enzyme ' + proteinID + ' details');
+    $(".modal-protein-dialog #proteinIframe").attr('src', keggURL + proteinID);
+});
+
+</script>

@@ -110,11 +110,18 @@
     <!-- END Dashboard Header -->
 
     <!-- Widgets Row -->
-    <div class="row" data-step="10" data-intro="">
+    <div class="row" data-step="10" data-intro="" id="network-preview">
         <div class="col-md-12">
             <!-- Timeline Widget -->
             <div class="widget" data-step="8" data-intro="Use this area to interact with the network, cool hm?">
                 <div class="widget-extra themed-background-dark">
+                    <div class="widget-options">
+                        <div class="btn-group btn-group-lg">
+                            <button type="button" class="btn btn-block btn-primary" id="exportNetworkButton">
+                                <i class="gi gi-floppy_save"></i> Export pathway
+                            </button>
+                        </div>
+                    </div>
                     <h3 class="widget-content-light">
                         Pathway <strong>Viewer</strong>
                     </h3>
@@ -138,3 +145,31 @@
 
 <!-- Load and execute javascript code used only in this page -->
 <script src="<?php echo HOME_URI;?>/assets/js/pages/index.js"></script>
+
+
+<script type="text/javascript">
+
+// JS code to handle the network export button
+$(document).on("click", "#exportNetworkButton", function () {
+    // Select the iframe object
+    var networkIframe = document.getElementById("networkIframe");
+
+    // Select the canvas inside the iframe object
+    var canvas = networkIframe.contentWindow.document.getElementsByTagName("canvas")[0];
+
+    var img    = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+
+    console.log(img);
+
+    var a = $("<a>")
+    .attr("href", img)
+    .attr("download", "img.png")
+    .appendTo("body");
+
+    a[0].click();
+
+    a.remove();
+
+});
+
+</script>

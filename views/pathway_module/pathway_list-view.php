@@ -80,7 +80,7 @@
                                     echo "<tr>";
 
                                     // View url
-                                    $view_url = HOME_URI . '/pathway_module/viewer?pathwayCode=' . encrypt_decrypt('encrypt', $value["code"]);
+                                    $view_url = HOME_URI . '/pathway_module/viewer?pathwayCode=' . encrypt_decrypt('encrypt', $value["code"]) . '#network-preview';
 
                                     // Item informations
                                     echo "<td>

@@ -121,6 +121,17 @@
                                 <i class="gi gi-floppy_save"></i> Export pathway
                             </button>
                         </div>
+                        <div class="btn-group btn-group-lg">
+                            <a href="javascript:void(0)" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                            <i class="gi gi-floppy_save"></i> Export pathway as <span class="caret"></span></a>
+                            <ul class="dropdown-menu text-left">
+                                <li class="dropdown-header">Header</li>
+                                <li><a href="javascript:void(0)">Action</a></li>
+                                <li><a href="javascript:void(0)">Another Action</a></li>
+                                <li class="divider"></li>
+                                <li class="disabled"><a href="javascript:void(0)">Disabled</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <h3 class="widget-content-light">
                         Pathway <strong>Viewer</strong>

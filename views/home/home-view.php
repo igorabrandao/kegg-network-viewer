@@ -185,7 +185,7 @@
 
                                     // Item informations
                                     echo "
-                                        <td class='text-center'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-center'><a href='" . $view_url . "'><strong>" . $value["code"] . " </strong></a></td>
                                         <td class='text-left'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
                                         <td class='text-center text-danger'><strong>" . $value["nodes"] . "</strong></td>
                                         <td class='text-center'>" . $value["edges"] . "</td>
@@ -243,7 +243,7 @@
 
                                     // Item informations
                                     echo "
-                                        <td class='text-center'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-center'><a href='" . $view_url . "'><strong>" . $value["code"] . " </strong></a></td>
                                         <td class='text-left'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
                                         <td class='text-center text-danger'><strong>" . $value["TOTAL_AP"] . "</strong></td>
                                         <td class='text-center'>" . $value["ap_number"] . "</td>
@@ -304,7 +304,7 @@
 
                                     // Item informations
                                     echo "
-                                        <td class='text-center'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-center'><a href='" . $view_url . "'><strong>" . $value["code"] . " </strong></a></td>
                                         <td class='text-left'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
                                         <td class='text-center openProteinModal' style='cursor: zoom-in; text-decoration: underline;' data-toggle='tooltip' 
                                             title='Click here to see more info about " . $value["node_highest_impact"] . "' 
@@ -370,7 +370,7 @@
 
                                     // Item informations
                                     echo "
-                                        <td class='text-center'><a href='" . $view_url . "'><strong>[" . $value["code"] . "] </strong></a></td>
+                                        <td class='text-center'><a href='" . $view_url . "'><strong>" . $value["code"] . " </strong></a></td>
                                         <td class='text-left'><a href='" . $view_url . "'>" . $value["name"] . "</strong></a></td>
                                         <td class='text-center text-danger'><strong>" . $value["total_species"] . "</strong></td>
                                         <td class='text-center'>" . $value["eukaryotes_count"] . "</td>

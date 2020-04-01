@@ -85,7 +85,7 @@
                                     // Item informations
                                     echo "<td>
 
-                                        <h3><a href='" . $view_url . "'><strong>[" . $value["code"] . "] - " . $value["name"] . "</strong></a></h3>
+                                        <h3><a href='" . $view_url . "'><strong>" . $value["code"] . " - " . $value["name"] . "</strong></a></h3>
                                         <p>
                                             <a class='label label-default'><strong>" . substr($value['class'], 0, 100) . "</strong></a>
                                         </p>

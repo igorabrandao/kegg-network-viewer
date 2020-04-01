@@ -114,7 +114,11 @@
 		public function get_most_ap( $has_network_ = 1, $limit_ = -1, $order_by_type_ = "" )
 		{
 			// Select the necessary data from DB
-			$sql = "SELECT P.`*`, (P.`ap_number` + P.`hap_number`) AS `TOTAL_AP`
+			$sql = "SELECT P.`id`, P.`code`, P.`name`, P.`description`, P.`class`, P.`pathway_map`, P.`module`, 
+				P.`disease`, P.`dblinks`, P.`ko_pathway`, P.`reference`, P.`eukaryotes_count`, P.`prokaryotes_count`, 
+				P.`animals_count`, P.`plants_count`, P.`fungi_count`, P.`protists_count`, P.`bacteria_count`, P.`archaea_count`, 
+				P.`has_network`, P.`nodes`, P.`edges`, P.`total_species`, P.`node_highest_impact`, P.`disconnected_nodes`, 
+				P.`community`, P.`mean_degree`, P.`mean_betweenness`, P.`ap_number`, P.`hap_number`, P.`hub_number`, P.`others_number`, (P.`ap_number` + P.`hap_number`) AS `TOTAL_AP`
 			FROM 
 				`pathway_data` as P";
 
@@ -144,7 +148,7 @@
 			{
 				$sql .= " LIMIT " . $limit_;
 			}
-
+			
 			// Execute the query
 			$query = $this->db->query($sql);
 

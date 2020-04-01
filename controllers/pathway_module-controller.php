@@ -73,6 +73,7 @@
 			// Load the modal page
 			require ABSPATH . '/views/modal/modal_network.php';
 			require ABSPATH . '/views/modal/modal_protein.php';
+			require ABSPATH . '/views/modal/modal_kegg_network.php';
 
 			// Load the page footer
 			require ABSPATH . '/views/_includes/template_end.php';

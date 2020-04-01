@@ -257,13 +257,27 @@
                         ?>
                     </tbody>
                 </table>
-                <p style="font-style: italic;"><strong>Note: </strong> 
-                    <ul>
-                        <li><strong>AP</strong> -> Node classified as Articulation Point</li>
-                        <li><strong>HAP</strong> -> Node highly connected and Articulation Point</li>
-                        <li><strong>HUB</strong> -> Node highly connected</li>
-                        <li><strong>Others</strong> -> Node without classification</li>
-                    </ul>
+                <p style="font-style: italic;"><strong>Note: </strong>
+                    <table class="table table-borderless table-striped table-vcenter table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="text-center"><strong>AP</strong></td>
+                                <td>Node classified as Articulation Point</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><strong>HAP</strong></td>
+                                <td>Node highly connected and Articulation Point</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><strong>HUB</strong></td>
+                                <td>Node highly connected</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><strong>Others</strong></td>
+                                <td>Node without classification</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </p>
                 <!-- END Top Pathways Content -->
             </div>

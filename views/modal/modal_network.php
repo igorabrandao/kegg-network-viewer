@@ -263,7 +263,7 @@
                             </div>
                             <div class="panel panel-default-dark">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><i class="fa fa-angle-right"></i> <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq1" href="#faq1_q8">DBLinks</a></h4>
+                                    <h4 class="panel-title"><i class="fa fa-angle-right"></i> <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq1" href="#faq1_q8">GO associated terms</a></h4>
                                 </div>
                                 <div id="faq1_q8" class="panel-collapse collapse">
                                     <div class="panel-body">
@@ -276,7 +276,10 @@
                                     <h4 class="panel-title"><i class="fa fa-angle-right"></i> <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq1" href="#faq1_q9">KO pathway</a></h4>
                                 </div>
                                 <div id="faq1_q9" class="panel-collapse collapse">
-                                    <div class="panel-body">
+                                    <div class="panel-body openKeggNetworkModal" style="cursor: zoom-in; text-decoration: underline;" 
+                                                        data-toggle="tooltip" title="Click here to see the KEGG network <?php echo $pathway_info["ko_pathway"]; ?>"
+                                                        data-id="<?php echo $pathway_info["ko_pathway"]; ?>"
+                                                        onclick="$('#modal-kegg-network-info').modal('show');" >
                                         <p><?php echo $pathway_info["ko_pathway"]; ?></p>
                                     </div>
                                 </div>
@@ -314,6 +317,17 @@ $(document).on("click", ".openProteinModal", function () {
     $(".modal-protein-dialog #proteinId").val( proteinID );
     $(".modal-protein-dialog #proteinTitle").html('<i class="gi gi-circle_info"></i> Enzyme ' + proteinID + ' details');
     $(".modal-protein-dialog #proteinIframe").attr('src', keggURL + proteinID);
+});
+
+// JS code to handle the dynamic kegg network ID click
+$(document).on("click", ".openKeggNetworkModal", function () {
+    var keggNetworkCode = "<?php echo v_num($pathway_info["ko_pathway"]); ?>";
+    var keggURL = 'https://www.kegg.jp/kegg-bin/show_pathway?org_name=ko&mapscale=&show_description=show&mapno=';
+
+    // Set the modal attributes
+    $(".modal-keggNetwork-dialog #keggNetworkId").val( keggNetworkCode );
+    $(".modal-keggNetwork-dialog #keggNetworkTitle").html('<i class="gi gi-circle_info"></i> KEGG network KO' + keggNetworkCode);
+    $(".modal-keggNetwork-dialog #keggNetworkIframe").attr('src', keggURL + keggNetworkCode);
 });
 
 </script>

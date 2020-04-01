@@ -22,7 +22,7 @@
     <!-- Used only if page preloader is enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
     <div class="preloader themed-background">
         <h1 class="push-top-bottom text-light text-center"><strong>KPV </strong> - KEGG Pathway Viewer
-            <br><small>by Igor Brandão</small>
+            <br><strong><small style="color: #F0FFF0;">by Igor Brandão</small></strong>
         </h1>
         <div class="inner">
             <h3 class="text-light visible-lt-ie10"><strong>Loading..</strong></h3>
@@ -235,6 +235,12 @@
                     </div>
 
                     <div class="sidebar-section sidebar-nav-mini-hide">
+                        <div class='alert alert-success alert-alt animation-pulse'>
+                            Wanna contribute with this project?<br>
+                            <i class='fa fa-thumbs-up fa-fw'></i> Just <a href="https://github.com/igorabrandao/kegg-network-viewer" target="_blank">
+                            <strong>click here </strong> to help!</a>
+                        </div>
+                        <hr>
                         <?php 
                             // Generate the development activity
                             $activity = $settings_model->parseChangelog();
@@ -262,12 +268,6 @@
                                     </div>";
                             }
                         ?>
-                        <hr>
-                        <div class='alert alert-success alert-alt'>
-                            <small>Wanna contribute with this project?</small><br>
-                            <i class='fa fa-thumbs-up fa-fw'></i> Just <a href="https://github.com/igorabrandao/kegg-network-viewer" target="_blank">
-                            <strong>click here </strong> to help!</a>
-                        </div>
                     </div>
                     <!-- END Sidebar Notifications -->
                 </div>

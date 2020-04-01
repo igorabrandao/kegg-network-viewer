@@ -4171,3 +4171,10 @@ only screen and (min-device-pixel-ratio: 1.5) {
     overflow: hidden;
     background:url(../img/loader/loader.gif) center center no-repeat;
 }
+
+.iframe-kegg-netwrok-viewer {
+    width: 100%;
+    height: 75vh;
+    overflow: hidden;
+    background:url(../img/loader/loader.gif) center center no-repeat;
+}

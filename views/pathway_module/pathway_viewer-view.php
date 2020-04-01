@@ -117,19 +117,14 @@
                 <div class="widget-extra themed-background-dark">
                     <div class="widget-options">
                         <div class="btn-group btn-group-lg">
-                            <button type="button" class="btn btn-block btn-primary" id="exportNetworkButton">
-                                <i class="gi gi-floppy_save"></i> Export pathway
-                            </button>
-                        </div>
-                        <div class="btn-group btn-group-lg">
                             <a href="javascript:void(0)" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
                             <i class="gi gi-floppy_save"></i> Export pathway as <span class="caret"></span></a>
                             <ul class="dropdown-menu text-left">
-                                <li class="dropdown-header">Header</li>
-                                <li><a href="javascript:void(0)">Action</a></li>
-                                <li><a href="javascript:void(0)">Another Action</a></li>
-                                <li class="divider"></li>
-                                <li class="disabled"><a href="javascript:void(0)">Disabled</a></li>
+                                <li id="exportNetworkButtonPng"><a href="javascript:void(0)"><i class="fi fi-png pull-right"></i>PNG</a></li>
+                                <li id="exportNetworkButtonJpeg"><a href="javascript:void(0)"><i class="fi fi-jpg pull-right"></i>JPEG</a></li>
+                                <li id="exportNetworkButtonSvg"><a href="javascript:void(0)"><i class="fi fi-svg pull-right"></i></i>SVG</a></li>
+                                <li id="exportNetworkButtonPdf"><a href="javascript:void(0)"><i class="fi fi-pdf pull-right"></i></i>PDF</a></li>
+                                <li id="exportNetworkButtonJson" class="disabled"><a href="javascript:void(0)"><i class="fi fi-xml pull-right"></i>XML/JSON</a></li>
                             </ul>
                         </div>
                     </div>
@@ -160,27 +155,70 @@
 
 <script type="text/javascript">
 
-// JS code to handle the network export button
-$(document).on("click", "#exportNetworkButton", function () {
-    // Select the iframe object
-    var networkIframe = document.getElementById("networkIframe");
+    /**
+     * Function to read the iframe canvas
+     */
+    var readIframeCanvas = function(){
+        // Select the iframe object
+        var networkIframe = document.getElementById("networkIframe");
 
-    // Select the canvas inside the iframe object
-    var canvas = networkIframe.contentWindow.document.getElementsByTagName("canvas")[0];
+        // Select the canvas inside the iframe object
+        var canvas = networkIframe.contentWindow.document.getElementsByTagName("canvas")[0];
 
-    var img    = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        return canvas;
+    };
 
-    console.log(img);
+    /**
+     * Function to download the exported image
+     */
+    var downloadImage = function(img_, ext_) {
+        // Genetate the downloadable image via link
+        var a = $("<a>")
+            .attr("href", img_)
+            .attr("download", "<?php echo $pathway_info["code"]; ?>." + ext_)
+            .appendTo("body");
 
-    var a = $("<a>")
-    .attr("href", img)
-    .attr("download", "img.png")
-    .appendTo("body");
+        // Simulate a click on the link
+        a[0].click();
 
-    a[0].click();
+        // Remove the link after the download
+        a.remove();
+    };
 
-    a.remove();
+    // **** JS codes to handle the network export button ****
 
-});
+    // PNG
+    $(document).on("click", "#exportNetworkButtonPng", function () {
+        // Read the iframe canvas
+        var canvas = readIframeCanvas();
+        
+        // Conver the canvas to png image
+        var img = canvas.toDataURL("image/png");
+
+        // Download the image
+        downloadImage(img, "png");
+    });
+
+    // JPEG
+    $(document).on("click", "#exportNetworkButtonJpeg", function () {
+        // Read the iframe canvas
+        var canvas = readIframeCanvas();
+        
+        // Conver the canvas to png image
+        var img = canvas.toDataURL('image/jpeg', 1.0);
+
+        // Download the image
+        downloadImage(img, "jpeg");
+    });
+
+    // SVG
+    $(document).on("click", "#exportNetworkButtonSvg", function () {
+        console.log('export SVG');
+    });
+
+    // PDF
+    $(document).on("click", "#exportNetworkButtonPdf", function () {
+        console.log('export PDF');
+    });
 
 </script>

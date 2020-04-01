@@ -4162,10 +4162,12 @@ only screen and (min-device-pixel-ratio: 1.5) {
     width: 100%;
     height: 90vh;
     overflow: hidden;
+    background:url(../img/loader/loader.gif) center center no-repeat;
 }
 
 .iframe-protein-viewer {
     width: 100%;
     height: 75vh;
     overflow: hidden;
+    background:url(../img/loader/loader.gif) center center no-repeat;
 }

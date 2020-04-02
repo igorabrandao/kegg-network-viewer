@@ -234,12 +234,11 @@
         // Get the canvas context
         var context = canvas.getContext("2d");
 
-        //serialize your SVG
+        // Serialize your SVG
         var mySerializedSVG = context.getSerializedSvg(true); //true here, if you need to convert named to numbered entities.
 
-        //If you really need to you can access the shadow inline SVG created by calling:
+        // If you really need to you can access the shadow inline SVG created by calling:
         var svg = ctx.getSvg();
-
 
         var svgString = canvas.outerHTML;
         var dataUrl = 'data:image/svg+xml,'+encodeURIComponent(svgString);

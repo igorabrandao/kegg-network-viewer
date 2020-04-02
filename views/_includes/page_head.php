@@ -432,11 +432,28 @@
                 </ul>
                 <!-- END Left Header Navigation -->
 
+                <!-- Google search -->
+                <script>
+                    (function() {
+                        var cx = '008740153531644540099:uyj2qvy_xlq';
+                        var gcse = document.createElement('script');
+                        gcse.type = 'text/javascript';
+                        gcse.async = true;
+                        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                        '//www.google.com/cse/cse.js?cx=' + cx;
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(gcse, s);
+                    })();
+                </script>
+
+                <script async src="https://cse.google.com/cse.js?cx=008740153531644540099:4ezuns26ucn"></script>
+
                 <!-- Search Form -->
-                <form action="page_ready_search_results.php" method="post" class="navbar-form-custom">
+                <form name="search-form" action="" class="navbar-form-custom">
                     <div class="form-group">
-                        <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search...">
+                        <input id="q" name="q" class="search-string form-control" type="search" placeholder="Search..." name="search-string">
                     </div>
+                    <div class="gcse-search"></div>
                 </form>
                 <!-- END Search Form -->
                 <?php } ?>

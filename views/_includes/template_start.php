@@ -63,5 +63,15 @@
 
         <!-- Modernizr (browser feature detection library) -->
         <script src="<?php echo HOME_URI;?>/assets/js/vendor/modernizr.min.js"></script>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162539431-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-162539431-1');
+        </script>
     </head>
     <body>

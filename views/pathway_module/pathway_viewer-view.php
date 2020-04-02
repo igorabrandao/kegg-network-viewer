@@ -122,8 +122,8 @@
                             <ul class="dropdown-menu text-left">
                                 <li id="exportNetworkButtonPng"><a href="javascript:void(0)"><i class="fi fi-png pull-right"></i>PNG</a></li>
                                 <li id="exportNetworkButtonJpeg"><a href="javascript:void(0)"><i class="fi fi-jpg pull-right"></i>JPEG</a></li>
-                                <li id="exportNetworkButtonSvg"><a href="javascript:void(0)"><i class="fi fi-svg pull-right"></i></i>SVG</a></li>
                                 <li id="exportNetworkButtonPdf"><a href="javascript:void(0)"><i class="fi fi-pdf pull-right"></i></i>PDF</a></li>
+                                <li id="exportNetworkButtonSvg" class="disabled"><a href="javascript:void(0)"><i class="fi fi-svg pull-right"></i></i>SVG</a></li>
                                 <li id="exportNetworkButtonJson" class="disabled"><a href="javascript:void(0)"><i class="fi fi-xml pull-right"></i>XML/JSON</a></li>
                             </ul>
                         </div>
@@ -211,11 +211,6 @@
         downloadImage(img, "jpeg");
     });
 
-    // SVG
-    $(document).on("click", "#exportNetworkButtonSvg", function () {
-        console.log('export SVG');
-    });
-
     // PDF
     $(document).on("click", "#exportNetworkButtonPdf", function () {
         // Select the iframe object
@@ -228,6 +223,34 @@
         // Click the pdf donwload button
         pdfButton.click();
     });
+
+    // SVG
+    $(document).on("click", "#exportNetworkButtonSvg", function () {
+        console.log('SVG exporting not implemented yet...');
+
+        /*// Read the iframe canvas
+        var canvas = readIframeCanvas()
+        
+        // Get the canvas context
+        var context = canvas.getContext("2d");
+
+        //serialize your SVG
+        var mySerializedSVG = context.getSerializedSvg(true); //true here, if you need to convert named to numbered entities.
+
+        //If you really need to you can access the shadow inline SVG created by calling:
+        var svg = ctx.getSvg();
+
+
+        var svgString = canvas.outerHTML;
+        var dataUrl = 'data:image/svg+xml,'+encodeURIComponent(svgString);
+        console.log(dataUrl);*/
+    });
+
+    // JSON
+    $(document).on("click", "#exportNetworkButtonJson", function () {
+        console.log('Json exporting not implemented yet...');
+    });
+    
 
     // Hide the iframe button
     var networkIframe = document.getElementById("networkIframe");

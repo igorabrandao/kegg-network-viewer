@@ -218,7 +218,22 @@
 
     // PDF
     $(document).on("click", "#exportNetworkButtonPdf", function () {
-        console.log('export PDF');
+        // Select the iframe object
+        var networkIframe = document.getElementById("networkIframe");
+
+        // Select the pdf download button
+        var pdfButton = networkIframe.contentWindow.document.getElementsByTagName("button")[0];
+        pdfButton.style.visibility = "hidden";
+
+        // Click the pdf donwload button
+        pdfButton.click();
     });
+
+    // Hide the iframe button
+    var networkIframe = document.getElementById("networkIframe");
+
+    setTimeout(() => {
+        networkIframe.contentWindow.document.getElementsByTagName("button")[0].style.visibility = "hidden"
+    }, 3000);
 
 </script>

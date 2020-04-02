@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
                         <!-- Iframe with keggNetwork visualization -->
-                        <iframe id="keggNetworkIframe" class="iframe-kegg-netwrok-viewer" frameBorder="0" src=""></iframe>
+                        <iframe id="keggNetworkIframe" class="iframe-kegg-network-viewer" frameBorder="0" src=""></iframe>
                         <!-- END Iframe with keggNetwork visualization -->
                     </div>
                 </div>

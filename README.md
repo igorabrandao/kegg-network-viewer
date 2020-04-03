@@ -8,7 +8,7 @@ nodes removal and edge addition.
 
 ## How to access the tool?
 
-Easy! [Just click here link](https://igorabrandao.com.br/kegg-pathway-bottleneck/).
+Easy! [Just click here](https://igorabrandao.com.br/kegg-pathway-bottleneck/).
 
 ## Contributors:
 

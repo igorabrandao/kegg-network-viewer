@@ -6,6 +6,10 @@ KPV is an online tool to visualize and interact with KEGG metabolic pathways.
 The network elaborated in our study contemplates protein classifications according to the AP detection algorithm,facilitating the visual identification of the most important proteins of a network (points of articulation). Additionally, our proposal provides a dynamic HTML visualizations of KEGG pathways enabling the simulation of basic operations such as
 nodes removal and edge addition.
 
+## How to access the tool?
+
+Easy! [Just click here link](https://igorabrandao.com.br/kegg-pathway-bottleneck/).
+
 ## Contributors:
 
 * Igor Brandão ( igorabrandao@gmail.com )

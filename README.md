@@ -10,6 +10,24 @@ nodes removal and edge addition.
 
 Easy! [Just click here](https://igorabrandao.com.br/kegg-pathway-bottleneck/).
 
+## Ways to contribute
+
+You can help us to make this projet even better :rocket:. Here are the waysyou can contribute to this project:
+
+1. Giving a feedback
+
+Report your feedback, issues or suggestions by [creating a topic here](https://github.com/igorabrandao/kegg-network-viewer/issues) :punch:.
+
+2. Developing with us
+
+Bring your dev skills to the team [click here to read more about](first-contributions.md) :computer:.
+
+3. Making a donation
+
+Help science initiatives spread out, your donation can make the difference! :electron:
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7NV5RV8B2MTA4)
+
 ## Contributors:
 
 * Igor Brandão ( igorabrandao@gmail.com )

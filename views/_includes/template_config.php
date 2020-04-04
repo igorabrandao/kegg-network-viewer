@@ -95,7 +95,7 @@ $primary_nav = array(
     array(
         'name'  => 'Help us',
         'url'   => HOME_URI . '/general_pages/help',
-        'icon'  => 'fa fa-heartbeat'
+        'icon'  => 'fa fa-heartbeat animation-pulse'
     ),
     array(
         'name'  => 'Network visualization',

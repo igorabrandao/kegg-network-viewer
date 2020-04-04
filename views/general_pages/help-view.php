@@ -4,7 +4,7 @@
     <div class="content-header">
         <div class="header-section">
             <h1>
-                <i class="fa fa-heartbeat"></i>Help science initiatives spread out!<br>
+                <i class="fa fa-heartbeat animation-pulse"></i>Help science initiatives spread out!<br>
                 <strong><small>Your contribution will be greatly appreciated and help me continue to develop this awesome 
                     tool crafted with love</small></strong><br>
             </h1>

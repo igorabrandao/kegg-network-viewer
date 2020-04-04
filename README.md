@@ -27,7 +27,7 @@ Bring your dev skills to the team [by clicking here](./includes/first-contributi
 
 ### 3. Making a donation
 
-Help science initiatives spread out, your donation can make the difference! :electron: :sparkling_heart:
+As you know, KEGG PATHWAY VIEWER is a free web tool and it will remain free forever. However, maintaining and improving it  costs time and money. If you like our work and find it useful, please help science initiatives spread out. Your contribution will be greatly appreciated and help me continue to develop this awesome tool crafted with :heart:
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7NV5RV8B2MTA4)
 
@@ -35,8 +35,8 @@ Help science initiatives spread out, your donation can make the difference! :ele
 
 ### Giving a feedback
 
-* Inácio Medeiros ( inaciogmedeiros@gmail.com )
-* Diego Arthur  ( arthur.vinx@gmail.com )
+* Inácio Medeiros
+* Diego Arthur
 
 ### Developing
 

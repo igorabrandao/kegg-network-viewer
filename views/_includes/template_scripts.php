@@ -16,6 +16,7 @@
 <script src="<?php echo HOME_URI;?>/assets/js/accessibility-buttons.js"></script>
 <script src="<?php echo HOME_URI;?>/assets/js/intro.js"></script>
 <script src="<?php echo HOME_URI;?>/assets/js/canvas2svg.js"></script>
+<script src="<?php echo HOME_URI;?>/assets/js/showdown.min.js"></script>
 <script src="<?php echo HOME_URI;?>/assets/js/app.js"></script>
 
 

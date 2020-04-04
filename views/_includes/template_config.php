@@ -93,6 +93,11 @@ $primary_nav = array(
         'icon'  => 'gi gi-circle_info'
     ),
     array(
+        'name'  => 'Help us',
+        'url'   => HOME_URI . '/general_pages/help',
+        'icon'  => 'fa fa-heartbeat'
+    ),
+    array(
         'name'  => 'Network visualization',
         'opt'   => '<a href="javascript:void(0)" data-toggle="tooltip" title="Use the menu below to navigate between pages related to KEGG pathways visualization"><i class="gi gi-lightbulb"></i></a>',
         'url'   => 'header',

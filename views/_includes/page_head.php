@@ -235,7 +235,7 @@
                     </div>
 
                     <div class="sidebar-section sidebar-nav-mini-hide">
-                        <div class='alert alert-success alert-alt animation-pulse'>
+                        <div class='alert alert-success alert-alt'>
                             Wanna contribute with this project?<br>
                             <i class='fa fa-thumbs-up fa-fw'></i> Just <a href="https://github.com/igorabrandao/kegg-network-viewer" target="_blank">
                             <strong>click here </strong> to help!</a>

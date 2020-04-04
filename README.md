@@ -19,3 +19,7 @@ Easy! [Just click here](https://igorabrandao.com.br/kegg-pathway-bottleneck/).
 In order to update the `CHANGELOG.md`, install the extension `auto-changelog`: [**npm install -g auto-changelog**] and after run the following command:
 
     auto-changelog --template keepachangelog
+
+## Licence:
+
+[The MIT License](https://http://mit-licence.igorabrandao.com.br/).

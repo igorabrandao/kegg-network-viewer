@@ -16,6 +16,7 @@
  *      (#m10rts) RETINA
  *      (#m11prs) PRINT
  *      (#m12prs) IFRAME
+ *      (#m13prs) GOOGLE SEARCH FORM
  */
 
 /*
@@ -4177,4 +4178,14 @@ only screen and (min-device-pixel-ratio: 1.5) {
     height: 75vh;
     overflow: hidden;
     background:url(../img/loader/loader.gif) center center no-repeat;
+}
+
+/*
+=================================================================
+(#m13prs) GOOGLE SEARCH FORM
+=================================================================
+*/
+
+.gsc-search-box {
+    display: none;
 }

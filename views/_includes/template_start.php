@@ -73,5 +73,7 @@
 
             gtag('config', 'UA-162539431-1');
         </script>
+
+        <script src='<?php echo HOME_URI;?>/includes/ovc/counter.js'></script>
     </head>
     <body>

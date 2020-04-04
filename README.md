@@ -22,4 +22,4 @@ In order to update the `CHANGELOG.md`, install the extension `auto-changelog`: [
 
 ## Licence:
 
-[The MIT License](https://http://mit-licence.igorabrandao.com.br/).
+[The MIT License](https://mit-licence.igorabrandao.com.br/).

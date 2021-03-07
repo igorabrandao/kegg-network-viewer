@@ -13,8 +13,17 @@
         // Find the network file name
         $network_filename = '';
 
-        foreach (glob(NETWORK_ABSPATH . "*" . $pathway_info["code"] . ".*") as $filename) {  
-            $network_filename = basename($filename);
+        // Generate the network itself
+        $pathway_model->generate_network($pathway_code, '');
+
+        //! Check if the unprotected file exists and give access permission to read
+        if (file_exists(RPROJECT_PATH . RSCRIPT_OUTPUT . '/' . $pathway_code . ".html")) {
+            // Retrieve the filename
+            foreach (glob(NETWORK_ABSPATH . "*" . $pathway_info["code"] . ".*") as $filename) {  
+                $network_filename = basename($filename);
+            }
+        } else {
+            echo "<br>Could not generate the network into path: " . RPROJECT_PATH . RSCRIPT_OUTPUT . '/' . $pathway_code . ".html";
         }
     }
     else

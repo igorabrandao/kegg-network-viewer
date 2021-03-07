@@ -53,6 +53,11 @@
 	// MAX FILE_UPLOAD SIZE
 	define( 'MAX_FILE_SIZE', (1024*10000) ); //100 MB
 
+	// RSCRIPT PATH
+	define( 'RPROJECT_PATH', '/mnt/64AE6120AE60EBCC/Arquivos\ Igor/Faculdades/UFRN/4\ -\ Mestrado/Pesquisas/System\ biology\ approaches\ in\ the\ investigation\ of\ bottlenecks\ in\ KEGG\ pathways/KeggPathwayAPs' );
+	define( 'RSCRIPT_PATH', '/bin/functions/dynamicGraph.R' );
+	define( 'RSCRIPT_OUTPUT', '/output/network' );
+
 	/*** DO NOT EDIT FROM HERE!!! ***/
 
 	// LOADER CALLING (SYSTEM IGNITION)

@@ -25,6 +25,45 @@
 		}
 
 		/**
+		 * Generate the network files
+		 *
+		 * @since 0.1
+		 * @access public
+		*/
+		public function generate_network( $pathway_code_, $pathway_org_ )
+		{
+			// Define the command var
+			$command = "";
+
+			// Default values
+			$defaultPathway = "00010";
+			$defaultOrg = "ec";
+
+			// Format the command
+			if ( isset($pathway_code_) && strcmp($pathway_code_, "") != 0 ) {
+				if ( isset($pathway_org_) && strcmp($pathway_org_, "") != 0 ) {
+					$command = "Rscript " . RPROJECT_PATH . RSCRIPT_PATH . " " . $pathway_code_ . " " . $pathway_org_;
+				} else {
+					$command = "Rscript " . RPROJECT_PATH . RSCRIPT_PATH . " " . $pathway_code_ . " " . $defaultOrg;
+				}
+			} else {
+				$command = "Rscript " . RPROJECT_PATH . RSCRIPT_PATH . " " . $defaultPathway . " " . $defaultOrg;
+			}
+
+			echo $command;
+
+			try {
+				// Execute the command
+				$output = shell_exec('sudo -u www-data ' . $command);
+				var_dump($output);
+
+				return true;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+		/**
 		 * Get the PATHWAYS count
 		 *
 		 * @since 0.1

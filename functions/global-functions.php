@@ -1,22 +1,18 @@
 <?php
 
 	//**********************************************************************************
-		//**********  IGOR A. BRANDÃO 2013 - 2016 ©
+		//**********  IGOR A. BRANDÃO 2020 - 2021 ©
 		//**********
 		//**********  PGM: PHP GENERAL FUNCTIONS CLASS
 		//**********
-		//**********  CUSTOMER:	AIRES SOLUÇÕES CORPORATIVAS
+		//**********  PROJECT:	KEGG NETWORK VIEWER
 		//**********
 		//**********  IGOR AUGUSTO BRANDÃO
 		//**********  VERSÃO:	1.0
 		//**********  VERSÃO:	1.2
-		//**********  VERSÃO:	1.3
-		//**********  VERSÃO:	1.5
 		//**********
-		//**********  JUL/2014 - Creation
-		//**********  OCT/2015 - Update
-		//**********  DEC/2015 - Update
-		//**********  JUL/2016 - Update
+		//**********  ABR/2020 - Creation
+		//**********  MAR/2021 - Update
 		//**********
 	//**********************************************************************************
 
@@ -54,7 +50,7 @@
 	 * @param string $key   The array's key
 	 * @return string|null  The key's value or null
 	*/
-	function chk_array ( $array, $key )
+	function chk_array($array, $key)
 	{
 		// Check if the key exists inside the array
 		if ( isset( $array[ $key ] ) && ! empty( $array[ $key ] ) ) 
@@ -71,11 +67,10 @@
 	 * Function to load automatically all standard classes
 	 * @class_name => the filename should be class-ClassName.php.
 	*/
-	function __autoload( $class_name ) 
-	{
+	spl_autoload_register(function($class_name) {
 		$file = ABSPATH . '/classes/class-' . $class_name . '.php';
 
-		if ( ! file_exists( $file ) ) 
+		if (!file_exists($file)) 
 		{
 			//require_once ABSPATH . '/includes/404.php';
 			return;
@@ -83,7 +78,7 @@
 
 		// Include class file
 		require_once $file;
-	} // __autoload
+	}); // spl_autoload_register
 
 	/**
 	 * Function to return the file extension
@@ -98,7 +93,7 @@
 	 * Function to return the file basename
 	 * @filename_ => the filename
 	*/
-	function file_basename( $filename_ ) 
+	function file_basename($filename_) 
 	{
 		$basename = basename( $filename_, file_ext( $filename_ ) );
 		return substr( $basename, 0, (strlen($basename) - 1) );
@@ -1407,4 +1402,3 @@
 	}
 
 	//******************************************************************************
-?>

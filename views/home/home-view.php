@@ -73,7 +73,7 @@
     <!-- Quick Stats -->
     <div class="row text-center" data-step="7" data-intro="This is the quick stats section">
         <div class="col-sm-6 col-lg-4">
-            <a href="javascript:void(0)" class="widget widget-hover-effect2">
+            <a href="<?php echo HOME_URI . '/pathway_module/list'; ?>" class="widget widget-hover-effect2">
                 <div class="widget-extra themed-background">
                     <h4 class="widget-content-light"><i class="gi gi-share_alt"></i> <strong>Pathways</strong> with visualization</h4>
                 </div>

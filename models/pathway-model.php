@@ -50,12 +50,9 @@
 				$command = "Rscript " . RPROJECT_PATH . RSCRIPT_PATH . " " . $defaultPathway . " " . $defaultOrg;
 			}
 
-			echo $command;
-
 			try {
 				// Execute the command
 				$output = shell_exec('sudo -u www-data ' . $command);
-				var_dump($output);
 
 				return true;
 			} catch (Exception $e) {

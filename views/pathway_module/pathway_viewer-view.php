@@ -16,8 +16,8 @@
         // Generate the network itself
         $pathway_model->generate_network($pathway_code, '');
 
-         // Retrieve the filename
-         foreach (glob(NETWORK_ABSPATH . "*" . $pathway_info["code"] . ".*") as $filename) {  
+        // Retrieve the filename
+        foreach (glob(NETWORK_ABSPATH . "ec/" . "*" . $pathway_info["code"] . ".*") as $filename) {  
             $network_filename = basename($filename);
         }
 
@@ -124,36 +124,84 @@
     <!-- END Dashboard Header -->
 
     <!-- Widgets Row -->
+
+    <!-- Filter Block -->
+    <div class="row" data-step="11" data-intro="" id="network-preview-filter">
+        <div class="col-md-12">
+            <!-- Select Components Block -->
+            <div class="block">
+                <!-- Select Components Title -->
+                <div class="block-title">
+                    <!-- Interactive block controls (initialized in js/app.js -> interactiveBlocks()) -->
+                    <div class="block-options pull-right"></div>
+                    <h2><strong>Filters</strong></h2>
+                </div>
+                <!-- END Select Components Title -->
+
+                <!-- Select Components Content -->
+                <div class="block-content">
+                    <form action="page_forms_components.html" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label" style="text-align: left;" for="organism-chooser">Organisms:</label>
+                            <div class="col-md-6">
+                                <select id="organism-chooser" name="organism-chooser" class="select-chosen" data-placeholder="Choose organisms.." style="width: 250px;" multiple>
+                                    <option value="United States">United States</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="Afghanistan">Afghanistan</option>
+                                    <option value="Aland Islands">Aland Islands</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Filter</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p style="font-style: italic;">Note: Just working with <strong>hsa & mmu </strong> organisms.</p>
+                </div>
+                <!-- END Select Components Content -->
+            </div>
+            <!-- END Select Components Block -->
+        </div>
+    </div>
+    <!-- END Filter Block -->
+
     <div class="row" data-step="10" data-intro="" id="network-preview">
         <div class="col-md-12">
-            <!-- Timeline Widget -->
-            <div class="widget" data-step="8" data-intro="Use this area to interact with the network, cool hm?">
-                <div class="widget-extra themed-background-dark">
-                    <div class="widget-options">
-                        <div class="btn-group btn-group-lg">
-                            <a href="javascript:void(0)" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-                            <i class="gi gi-floppy_save"></i> Export pathway as <span class="caret"></span></a>
-                            <ul class="dropdown-menu text-left">
-                                <li id="exportNetworkButtonPng"><a href="javascript:void(0)"><i class="fi fi-png pull-right"></i>PNG</a></li>
-                                <li id="exportNetworkButtonJpeg"><a href="javascript:void(0)"><i class="fi fi-jpg pull-right"></i>JPEG</a></li>
-                                <li id="exportNetworkButtonPdf"><a href="javascript:void(0)"><i class="fi fi-pdf pull-right"></i></i>PDF</a></li>
-                                <li id="exportNetworkButtonSvg" class="disabled"><a href="javascript:void(0)"><i class="fi fi-svg pull-right"></i></i>SVG</a></li>
-                                <li id="exportNetworkButtonJson" class="disabled"><a href="javascript:void(0)"><i class="fi fi-xml pull-right"></i>XML/JSON</a></li>
-                            </ul>
+            <!-- Pathway Viewer Widget -->
+            <div class="block">
+                <!-- Select Components Title -->
+                <div class="block-title themed-background-dark-night" style="color: #ffffff;">
+                    <!-- Interactive block controls (initialized in js/app.js -> interactiveBlocks()) -->
+                    <div class="block-options pull-right">
+                        <div class="btn-group btn-group-sm">
+                            <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary dropdown-toggle enable-tooltip" 
+                            data-toggle="dropdown" title="Saving options">
+                                <i class="gi gi-floppy_save"></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu text-left">
+                                    <li id="exportNetworkButtonPng"><a href="javascript:void(0)"><i class="fi fi-png pull-right"></i>PNG</a></li>
+                                    <li id="exportNetworkButtonJpeg"><a href="javascript:void(0)"><i class="fi fi-jpg pull-right"></i>JPEG</a></li>
+                                    <li id="exportNetworkButtonPdf"><a href="javascript:void(0)"><i class="fi fi-pdf pull-right"></i></i>PDF</a></li>
+                                    <li id="exportNetworkButtonSvg" class="disabled"><a href="javascript:void(0)"><i class="fi fi-svg pull-right"></i></i>SVG</a></li>
+                                    <li id="exportNetworkButtonJson" class="disabled"><a href="javascript:void(0)"><i class="fi fi-xml pull-right"></i>XML/JSON</a></li>
+                                </ul>
                         </div>
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Show/hide" data-toggle="block-toggle-content"><i class="fa fa-arrows-v"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Fullscreen" data-toggle="block-toggle-fullscreen"><i class="fa fa-desktop"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Delete block" data-toggle="block-hide"><i class="fa fa-times"></i></a>
                     </div>
-                    <h3 class="widget-content-light">
-                        Pathway <strong>Viewer</strong>
-                    </h3>
+                    <h2>Pathway <strong>Viewer</strong></h2>
                 </div>
-                <div class="widget-extra">
+                <!-- END Select Components Title -->
+
+                <!-- Select Components Content -->
+                <div class="block-content">
                     <!-- Iframe with pathway visualization -->
                     <iframe id="networkIframe" class="iframe-network-viewer" frameBorder="0"
-                        src="<?php echo HOME_URI . '/resources/networks/' . $network_filename;?>"></iframe>
+                        src="<?php echo HOME_URI . '/resources/networks/ec/' . $network_filename;?>"></iframe>
                     <!-- END Iframe with pathway visualization -->
                 </div>
             </div>
-            <!-- END Timeline Widget -->
+            <!-- END Pathway Viewer Widget -->
         </div>
     </div>
     <!-- END Widgets Row -->

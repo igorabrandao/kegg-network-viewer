@@ -10,6 +10,9 @@
         $pathway_info = $pathway_model->get_pathway_info($pathway_code);
         $pathway_info = $pathway_info[0];
 
+        // Load the organism list
+        $organism_list = $organism_model->get_organisms_list();
+
         // Find the network file name
         $network_filename = '';
 
@@ -143,20 +146,24 @@
                     <form action="page_forms_components.html" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
                         <div class="form-group">
                             <label class="col-md-1 control-label" style="text-align: left;" for="organism-chooser">Organisms:</label>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <select id="organism-chooser" name="organism-chooser" class="select-chosen" data-placeholder="Choose organisms.." style="width: 250px;" multiple>
-                                    <option value="United States">United States</option>
-                                    <option value="United Kingdom">United Kingdom</option>
-                                    <option value="Afghanistan">Afghanistan</option>
-                                    <option value="Aland Islands">Aland Islands</option>
+                                    <option value="ec">ec - Canonical (default)</option>
+                                    <?php
+                                        // Run through posts list
+                                        foreach ( $organism_list as $org )
+                                        {
+                                            echo '<option value="' . $org["organism"] . '">' . $org["organism"] . " - " . $org["specie"] . '</option>';
+                                        }
+                                    ?>
                                 </select>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-3">
                                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Filter</button>
                             </div>
                         </div>
                     </form>
-                    <p style="font-style: italic;">Note: Just working with <strong>hsa & mmu </strong> organisms.</p>
+                    <p style="font-style: italic;">Note: Just working for <strong>ec, hsa & mmu </strong> organisms.</p>
                 </div>
                 <!-- END Select Components Content -->
             </div>
@@ -187,7 +194,7 @@
                         </div>
                         <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Show/hide" data-toggle="block-toggle-content"><i class="fa fa-arrows-v"></i></a>
                         <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Fullscreen" data-toggle="block-toggle-fullscreen"><i class="fa fa-desktop"></i></a>
-                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Delete block" data-toggle="block-hide"><i class="fa fa-times"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Delete network" data-toggle="block-hide"><i class="fa fa-times"></i></a>
                     </div>
                     <h2>Pathway <strong>Viewer</strong></h2>
                 </div>

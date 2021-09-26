@@ -55,6 +55,7 @@
 			// Load models
 			$settings_model = $this->load_model('settings-model');
 			$pathway_model = $this->load_model('pathway-model');
+			$organism_model = $this->load_model('organism-model');
 
 			/** Load files from view **/
 

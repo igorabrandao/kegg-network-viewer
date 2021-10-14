@@ -186,8 +186,8 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
     <!-- END Custom message Block -->
 
     <!-- Preview section -->
-    <div class="row" data-step="10" data-intro="" >
-        <div id="previewSection">
+    <div id="previewSection">
+        <div class="row" data-step="10" data-intro="" id="networkPreviewRow" name="networkPreviewRow">
             <div class="col-md-12" id="networkPreviewBlock" name="networkPreviewBlock">
                 <!-- Pathway Viewer Widget -->
                 <div class="block">
@@ -238,6 +238,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
 
 <script type="text/javascript">
     const previewSectionName = 'networkPreviewBlock';
+    const maxPreviewPerRow = 4;
 
     /** 
      * Plugin to alter a given element property via wildcard
@@ -375,12 +376,31 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
     const createNewPreview = function(org_, idx_) {
         // Clone the preview layout
         const newPreview = document.querySelector('#' + previewSectionName).cloneNode(true);
+        const currentRow = Math.ceil((idx_+1)/maxPreviewPerRow) - 1;
 
-        // Change the id attribute of the newly created element:
+        // Change the id attribute of the newly created element
         newPreview.setAttribute('id', previewSectionName + idx_);
 
         // Append the newly created element on element previewSection
-        document.querySelector('#previewSection').appendChild(newPreview);
+        if (idx_ % maxPreviewPerRow == 0) {
+            // Create a new row
+            const newRow = document.querySelector('#networkPreviewRow').cloneNode(false);
+
+            // Change the id attribute of the newly created element
+            const newRowId = 'networkPreviewRow' + currentRow;
+            newRow.setAttribute('id', newRowId);
+
+            // Add the row to the preview section
+            document.querySelector('#previewSection').appendChild(newRow);
+
+            // Add the preview in the current row
+            document.querySelector('#' + newRowId).appendChild(newPreview);
+        } else {
+            // Add the preview in the current row
+            document.querySelector('#networkPreviewRow').appendChild(newPreview);
+        }
+
+        console.log(`current row: ${currentRow}`);
     }
 
     /**
@@ -388,16 +408,18 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
      */
     const removePreview = function(idx_) {
         // Remove the preview layout
-        document.querySelector('#' + previewSectionName + idx_).remove();
+        document.querySelector(previewSectionName + idx_).remove();
     }
 
     /**
      * Method to resize the grids according to the number of grids
      */
-    const resizeGridLayout = function(selectedOrgCount_) {
+    const resizeGridLayout = function(previewId_, itensPerRow_) {
+        console.log(previewId_);
+        console.log(itensPerRow_);
         const defaultGrid = 12;
-        const newGrid = (defaultGrid / selectedOrgCount_);
-        $("#" + previewSectionName).alterClass('col-md-*', 'col-md-' + newGrid);
+        const newGrid = (defaultGrid / itensPerRow_);
+        $("#" + previewId_).alterClass('col-md-*', 'col-md-' + newGrid);
     }
 
     // Handle the org selector change pipeline
@@ -412,16 +434,26 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
             // If the number of previews > current orgs selection count, remove it!
             const previews = $('div[name="' + previewSectionName + '"]');
             
-            for (idx = (previews.length - 1); idx > 0; idx--) {
+            /*for (idx = (previews.length - 1); idx > 0; idx--) {
                 removePreview(idx);
-            }
-
-            // Resize the preview layout grid
-            resizeGridLayout(selectedOrg.length);
+            }*/
 
             // Create the previews
             for (idx = 1; idx < selectedOrg.length; idx++) {
+                // Create a new preview
                 createNewPreview('hsa', idx);
+
+                // Count the previews per row
+                const previewPerRow = idx < maxPreviewPerRow ? (idx + 1) : Math.abs(idx - maxPreviewPerRow);
+
+                console.log(`itens per row: ${previewPerRow}`);
+
+                if (idx - 1 == 0) {
+                    resizeGridLayout(previewSectionName, previewPerRow);
+                    resizeGridLayout(previewSectionName + idx, previewPerRow);
+                } else {
+                    resizeGridLayout(previewSectionName + idx, previewPerRow);
+                }
             }
         } else {
             // Display the custom message

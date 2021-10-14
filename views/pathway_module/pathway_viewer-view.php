@@ -408,15 +408,13 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
      */
     const removePreview = function(idx_) {
         // Remove the preview layout
-        document.querySelector(previewSectionName + idx_).remove();
+        document.querySelector('#' + previewSectionName + idx_).remove();
     }
 
     /**
      * Method to resize the grids according to the number of grids
      */
     const resizeGridLayout = function(previewId_, itensPerRow_) {
-        console.log(previewId_);
-        console.log(itensPerRow_);
         const defaultGrid = 12;
         const newGrid = (defaultGrid / itensPerRow_);
         $("#" + previewId_).alterClass('col-md-*', 'col-md-' + newGrid);
@@ -434,9 +432,9 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
             // If the number of previews > current orgs selection count, remove it!
             const previews = $('div[name="' + previewSectionName + '"]');
             
-            /*for (idx = (previews.length - 1); idx > 0; idx--) {
+            for (idx = (previews.length - 1); idx > 0; idx--) {
                 removePreview(idx);
-            }*/
+            }
 
             // Create the previews
             for (idx = 1; idx < selectedOrg.length; idx++) {
@@ -444,15 +442,22 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
                 createNewPreview('hsa', idx);
 
                 // Count the previews per row
-                const previewPerRow = idx < maxPreviewPerRow ? (idx + 1) : Math.abs(idx - maxPreviewPerRow);
+                let previewPerRow = idx < maxPreviewPerRow ? (idx + 1) : Math.abs(idx - maxPreviewPerRow);
+                previewPerRow = previewPerRow == 0 ? 1 : previewPerRow;
+                const currentRow = Math.ceil((idx+1)/maxPreviewPerRow) - 1;
 
                 console.log(`itens per row: ${previewPerRow}`);
 
-                if (idx - 1 == 0) {
+                if (currentRow == 0) {
                     resizeGridLayout(previewSectionName, previewPerRow);
-                    resizeGridLayout(previewSectionName + idx, previewPerRow);
+                    resizeGridLayout(previewSectionName + '1', previewPerRow);
+                    resizeGridLayout(previewSectionName + '2', previewPerRow);
+                    resizeGridLayout(previewSectionName + '3', previewPerRow);
                 } else {
-                    resizeGridLayout(previewSectionName + idx, previewPerRow);
+                    resizeGridLayout(previewSectionName + currentRow.toString(), previewPerRow);
+                    resizeGridLayout(previewSectionName + (currentRow + previewPerRow).toString(), previewPerRow);
+                    resizeGridLayout(previewSectionName + (currentRow + previewPerRow + 1).toString(), previewPerRow);
+                    resizeGridLayout(previewSectionName + (currentRow + previewPerRow + 2).toString(), previewPerRow);
                 }
             }
         } else {

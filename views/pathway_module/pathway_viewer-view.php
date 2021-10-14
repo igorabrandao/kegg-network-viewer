@@ -185,44 +185,47 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
     </div>
     <!-- END Custom message Block -->
 
-    <div class="row" data-step="10" data-intro="" id="networkPreviewBlock">
-        <div class="col-md-12">
-            <!-- Pathway Viewer Widget -->
-            <div class="block">
-                <!-- Select Components Title -->
-                <div class="block-title themed-background-dark-night" style="color: #ffffff;">
-                    <!-- Interactive block controls (initialized in js/app.js -> interactiveBlocks()) -->
-                    <div class="block-options pull-right">
-                        <div class="btn-group btn-group-sm">
-                            <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary dropdown-toggle enable-tooltip" data-toggle="dropdown" title="Saving options">
-                                <i class="gi gi-floppy_save"></i> <span class="caret"></span></a>
-                            <ul class="dropdown-menu text-left">
-                                <li id="exportNetworkButtonPng"><a href="javascript:void(0)"><i class="fi fi-png pull-right"></i>PNG</a></li>
-                                <li id="exportNetworkButtonJpeg"><a href="javascript:void(0)"><i class="fi fi-jpg pull-right"></i>JPEG</a></li>
-                                <li id="exportNetworkButtonPdf"><a href="javascript:void(0)"><i class="fi fi-pdf pull-right"></i></i>PDF</a></li>
-                                <li id="exportNetworkButtonSvg" class="disabled"><a href="javascript:void(0)"><i class="fi fi-svg pull-right"></i></i>SVG</a></li>
-                                <li id="exportNetworkButtonJson" class="disabled"><a href="javascript:void(0)"><i class="fi fi-xml pull-right"></i>XML/JSON</a></li>
-                            </ul>
+    <!-- Preview section -->
+    <div class="row" data-step="10" data-intro="" >
+        <div id="previewSection">
+            <div class="col-md-12" id="networkPreviewBlock" name="networkPreviewBlock">
+                <!-- Pathway Viewer Widget -->
+                <div class="block">
+                    <!-- Select Components Title -->
+                    <div class="block-title themed-background-dark-night" style="color: #ffffff;">
+                        <!-- Interactive block controls (initialized in js/app.js -> interactiveBlocks()) -->
+                        <div class="block-options pull-right">
+                            <div class="btn-group btn-group-sm">
+                                <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary dropdown-toggle enable-tooltip" data-toggle="dropdown" title="Saving options">
+                                    <i class="gi gi-floppy_save"></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu text-left">
+                                    <li id="exportNetworkButtonPng"><a href="javascript:void(0)"><i class="fi fi-png pull-right"></i>PNG</a></li>
+                                    <li id="exportNetworkButtonJpeg"><a href="javascript:void(0)"><i class="fi fi-jpg pull-right"></i>JPEG</a></li>
+                                    <li id="exportNetworkButtonPdf"><a href="javascript:void(0)"><i class="fi fi-pdf pull-right"></i></i>PDF</a></li>
+                                    <li id="exportNetworkButtonSvg" class="disabled"><a href="javascript:void(0)"><i class="fi fi-svg pull-right"></i></i>SVG</a></li>
+                                    <li id="exportNetworkButtonJson" class="disabled"><a href="javascript:void(0)"><i class="fi fi-xml pull-right"></i>XML/JSON</a></li>
+                                </ul>
+                            </div>
+                            <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Show/hide" data-toggle="block-toggle-content"><i class="fa fa-arrows-v"></i></a>
+                            <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Fullscreen" data-toggle="block-toggle-fullscreen"><i class="fa fa-desktop"></i></a>
+                            <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Delete network" data-toggle="block-hide"><i class="fa fa-times"></i></a>
                         </div>
-                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Show/hide" data-toggle="block-toggle-content"><i class="fa fa-arrows-v"></i></a>
-                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Fullscreen" data-toggle="block-toggle-fullscreen"><i class="fa fa-desktop"></i></a>
-                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Delete network" data-toggle="block-hide"><i class="fa fa-times"></i></a>
+                        <h2>Pathway <strong>Viewer</strong></h2>
                     </div>
-                    <h2>Pathway <strong>Viewer</strong></h2>
-                </div>
-                <!-- END Select Components Title -->
+                    <!-- END Select Components Title -->
 
-                <!-- Select Components Content -->
-                <div class="block-content">
-                    <!-- Iframe with pathway visualization -->
-                    <iframe id="networkIframe" class="iframe-network-viewer" frameBorder="0" src="<?php echo HOME_URI . '/resources/networks/ec/' . $network_filename; ?>"></iframe>
-                    <!-- END Iframe with pathway visualization -->
+                    <!-- Select Components Content -->
+                    <div class="block-content">
+                        <!-- Iframe with pathway visualization -->
+                        <iframe id="networkIframe" class="iframe-network-viewer" frameBorder="0" src="<?php echo HOME_URI . '/resources/networks/ec/' . $network_filename; ?>"></iframe>
+                        <!-- END Iframe with pathway visualization -->
+                    </div>
                 </div>
+                <!-- END Pathway Viewer Widget -->
             </div>
-            <!-- END Pathway Viewer Widget -->
         </div>
     </div>
-    <!-- END Widgets Row -->
+    <!-- END Preview Section -->
 </div>
 <!-- END Page Content -->
 
@@ -234,6 +237,35 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
 
 
 <script type="text/javascript">
+    const previewSectionName = 'networkPreviewBlock';
+
+    /** 
+     * Plugin to alter a given element property via wildcard
+     */
+    $.fn.alterClass = function(removals, additions) {
+        var self = this;
+
+        if (removals.indexOf('*') === -1) {
+            // Use native jQuery methods if there is no wildcard matching
+            self.removeClass(removals);
+            return !additions ? self : self.addClass(additions);
+        }
+
+        var patt = new RegExp('\\s' +
+            removals.replace(/\*/g, '[A-Za-z0-9-_]+').split(' ').join('\\s|\\s') +
+            '\\s', 'g');
+
+        self.each(function(i, it) {
+            var cn = ' ' + it.className + ' ';
+            while (patt.test(cn)) {
+                cn = cn.replace(patt, ' ');
+            }
+            it.className = $.trim(cn);
+        });
+
+        return !additions ? self : self.addClass(additions);
+    };
+
     /**
      * Function to read the iframe canvas
      */
@@ -337,21 +369,63 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
         return $('#organismChooser option:selected');
     }
 
-    // Handle the org selector change
+    /**
+     * Method to create a new grid according to the selected organism
+     */
+    const createNewPreview = function(org_, idx_) {
+        // Clone the preview layout
+        const newPreview = document.querySelector('#' + previewSectionName).cloneNode(true);
+
+        // Change the id attribute of the newly created element:
+        newPreview.setAttribute('id', previewSectionName + idx_);
+
+        // Append the newly created element on element previewSection
+        document.querySelector('#previewSection').appendChild(newPreview);
+    }
+
+    /**
+     * Method to remove an existing grid according to its index
+     */
+    const removePreview = function(idx_) {
+        // Remove the preview layout
+        document.querySelector('#' + previewSectionName + idx_).remove();
+    }
+
+    /**
+     * Method to resize the grids according to the number of grids
+     */
+    const resizeGridLayout = function(selectedOrgCount_) {
+        const defaultGrid = 12;
+        const newGrid = (defaultGrid / selectedOrgCount_);
+        $("#" + previewSectionName).alterClass('col-md-*', 'col-md-' + newGrid);
+    }
+
+    // Handle the org selector change pipeline
     $(document).on("change", "#organismChooser", function(ev_) {
         const selectedOrg = getSelectedOrgs();
-        console.log(selectedOrg.length);
-        console.log(selectedOrg);
 
         if (selectedOrg.length > 0) {
             // Display the selected pathway(s)
-            $('#networkPreviewBlock').css('display', 'block');
+            $('#' + previewSectionName).css('display', 'block');
             $('#customMessageBlock').css('display', 'none');
 
+            // If the number of previews > current orgs selection count, remove it!
+            const previews = $('div[name="' + previewSectionName + '"]');
+            
+            for (idx = (previews.length - 1); idx > 0; idx--) {
+                removePreview(idx);
+            }
 
+            // Resize the preview layout grid
+            resizeGridLayout(selectedOrg.length);
+
+            // Create the previews
+            for (idx = 1; idx < selectedOrg.length; idx++) {
+                createNewPreview('hsa', idx);
+            }
         } else {
             // Display the custom message
-            $('#networkPreviewBlock').css('display', 'none');
+            $('#' + previewSectionName).css('display', 'none');
             $('#customMessageBlock').css('display', 'block');
         }
     });

@@ -376,7 +376,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
     const createNewPreview = function(org_, idx_) {
         // Clone the preview layout
         const newPreview = document.querySelector('#' + previewSectionName).cloneNode(true);
-        const currentRow = Math.ceil((idx_+1)/maxPreviewPerRow) - 1;
+        const currentRow = Math.ceil((idx_ + 1) / maxPreviewPerRow) - 1;
 
         // Change the id attribute of the newly created element
         newPreview.setAttribute('id', previewSectionName + idx_);
@@ -397,10 +397,12 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
             document.querySelector('#' + newRowId).appendChild(newPreview);
         } else {
             // Add the preview in the current row
-            document.querySelector('#networkPreviewRow').appendChild(newPreview);
+            if (currentRow == 0) {
+                document.querySelector('#networkPreviewRow').appendChild(newPreview);
+            } else {
+                document.querySelector('#networkPreviewRow' + currentRow).appendChild(newPreview);
+            }
         }
-
-        console.log(`current row: ${currentRow}`);
     }
 
     /**
@@ -417,7 +419,10 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
     const resizeGridLayout = function(previewId_, itensPerRow_) {
         const defaultGrid = 12;
         const newGrid = (defaultGrid / itensPerRow_);
-        $("#" + previewId_).alterClass('col-md-*', 'col-md-' + newGrid);
+
+        if ($("#" + previewId_).length) {
+            $("#" + previewId_).alterClass('col-md-*', 'col-md-' + newGrid);
+        }
     }
 
     // Handle the org selector change pipeline
@@ -431,33 +436,34 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
 
             // If the number of previews > current orgs selection count, remove it!
             const previews = $('div[name="' + previewSectionName + '"]');
-            
+
             for (idx = (previews.length - 1); idx > 0; idx--) {
                 removePreview(idx);
             }
 
             // Create the previews
-            for (idx = 1; idx < selectedOrg.length; idx++) {
-                // Create a new preview
-                createNewPreview('hsa', idx);
+            if (selectedOrg.length == 1) {
+                resizeGridLayout(previewSectionName, 1);
+            } else {
+                for (idx = 1; idx < selectedOrg.length; idx++) {
+                    // Create a new preview
+                    createNewPreview('hsa', idx); // TODO: use the selected org
 
-                // Count the previews per row
-                let previewPerRow = idx < maxPreviewPerRow ? (idx + 1) : Math.abs(idx - maxPreviewPerRow);
-                previewPerRow = previewPerRow == 0 ? 1 : previewPerRow;
-                const currentRow = Math.ceil((idx+1)/maxPreviewPerRow) - 1;
+                    // Count the previews per row
+                    const currentRow = Math.ceil((idx + 1) / maxPreviewPerRow) - 1;
+                    const previewPerRow = idx < maxPreviewPerRow ? (idx + 1) : (Math.abs(idx - (maxPreviewPerRow * currentRow)) + 1);
 
-                console.log(`itens per row: ${previewPerRow}`);
-
-                if (currentRow == 0) {
-                    resizeGridLayout(previewSectionName, previewPerRow);
-                    resizeGridLayout(previewSectionName + '1', previewPerRow);
-                    resizeGridLayout(previewSectionName + '2', previewPerRow);
-                    resizeGridLayout(previewSectionName + '3', previewPerRow);
-                } else {
-                    resizeGridLayout(previewSectionName + currentRow.toString(), previewPerRow);
-                    resizeGridLayout(previewSectionName + (currentRow + previewPerRow).toString(), previewPerRow);
-                    resizeGridLayout(previewSectionName + (currentRow + previewPerRow + 1).toString(), previewPerRow);
-                    resizeGridLayout(previewSectionName + (currentRow + previewPerRow + 2).toString(), previewPerRow);
+                    if (currentRow == 0) {
+                        resizeGridLayout(previewSectionName, previewPerRow);
+                        resizeGridLayout(previewSectionName + '1', previewPerRow);
+                        resizeGridLayout(previewSectionName + '2', previewPerRow);
+                        resizeGridLayout(previewSectionName + '3', previewPerRow);
+                    } else {
+                        resizeGridLayout(previewSectionName + (currentRow * maxPreviewPerRow).toString(), previewPerRow);
+                        resizeGridLayout(previewSectionName + (currentRow * maxPreviewPerRow + 1).toString(), previewPerRow);
+                        resizeGridLayout(previewSectionName + (currentRow * maxPreviewPerRow + 2).toString(), previewPerRow);
+                        resizeGridLayout(previewSectionName + (currentRow * maxPreviewPerRow + 2).toString(), previewPerRow);
+                    }
                 }
             }
         } else {

@@ -106,7 +106,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
-                                <strong><?php echo ($pathway_info["hub_number"] + $pathway_info["others_number"]); ?></strong><br>
+                                <strong><?php echo $pathway_info["others_number"]; ?></strong><br>
                                 <small>OTHER NODES</small>
                             </h2>
                         </div>
@@ -208,7 +208,6 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
                             </div>
                             <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Show/hide" data-toggle="block-toggle-content"><i class="fa fa-arrows-v"></i></a>
                             <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Fullscreen" data-toggle="block-toggle-fullscreen"><i class="fa fa-desktop"></i></a>
-                            <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="Delete network" data-toggle="block-hide"><i class="fa fa-times"></i></a>
                         </div>
                         <h2>Pathway <strong>Viewer</strong></h2>
                     </div>
@@ -217,7 +216,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
                     <!-- Select Components Content -->
                     <div class="block-content">
                         <!-- Iframe with pathway visualization -->
-                        <iframe id="networkIframe" class="iframe-network-viewer" frameBorder="0" src="<?php echo HOME_URI . '/resources/networks/ec/' . $network_filename; ?>"></iframe>
+                        <iframe id="networkIframe" name="networkIframe" class="iframe-network-viewer" frameBorder="0" src="<?php echo HOME_URI . '/resources/networks/ec/' . $network_filename; ?>"></iframe>
                         <!-- END Iframe with pathway visualization -->
                     </div>
                 </div>
@@ -239,6 +238,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
 <script type="text/javascript">
     const previewSectionName = 'networkPreviewBlock';
     const maxPreviewPerRow = 4;
+    const previewFileBasename = "<?php echo HOME_URI . '/resources/networks/???/' . $network_filename; ?>";
 
     /** 
      * Plugin to alter a given element property via wildcard
@@ -403,6 +403,13 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
                 document.querySelector('#networkPreviewRow' + currentRow).appendChild(newPreview);
             }
         }
+
+        // Update the preview iframe src
+        const previewIframe = document.getElementsByName("networkIframe")[idx];
+
+        if (previewIframe) {
+            previewIframe.src = previewFileBasename.replace('???', org_);
+        }
     }
 
     /**
@@ -447,7 +454,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
             } else {
                 for (idx = 1; idx < selectedOrg.length; idx++) {
                     // Create a new preview
-                    createNewPreview('hsa', idx); // TODO: use the selected org
+                    createNewPreview(selectedOrg[idx].value, idx); // TODO: use the selected org
 
                     // Count the previews per row
                     const currentRow = Math.ceil((idx + 1) / maxPreviewPerRow) - 1;

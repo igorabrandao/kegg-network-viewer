@@ -214,7 +214,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
                     <!-- END Select Components Title -->
 
                     <!-- Select Components Content -->
-                    <div class="block-content">
+                    <div class="block-content-full">
                         <!-- Iframe with pathway visualization -->
                         <iframe id="networkIframe" name="networkIframe" class="iframe-network-viewer" frameBorder="0" src="<?php echo HOME_URI . '/resources/networks/ec/' . $network_filename; ?>"></iframe>
                         <!-- END Iframe with pathway visualization -->

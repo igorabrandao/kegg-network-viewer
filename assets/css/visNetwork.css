@@ -1,0 +1,8 @@
+.magnifier {
+    display: none;
+    position: absolute;
+    border: 1px black solid;
+    box-shadow: 5px 5px 10px #1e1e1e;
+    border-radius: 50%;
+    z-index: 5000;
+}

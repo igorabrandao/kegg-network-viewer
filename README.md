@@ -52,6 +52,14 @@ In order to update the `CHANGELOG.md`, install the extension `auto-changelog`: [
 
     auto-changelog --template keepachangelog
 
+## Project version tags:
+
+Toc create release labels to the project, execute the following commands:
+
+    git tag -a v[version number in format x.x.x] -m "version [version number in format x.x.x]"
+
+    git push origin --tags
+
 ## Licence:
 
 [The MIT License](https://mit-licence.igorabrandao.com.br/).

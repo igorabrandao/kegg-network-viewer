@@ -60,6 +60,14 @@ Toc create release labels to the project, execute the following commands:
 
     git push origin --tags
 
+## Note on file permission:
+
+When uploading the project to the server, set the following file and folder permissions:
+
+Folders like 755 find . -type d -exec chmod 755 {} \;
+
+Files like 644 find . -type f -exec chmod 644 {} \;
+
 ## Licence:
 
 [The MIT License](https://mit-licence.igorabrandao.com.br/).

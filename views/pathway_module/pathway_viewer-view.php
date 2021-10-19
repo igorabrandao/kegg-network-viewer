@@ -100,7 +100,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
                         </div>
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
-                                <strong><?php echo ($pathway_info["ap_number"] + $pathway_info["hap_number"]); ?></strong><br>
+                                <strong><?php echo $pathway_info["ap_number"]; ?></strong><br>
                                 <small>ARTICULATION POINTS</small>
                             </h2>
                         </div>

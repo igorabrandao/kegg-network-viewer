@@ -53,12 +53,17 @@
 		 * @since 0.1
 		 * @access public
 		*/
-		public function get_organisms_list( $limit_ = -1, $order_by_field_ = "", $order_by_type_ = "" )
+		public function get_organisms_list( $limit_ = -1, $where_org_list_ = [], $order_by_field_ = "", $order_by_type_ = "" )
 		{
 			// Select the necessary data from DB
 			$sql = "SELECT O.`id`, O.`t.number`, O.`organism`, O.`specie`, O.`phylogeny`
 			FROM 
 				`organism` as O";
+
+			// Check where parameter
+			if ( isset($where_org_list_) && sizeof($where_org_list_) != 0 ) {
+				$sql .= " WHERE O.`organism` IN ('" . implode("', '", $where_org_list_) . "')";
+			}
 
 			// Check order by parameter
 			if ( isset($order_by_field_) && strcmp($order_by_type_, "") != 0 )

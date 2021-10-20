@@ -10,7 +10,8 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
     $pathway_info = $pathway_info[0];
 
     // Load the organism list
-    $organism_list = $organism_model->get_organisms_list();
+    $org_list = ["ec", "hsa", "mmu", "dme", "sce", "cel", "ath"];
+    $organism_list = $organism_model->get_organisms_list(-1, $org_list, "", "");
 
     // Find the network file name
     $network_filename = '';
@@ -111,7 +112,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
                             </h2>
                         </div>
 
-                        <div class="col-sm-12 hidden-xs" data-step="9" data-intro="Click here to see the details about the pathway.">
+                        <div class="col-sm-12 hidden-xs" data-step="8" data-intro="Click here to see the details about the pathway.">
                             <button type="button" class="btn btn-block btn-danger" onclick="$('#modal-network-info').modal('show');">
                                 Click here to see the pathway information
                             </button>
@@ -129,7 +130,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
     <!-- Widgets Row -->
 
     <!-- Filter Block -->
-    <div class="row" data-step="11" data-intro="" id="network-preview-filter">
+    <div class="row" data-step="9" data-intro="Here you can select the organisms to see their pathways." id="network-preview-filter">
         <div class="col-md-12">
             <!-- Select Components Block -->
             <div class="block">
@@ -172,7 +173,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
     <!-- END Filter Block -->
 
     <!-- Custom message Block -->
-    <div class="row" data-step="11" data-intro="" id="customMessageBlock" style="display: none;">
+    <div class="row" id="customMessageBlock" style="display: none;">
         <div class="col-md-12">
             <div class="block">
                 <!-- Content -->
@@ -187,7 +188,7 @@ if (isset($_GET['pathwayCode']) && strcmp($_GET['pathwayCode'], "") != 0) {
 
     <!-- Preview section -->
     <div id="previewSection">
-        <div class="row" data-step="10" data-intro="" id="networkPreviewRow" name="networkPreviewRow">
+        <div class="row" id="networkPreviewRow" name="networkPreviewRow" data-step="10" data-intro="Here we have the dynamic network preview, use this area to interact with the network">
             <div class="col-md-12" id="networkPreviewBlock" name="networkPreviewBlock">
                 <!-- Pathway Viewer Widget -->
                 <div class="block">

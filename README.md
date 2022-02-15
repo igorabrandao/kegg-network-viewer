@@ -17,13 +17,9 @@ Easy! [Just click here](https://igorabrandao.com.br/kegg-pathway-bottleneck/).
 
 You can help us to make this projet even better :rocket:. Here are the ways you can contribute to this project:
 
-### 1. Giving a feedback
+### Giving a feedback
 
 Report your feedback, issues or suggestions by [creating a topic here](https://github.com/igorabrandao/kegg-network-viewer/issues) :punch:.
-
-### 2. Developing with us
-
-Bring your dev skills to the team [by clicking here](./includes/first-contributions/README.md) :computer:.
 
 ## Contributors:
 

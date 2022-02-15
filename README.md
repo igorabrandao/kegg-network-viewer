@@ -23,8 +23,6 @@ Report your feedback, issues or suggestions by [creating a topic here](https://g
 
 ## Contributors:
 
-### Giving a feedback
-
 * Inácio Medeiros
 * Diego Arthur
 

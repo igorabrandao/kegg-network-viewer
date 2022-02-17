@@ -1,4 +1,5 @@
 <?php
+
 /**
  * page_head.php
  *
@@ -16,7 +17,9 @@
 
     'page-loading'      enables page preloader
 -->
-<div id="page-wrapper"<?php if ($template['page_preloader']) { echo ' class="page-loading"'; } ?>>
+<div id="page-wrapper" <?php if ($template['page_preloader']) {
+                            echo ' class="page-loading"';
+                        } ?>>
     <!-- Preloader -->
     <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
     <!-- Used only if page preloader is enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
@@ -63,225 +66,40 @@
         'enable-cookies'                                enables cookies for remembering active color theme when changed from the sidebar links
     -->
     <?php
-        $page_classes = '';
+    $page_classes = '';
 
-        if ($template['header'] == 'navbar-fixed-top') {
-            $page_classes = 'header-fixed-top';
-        } else if ($template['header'] == 'navbar-fixed-bottom') {
-            $page_classes = 'header-fixed-bottom';
-        }
+    if ($template['header'] == 'navbar-fixed-top') {
+        $page_classes = 'header-fixed-top';
+    } else if ($template['header'] == 'navbar-fixed-bottom') {
+        $page_classes = 'header-fixed-bottom';
+    }
 
-        if ($template['sidebar']) {
-            $page_classes .= (($page_classes == '') ? '' : ' ') . $template['sidebar'];
-        }
+    if ($template['sidebar']) {
+        $page_classes .= (($page_classes == '') ? '' : ' ') . $template['sidebar'];
+    }
 
-        if ($template['main_style'] == 'style-alt')  {
-            $page_classes .= (($page_classes == '') ? '' : ' ') . 'style-alt';
-        }
+    if ($template['main_style'] == 'style-alt') {
+        $page_classes .= (($page_classes == '') ? '' : ' ') . 'style-alt';
+    }
 
-        if ($template['footer'] == 'footer-fixed')  {
-            $page_classes .= (($page_classes == '') ? '' : ' ') . 'footer-fixed';
-        }
+    if ($template['footer'] == 'footer-fixed') {
+        $page_classes .= (($page_classes == '') ? '' : ' ') . 'footer-fixed';
+    }
 
-        if (!$template['menu_scroll'])  {
-            $page_classes .= (($page_classes == '') ? '' : ' ') . 'disable-menu-autoscroll';
-        }
+    if (!$template['menu_scroll']) {
+        $page_classes .= (($page_classes == '') ? '' : ' ') . 'disable-menu-autoscroll';
+    }
 
-        if ($template['cookies'] === 'enable-cookies') {
-            $page_classes .= (($page_classes == '') ? '' : ' ') . 'enable-cookies';
-        }
+    if ($template['cookies'] === 'enable-cookies') {
+        $page_classes .= (($page_classes == '') ? '' : ' ') . 'enable-cookies';
+    }
     ?>
-    <div id="page-container"<?php if ($page_classes) { echo ' class="' . $page_classes . '"'; } ?>>
-        <!-- Main Sidebar -->
-        <div id="sidebar">
-            <!-- Wrapper for scrolling functionality -->
-            <div id="sidebar-scroll">
-                <!-- Sidebar Content -->
-                <div class="sidebar-content">
-                    <!-- Brand -->
-                    <a href="<?php echo HOME_URI;?>" class="sidebar-brand">
-                        <i class="gi gi-share_alt"></i><span class="sidebar-nav-mini-hide"><strong>KPV</strong></span>
-                    </a>
-                    <!-- END Brand -->
 
-                    <!-- User Info -->
-                    <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
-                        <div class="sidebar-user-avatar">
-                            <a href="page_ready_user_profile.php">
-                                <img src="<?php echo HOME_URI;?>/assets/img/placeholders/avatars/network_avatar.jpg" alt="avatar">
-                            </a>
-                        </div>
-                        <div class="sidebar-user-name"><?php echo $template["user_name"]; ?></div>
-                        <div class="sidebar-user-links">
-                            <!--<a href="page_ready_user_profile.php" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>-->
-                            <a href="mailto:<?php echo $template["email"]; ?>" data-toggle="tooltip" data-placement="bottom" title="Get in touch"><i class="gi gi-envelope"></i></a>
-                            <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.php in PHP version) -->
-                            <!--<a href="javascript:void(0)" class="enable-tooltip" data-placement="bottom" title="Settings" onclick="$('#modal-user-settings').modal('show');"><i class="gi gi-cogwheel"></i></a>-->
-                            <!--<a href="login.php" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>-->
-                        </div>
-                    </div>
-                    <!-- END User Info -->
-
-                    <?php if ($primary_nav) { ?>
-                    <!-- Sidebar Navigation -->
-                    <ul class="sidebar-nav" data-step="2" data-intro="Use the sidebar to access the website pages">
-                        <?php foreach( $primary_nav as $key => $link ) {
-                            $link_class = '';
-                            $li_active  = '';
-                            $menu_link  = '';
-
-                            // Get 1st level link's vital info
-                            $url        = (isset($link['url']) && $link['url']) ? $link['url'] : '#';
-                            $active     = (isset($link['url']) && ($template['active_page'] == $link['url'])) ? ' active' : '';
-                            $icon       = (isset($link['icon']) && $link['icon']) ? '<i class="' . $link['icon'] . ' sidebar-nav-icon"></i>' : '';
-
-                            // Check if the link has a submenu
-                            if (isset($link['sub']) && $link['sub']) {
-                                // Since it has a submenu, we need to check if we have to add the class active
-                                // to its parent li element (only if a 2nd or 3rd level link is active)
-                                foreach ($link['sub'] as $sub_link) {
-                                    if (in_array($template['active_page'], $sub_link)) {
-                                        $li_active = ' class="active"';
-                                        break;
-                                    }
-
-                                    // 3rd level links
-                                    if (isset($sub_link['sub']) && $sub_link['sub']) {
-                                        foreach ($sub_link['sub'] as $sub2_link) {
-                                            if (in_array($template['active_page'], $sub2_link)) {
-                                                $li_active = ' class="active"';
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                $menu_link = 'sidebar-nav-menu';
-                            }
-
-                            // Create the class attribute for our link
-                            if ($menu_link || $active) {
-                                $link_class = ' class="'. $menu_link . $active .'"';
-                            }
-                        ?>
-                        <?php if ($url == 'header') { // if it is a header and not a link ?>
-                        <li class="sidebar-header">
-                            <?php if (isset($link['opt']) && $link['opt']) { // If the header has options set ?>
-                            <span class="sidebar-header-options clearfix"><?php echo $link['opt']; ?></span>
-                            <?php } ?>
-                            <span class="sidebar-header-title"><?php echo $link['name']; ?></span>
-                        </li>
-                        <?php } else { // If it is a link ?>
-                        <li <?php echo $li_active; ?>>
-                            <a href="<?php echo $url; ?>"<?php echo $link_class; ?>><?php if (isset($link['sub']) && $link['sub']) { // if the link has a submenu ?><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><?php } echo $icon; ?><span class="sidebar-nav-mini-hide"><?php echo $link['name']; ?></span></a>
-                            <?php if (isset($link['sub']) && $link['sub']) { // if the link has a submenu ?>
-                            <ul>
-                                <?php foreach ($link['sub'] as $sub_link) {
-                                    $link_class = '';
-                                    $li_active = '';
-                                    $submenu_link = '';
-
-                                    // Get 2nd level link's vital info
-                                    $url        = (isset($sub_link['url']) && $sub_link['url']) ? $sub_link['url'] : '#';
-                                    $active     = (isset($sub_link['url']) && ($template['active_page'] == $sub_link['url'])) ? ' active' : '';
-
-                                    // Check if the link has a submenu
-                                    if (isset($sub_link['sub']) && $sub_link['sub']) {
-                                        // Since it has a submenu, we need to check if we have to add the class active
-                                        // to its parent li element (only if a 3rd level link is active)
-                                        foreach ($sub_link['sub'] as $sub2_link) {
-                                            if (in_array($template['active_page'], $sub2_link)) {
-                                                $li_active = ' class="active"';
-                                                break;
-                                            }
-                                        }
-
-                                        $submenu_link = 'sidebar-nav-submenu';
-                                    }
-
-                                    if ($submenu_link || $active) {
-                                        $link_class = ' class="'. $submenu_link . $active .'"';
-                                    }
-                                ?>
-                                <li <?php echo $li_active; ?>>
-                                    <a href="<?php echo $url; ?>"<?php echo $link_class; ?>><?php if (isset($sub_link['sub']) && $sub_link['sub']) { ?><i class="fa fa-angle-left sidebar-nav-indicator"></i><?php } echo $sub_link['name']; ?></a>
-                                    <?php if (isset($sub_link['sub']) && $sub_link['sub']) { ?>
-                                        <ul>
-                                            <?php foreach ($sub_link['sub'] as $sub2_link) {
-                                                // Get 3rd level link's vital info
-                                                $url    = (isset($sub2_link['url']) && $sub2_link['url']) ? $sub2_link['url'] : '#';
-                                                $active = (isset($sub2_link['url']) && ($template['active_page'] == $sub2_link['url'])) ? ' class="active"' : '';
-                                            ?>
-                                            <li>
-                                                <a href="<?php echo $url; ?>"<?php echo $active ?>><?php echo $sub2_link['name']; ?></a>
-                                            </li>
-                                            <?php } ?>
-                                        </ul>
-                                    <?php } ?>
-                                </li>
-                                <?php } ?>
-                            </ul>
-                            <?php } ?>
-                        </li>
-                        <?php } ?>
-                        <?php } ?>
-                    </ul>
-                    <!-- END Sidebar Navigation -->
-                    <?php } ?>
-
-                    <!-- Sidebar Notifications -->
-                    <div class="sidebar-header sidebar-nav-mini-hide">
-                        <span class="sidebar-header-title">Development Activity</span>
-                    </div>
-
-                    <div class="sidebar-section sidebar-nav-mini-hide">
-                        <div class='alert alert-success alert-alt'>
-                            Wanna contribute with this project?<br>
-                            <i class='fa fa-thumbs-up fa-fw'></i> Just <a href="https://github.com/igorabrandao/kegg-network-viewer" target="_blank">
-                            <strong>click here </strong> to help!</a>
-                        </div>
-                        <hr>
-                        <?php 
-                            // Generate the development activity
-                            $activity = $settings_model->parseChangelog();
-
-                            // Check if there is some version
-                            if (is_array($activity)) {
-                                // Set the activities colors
-                                $colors = array('alert-success', 'alert-info', 'alert-warning', 'alert-danger');
-
-                                // Print the version informations
-                                foreach($activity as $row => $item)
-                                {
-                                    // Generate random colors
-                                    $randomNumber = rand(0, 3);
-
-                                    echo "<div class='alert " . $colors[$randomNumber] . " alert-alt'>
-                                            <small><i class='fa fa-arrow-up fa-fw'></i>" . $item['version'] . " / " . $item['date'] . "</small>
-                                            <hr style='margin: 0;'>" . $item['description'] . "</div>";
-                                }
-
-                            } else {
-                                echo "<div class='alert alert-danger alert-alt'>
-                                        <small>Today</small><br>
-                                        <i class='fa fa-exclamation fa-fw'></i> <a><strong>" . $activity . "</strong></a>
-                                    </div>";
-                            }
-                        ?>
-                    </div>
-                    <!-- END Sidebar Notifications -->
-                </div>
-                <!-- END Sidebar Content -->
-            </div>
-            <!-- END Wrapper for scrolling functionality -->
-        </div>
-        <!-- END Main Sidebar -->
-
-        <!-- Main Container -->
-        <div id="main-container">
-            <!-- Header -->
-            <!-- In the PHP version you can set the following options from inc/config file -->
-            <!--
+    <!-- Main Container -->
+    <div id="main-container">
+        <!-- Header -->
+        <!-- In the PHP version you can set the following options from inc/config file -->
+        <!--
                 Available header.navbar classes:
 
                 'navbar-default'            for the default light header
@@ -293,13 +111,18 @@
                 'navbar-fixed-bottom'       for a bottom fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar()))
                     'header-fixed-bottom'   has to be added on #page-container only if the class 'navbar-fixed-bottom' was added
             -->
-            <header class="navbar<?php if ($template['header_navbar']) { echo ' ' . $template['header_navbar']; } ?><?php if ($template['header']) { echo ' '. $template['header']; } ?>">
-                <?php if ( $template['header_content'] == 'horizontal-menu' ) { // Horizontal Menu Header Content ?>
+        <header class="navbar<?php if ($template['header_navbar']) {
+                                    echo ' ' . $template['header_navbar'];
+                                } ?><?php if ($template['header']) {
+                                                                                                                    echo ' ' . $template['header'];
+                                                                                                                } ?>">
+            <?php if ($template['header_content'] == 'horizontal-menu') { // Horizontal Menu Header Content 
+            ?>
                 <!-- Navbar Header -->
                 <div class="navbar-header">
                     <!-- Horizontal Menu Toggle + Alternative Sidebar Toggle Button, Visible only in small screens (< 768px) -->
                     <ul class="nav navbar-nav-custom pull-right visible-xs">
-                        
+
                     </ul>
                     <!-- END Horizontal Menu Toggle + Alternative Sidebar Toggle Button -->
 
@@ -378,17 +201,10 @@
                     </form>
                 </div>
                 <!-- END Horizontal Menu + Search -->
-                <?php } else { // Default Header Content  ?>
+            <?php } else { // Default Header Content  
+            ?>
                 <!-- Left Header Navigation -->
                 <ul class="nav navbar-nav-custom">
-                    <!-- Main Sidebar Toggle Button -->
-                    <li>
-                        <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
-                            <i class="fa fa-bars fa-fw"></i>
-                        </a>
-                    </li>
-                    <!-- END Main Sidebar Toggle Button -->
-
                     <!-- Template Options -->
                     <!-- Change Options functionality can be found in js/app.js - templateOptions() -->
                     <li class="dropdown">
@@ -440,7 +256,7 @@
                         gcse.type = 'text/javascript';
                         gcse.async = true;
                         gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-                        '//www.google.com/cse/cse.js?cx=' + cx;
+                            '//www.google.com/cse/cse.js?cx=' + cx;
                         var s = document.getElementsByTagName('script')[0];
                         s.parentNode.insertBefore(gcse, s);
                     })();
@@ -456,61 +272,49 @@
                     <div class="gcse-search"></div>
                 </form>
                 <!-- END Search Form -->
-                <?php } ?>
+            <?php } ?>
 
-                <!-- Right Header Navigation -->
-                <ul class="nav navbar-nav-custom pull-right" data-step="6" data-intro="Use this options to increase/decrease the font-size, add/remove contrast and change the language">
-                    <!-- Alternative Sidebar Toggle Button -->
-                    <li>
-                        <a href="javascript:void(0)" aria-label="Increase Font" id="accessibility-font" class="js-accessibility"></a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" aria-label="Add Contrast" id="accessibility-contrast" class="js-accessibility">
-                    </li>
-                    <li><a></a></li>
-                    <li><a></a></li>
-                    <!-- Language Dropdown -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                            Language <i class="fa fa-globe"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-                            <li class="dropdown-header text-center">Select the language</li>
-                            <li>
-                                <a href="#googtrans(en|en)" class="lang-en lang-select" data-lang="en">
-                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/United States Minor Outlying.png" alt="English"> English</a>
+            <!-- Right Header Navigation -->
+            <ul class="nav navbar-nav-custom pull-right" data-step="6" data-intro="Use this options to increase/decrease the font-size, add/remove contrast and change the language">
+                <!-- Alternative Sidebar Toggle Button -->
+                <li>
+                    <a href="javascript:void(0)" aria-label="Increase Font" id="accessibility-font" class="js-accessibility"></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" aria-label="Add Contrast" id="accessibility-contrast" class="js-accessibility">
+                </li>
+                <li><a></a></li>
+                <li><a></a></li>
+                <!-- Language Dropdown -->
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                        Language <i class="fa fa-globe"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                        <li class="dropdown-header text-center">Select the language</li>
+                        <li>
+                            <a href="#googtrans(en|en)" class="lang-en lang-select" data-lang="en">
+                                <img src="<?php echo HOME_URI; ?>/assets/img/flags/United States Minor Outlying.png" alt="English"> English</a>
 
-                                <a href="#googtrans(en|pt)" class="lang-es lang-select" data-lang="pt">
-                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/Brazil.png" alt="Portuguese"> Portuguese</a>
+                            <a href="#googtrans(en|pt)" class="lang-es lang-select" data-lang="pt">
+                                <img src="<?php echo HOME_URI; ?>/assets/img/flags/Brazil.png" alt="Portuguese"> Portuguese</a>
 
-                                <a href="#googtrans(en|es)" class="lang-es lang-select" data-lang="es">
-                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/Spain.png" alt="Spanish"> Spanish</a>
+                            <a href="#googtrans(en|es)" class="lang-es lang-select" data-lang="es">
+                                <img src="<?php echo HOME_URI; ?>/assets/img/flags/Spain.png" alt="Spanish"> Spanish</a>
+                        </li>
+                        <li class="divider"></li>
+                    </ul>
+                </li>
+                <!-- END Language Dropdown -->
+                <li><a></a></li>
+                <!-- END Alternative Sidebar Toggle Button -->
+                <!-- END User Dropdown -->
+            </ul>
+            <!-- END Right Header Navigation -->
+        </header>
+        <!-- END Header -->
 
-                                <a href="#googtrans(en|de)" class="lang-es lang-select" data-lang="de">
-                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/Germany.png" alt="German"> German</a> 
-
-                                <a href="#googtrans(en|fr)" class="lang-es lang-select" data-lang="fr">
-                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/France.png" alt="French"> French</a> 
-
-                                <a href="#googtrans(en|zh-CN)" class="lang-es lang-select" data-lang="zh-CN">
-                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/China.png" alt="Mandarim"> Chinese Simplified</a>
-
-                                <a href="#googtrans(en|ja)" class="lang-es lang-select" data-lang="ja">
-                                    <img src="<?php echo HOME_URI;?>/assets/img/flags/Japan.png" alt="Japanese"> Japanese</a>
-                            </li>
-                            <li class="divider"></li>
-                        </ul>
-                    </li>
-                    <!-- END Language Dropdown -->
-                    <li><a></a></li>
-                    <!-- END Alternative Sidebar Toggle Button -->
-                    <!-- END User Dropdown -->
-                </ul>
-                <!-- END Right Header Navigation -->
-            </header>
-            <!-- END Header -->
-
-            <?php 
-                // Load the modal dictionary page
-                require ABSPATH . '/views/modal/modal_dictionary.php';
-            ?>
+        <?php
+        // Load the modal dictionary page
+        require ABSPATH . '/views/modal/modal_dictionary.php';
+        ?>

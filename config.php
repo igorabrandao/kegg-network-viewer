@@ -21,7 +21,7 @@
 	define( 'FULL_PERMISSION', 0777 );
 
 	// HOME URI
-	define( 'HOME_URI', 'http://scotch-box/kegg-network-viewer' );
+	define( 'HOME_URI', 'http://localhost/kpv' );
 
 	// ACTIVE TAB
 	$GLOBALS['ACTIVE_TAB'] = 'Painel_Controle';
@@ -36,13 +36,13 @@
 	define( 'HOSTNAME', 'localhost' );
 
 	// DB NAME
-	define( 'DB_NAME', 'kegg-pathway-bottleneck' );
+	define( 'DB_NAME', 'kpv' );
 
 	// DB USER
 	define( 'DB_USER', 'root' );
 
 	// DB PASSWORD
-	define( 'DB_PASSWORD', 'root' );
+	define( 'DB_PASSWORD', 'Q<S/KhJ/Mxr{)a{JqyB^,ua44?PJqu' );
 
 	// PDO's CONNECTION CHARSET
 	define( 'DB_CHARSET', 'utf8' );

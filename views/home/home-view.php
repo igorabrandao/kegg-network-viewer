@@ -57,19 +57,6 @@
         <img src="<?php echo HOME_URI;?>/assets/img/placeholders/headers/dashboard_header.jpg" alt="header image" class="animation-pulseSlow">
     </div>
 
-    <!-- eCommerce Dashboard Header -->
-    <div class="content-header">
-        <ul class="nav-horizontal text-center" data-step="3" data-intro="Or the quick access options">
-            <li class="active">
-                <a href="<?php echo HOME_URI; ?>"><i class="fa fa-bar-chart"></i> <?php echo $template['initials']; ?> Statistics</a>
-            </li>
-            <li>
-                <a href="<?php echo HOME_URI . '/pathway_module/list'; ?>"><i class="gi gi-list"></i> Pathways list</a>
-            </li>
-        </ul>
-    </div>
-    <!-- END eCommerce Dashboard Header -->
-
     <!-- Quick Stats -->
     <div class="row text-center" data-step="7" data-intro="This is the quick stats section">
         <div class="col-sm-6 col-lg-4">

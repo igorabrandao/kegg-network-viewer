@@ -17,11 +17,23 @@ Easy! [Just click here](https://igorabrandao.com.br/kegg-pathway-bottleneck/).
 
 You can help us to make this projet even better :rocket:. Here are the ways you can contribute to this project:
 
-### Giving a feedback
+### 1. Giving a feedback
 
 Report your feedback, issues or suggestions by [creating a topic here](https://github.com/igorabrandao/kegg-network-viewer/issues) :punch:.
 
+### 2. Developing with us
+
+Bring your dev skills to the team [by clicking here](./includes/first-contributions/README.md) :computer:.
+
+### 3. Making a donation
+
+As you know, KEGG PATHWAY VIEWER is a free web tool and it will remain free forever. However, maintaining and improving it  costs time and money. If you like our work and find it useful, please help science initiatives spread out. Your contribution will be greatly appreciated and help me continue to develop this awesome tool crafted with :heart:
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7NV5RV8B2MTA4)
+
 ## Contributors:
+
+### Giving a feedback
 
 * Inácio Medeiros
 * Diego Arthur
@@ -29,6 +41,10 @@ Report your feedback, issues or suggestions by [creating a topic here](https://g
 ### Developing
 
 * Igor Brandão ( igorabrandao@gmail.com )
+
+### Donating
+
+You can be the next to help out! :pray:
 
 ## Changelog:
 
